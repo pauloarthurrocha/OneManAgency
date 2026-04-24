@@ -29,7 +29,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 const os = require('os');
 
-const VERSION = '3.2.0';
+const VERSION = '3.2.1';
 const GLOBAL_DIR = path.join(os.homedir(), '.agencia-ai');
 const SKILLS_DIR = path.join(GLOBAL_DIR, 'skills');
 const AGENTS_DIR = path.join(GLOBAL_DIR, 'agents');
