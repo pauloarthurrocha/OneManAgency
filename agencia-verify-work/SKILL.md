@@ -1,13 +1,14 @@
 ---
 name: agencia-verify-work
-description: Quality Gate pós-fase da Agência AI Adaptável. Valida outputs de cada fase do PIPELINE.md contra critérios de aceite declarados. Gera relatório de verificação (.planning/VERIFICATION_REPORT.md) com status PASS/WARNING/FAIL. Pode ser invocado automaticamente pelo agencia-executor após cada fase, ou manualmente pelo usuário.
+description: Quality Gate pós-fase da Agência AI Adaptável v2.0. Valida outputs de cada fase do PIPELINE.md contra critérios de aceite declarados. Agora com integração automática de scripts Python de validação (checklist.py e verify_all.py). Gera relatório de verificação (.planning/VERIFICATION_REPORT.md) com status PASS/WARNING/FAIL. Pode ser invocado automaticamente pelo agencia-executor após cada fase, ou manualmente pelo usuário.
 metadata:
-  version: 1.0.0
+  version: 2.0.0
   changelog:
+    - v2.0: Integração automática com scripts Python (checklist.py, verify_all.py). Suporte a Validation Level (quick/full) no PIPELINE.md.
     - v1.0: Validação estruturada de outputs, critérios de aceite, placeholders, e build/test quando aplicável.
 ---
 
-# Agencia Verify Work — Quality Gate v1.0
+# Agencia Verify Work — Quality Gate v2.0
 
 Você é o **Quality Gate** da Agência AI Adaptável. Sua responsabilidade é validar se uma fase foi realmente concluída com qualidade, antes de marcar como `[X]` no PIPELINE.md.
 
@@ -77,6 +78,77 @@ Se a fase envolve código, rodar verificações técnicas:
 | Docker | `docker build --no-cache .` | FAIL |
 
 > ⚠️ **Nunca exponha secrets.** Se precisar de env vars, usar apenas `.env.example`.
+
+---
+
+### Step 5: Validação Automática via Scripts Python (v2.0)
+
+O Quality Gate agora integra scripts Python de validação para automação completa:
+
+#### Scripts Disponíveis
+
+| Script | Uso | Tempo | Quando Rodar |
+|---|---|---|---|
+| `scripts/checklist.py` | Validação rápida (lint, types, security, tests, build, SEO, code quality) | ~30s | Toda fase que gera código |
+| `scripts/verify_all.py` | Validação completa (Lighthouse, E2E, bundle, a11y, mobile, i18n, links) | ~3-5min | Fases finais (QA, Deploy) |
+
+#### Ativação no PIPELINE.md
+
+Cada fase pode ter metadata `Validation:` indicando o nível de validação:
+
+```markdown
+- [ ] Fase 3: Scaffold Next.js
+      Agent: frontend-specialist
+      Skills: landing-page-scaffold, nextjs-react-expert
+      Validation: quick        ← roda checklist.py
+      Output: src/
+
+- [ ] Fase 7: QA & Deploy
+      Agent: test-engineer
+      Skills: testing-patterns, deployment-procedures
+      Validation: full         ← roda verify_all.py
+      Output: production
+```
+
+#### Níveis de Validação
+
+| Nível | Script | Quando Usar |
+|---|---|---|
+| `none` | Nenhum | Fases que não geram código (copy, design) |
+| `quick` | `scripts/checklist.py` | Fases de implementação intermediárias |
+| `full` | `scripts/verify_all.py` | Fases finais, antes de deploy |
+
+#### Execução Automática
+
+O executor chama os scripts automaticamente:
+
+```bash
+# Validação quick (30s)
+python scripts/checklist.py [caminho_do_projeto]
+→ Gera .planning/CHECKLIST_REPORT.json
+
+# Validação full (3-5min)
+python scripts/verify_all.py [caminho_do_projeto]
+→ Gera .planning/VERIFICATION_REPORT.json
+```
+
+#### Integração no Relatório
+
+Os resultados dos scripts são incluídos no VERIFICATION_REPORT.md:
+
+```markdown
+### 5. Validação Automática
+| Script | Status | Detalhes |
+|---|---|---|
+| checklist.py | ✅ PASS | 7/7 checks passaram |
+| verify_all.py | ⚠️ WARNING | Performance 78 (esperado: ≥ 85) |
+```
+
+#### Fallback
+
+Se Python não está disponível ou scripts não existem:
+- Usar validação heurística interna (Step 2-4)
+- Avisar usuário: "Scripts de validação não disponíveis. Usando verificação heurística."
 
 ---
 

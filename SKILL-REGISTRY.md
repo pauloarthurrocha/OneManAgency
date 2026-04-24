@@ -1,8 +1,9 @@
 # SKILL-REGISTRY.md — Índice de Skills Agência AI Adaptável
 
 > **Atualizado em:** 2026-04-24
-> **Versão do Sistema:** 3.0.1
+> **Versão do Sistema:** 3.2.0
 > **Total de Skills:** 160+
+> **Novidades v3.2:** Agentes especializados, orquestração multi-agent, scripts de validação Python, presets estéticos, templates de componentes LP
 
 ---
 
@@ -26,10 +27,10 @@ skill(name="nome-da-skill")
 | Skill | Versão | Descrição | Trigger |
 |---|---|---|---|
 | `agencia-init` | v3.0 | Inicializa projetos. Detecta IDE, configura MCPs, cria estrutura Context Engineering | `init`, `novo projeto`, `criar projeto` |
-| `agencia-executor` | v3.1 | Orquestrador dinâmico. Lê PIPELINE.md, executa fases | `executor`, `executar fase`, `próximo passo` |
-| `client-onboarding` | v3.1 | Arquiteto Socrático. Entrevista, valida stack, gera BRIEFING/PROJECT/PIPELINE | `onboarding`, `briefing`, `entrevista cliente` |
-| `pipeline-generator` | v1.0 | Gera PIPELINE.md com 9 playbooks por tipo de projeto | `pipeline`, `playbook`, `fases do projeto` |
-| `agencia-verify-work` | v1.0 | Quality Gate pós-fase. Valida outputs, gera VERIFICATION_REPORT | `verify`, `verificar`, `quality gate` |
+| `agencia-executor` | v3.2 | Orquestrador dinâmico. Lê PIPELINE.md, executa fases. **Novo:** Suporte a agentes especializados por fase, orquestração multi-agent paralela | `executor`, `executar fase`, `próximo passo` |
+| `client-onboarding` | v3.2 | Arquiteto Socrático. Entrevista, valida stack, gera BRIEFING/PROJECT/PIPELINE. **Novo:** Questionários socráticos por playbook (SaaS, LP, Python, Low-ticket) | `onboarding`, `briefing`, `entrevista cliente` |
+| `pipeline-generator` | v1.0 | Gera PIPELINE.md com 9 playbooks por tipo de projeto. **Novo:** Fase "Arquitetura Técnica" com PRDs para SaaS/Full-stack | `pipeline`, `playbook`, `fases do projeto` |
+| `agencia-verify-work` | v2.0 | Quality Gate pós-fase. Valida outputs, gera VERIFICATION_REPORT. **Novo:** Integração automática com scripts Python (checklist.py, verify_all.py) | `verify`, `verificar`, `quality gate` |
 | `skill-creator` | v1.0 | Criação/otimização de skills. Wizard + A/B testing + evals | `criar skill`, `nova skill`, `otimizar skill` |
 
 **Fonte:** `~/.agencia-ai/skills/` (repo principal)
@@ -160,35 +161,41 @@ skill(name="nome-da-skill")
 
 ---
 
-## 🤖 Agentes Especializados (Antigravity Kit)
+## 🤖 Agentes Especializados (Agência AI Adaptável v3.2)
 
-> Instalado em: `~/.agencia-ai/antigravity-kit/agents/`
-> Uso: O executor pode invocar agentes por fase (futuro v3.2+)
+> Local: `.agents/agents/` (no repo da agência, commitado)
+> Uso: O `agencia-executor` v3.2 invoca agentes por fase via metadata `Agent:`
+> File Type Ownership: Cada agente tem prioridade de edição sobre seus tipos de arquivo
 
-| Agente | Domínio | Uso |
-|---|---|---|
-| `orchestrator` | Coordenação multi-agent | Decompõe tarefas complexas, invoca especialistas em paralelo |
-| `frontend-specialist` | Frontend & UI | React, Next.js, Tailwind, componentes, animações |
-| `backend-specialist` | Backend & API | Node.js, Express, FastAPI, databases |
-| `database-architect` | Database & Schema | Prisma, migrations, optimization, RLS |
-| `security-auditor` | Security & Auth | Authentication, vulnerabilities, OWASP |
-| `penetration-tester` | Security Testing | Active vulnerability testing, red team |
-| `test-engineer` | Testing & QA | Unit tests, E2E, coverage, TDD |
-| `devops-engineer` | DevOps & Infra | Deployment, CI/CD, PM2, monitoring |
-| `mobile-developer` | Mobile Apps | React Native, Flutter, Expo |
-| `performance-optimizer` | Performance | Profiling, optimization, bottlenecks |
-| `debugger` | Debugging | Root cause analysis, systematic debugging |
-| `explorer-agent` | Discovery | Codebase exploration, dependencies |
-| `project-planner` | Planning | Task breakdown, milestones, roadmap |
-| `seo-specialist` | SEO & Marketing | SEO optimization, meta tags, analytics |
-| `game-developer` | Game Development | Unity, Godot, Unreal, Phaser |
-| `product-manager` | Product Management | Feature prioritization, user stories |
-| `product-owner` | Product Ownership | Requirements, acceptance criteria |
-| `qa-automation-engineer` | QA Automation | Automated testing pipelines |
-| `code-archaeologist` | Legacy Code | Understanding old codebases |
-| `documentation-writer` | Documentation | Docs, README, API documentation |
+| Agente | Domínio | File Types | Uso |
+|---|---|---|---|
+| `orchestrator` | Coordenação multi-agent | - | Decompõe tarefas complexas, invoca especialistas em paralelo, sincroniza waves |
+| `frontend-specialist` | Frontend & UI | *.tsx, *.jsx, *.css, *.scss, tailwind.config.* | React, Next.js, Tailwind, componentes, animações |
+| `backend-specialist` | Backend & API | *.ts (API), *.js (API), *.py, routes.* | Node.js, Express, FastAPI, APIs, webhooks |
+| `database-architect` | Database & Schema | *.prisma, schema.*, migrations/* | PostgreSQL, Prisma, Drizzle, RLS, índices |
+| `security-auditor` | Security & Auth | middleware.*, auth.*, security.* | OWASP, JWT, headers, rate limiting, secrets |
+| `test-engineer` | Testing & QA | *.test.*, *.spec.*, __tests__/* | Unit tests, E2E, coverage, TDD, Playwright |
+| `devops-engineer` | DevOps & Infra | *.yml, *.yaml, Dockerfile, docker-compose.* | Deploy, CI/CD, Docker, Vercel, Cloudflare |
+| `seo-specialist` | SEO & Marketing | robots.txt, sitemap.xml, manifest.json | Meta tags, schema markup, Core Web Vitals |
+| `copywriter-specialist` | Copy & Persuasão | COPY_DECK.md, copy-*.md | Headlines, CTAs, copy deck, email sequences |
+| `design-specialist` | Design System & UX | DESIGN_SYSTEM.md, design-*.md | Tokens, tipografia, componentes, layout |
 
-**Fonte:** `~/.agencia-ai/antigravity-kit/agents/` (v2.0.1)
+**Como usar no PIPELINE.md:**
+```markdown
+- [ ] Fase 4: UI Spec
+      Agent: frontend-specialist
+      Skills: gsd-ui-phase, frontend-design
+      Output: .planning/UI-SPEC.md
+```
+
+**Orquestração Multi-Agent:**
+```markdown
+- [ ] Fase 5: Implementação Full-Stack
+      Orchestration: true
+      Agents: frontend-specialist, backend-specialist, database-architect
+```
+
+**Fonte:** `.agents/agents/` (v3.2.0)
 
 ---
 
@@ -215,25 +222,26 @@ skill(name="nome-da-skill")
 
 ---
 
-## 🧪 Scripts de Validação (Antigravity Kit)
+## 🧪 Scripts de Validação (v3.2)
 
-> Instalado em: `~/.agencia-ai/antigravity-kit/scripts/`
+> Local: `scripts/` (no repo da agência)
+> Uso: Integrados no `agencia-verify-work` v2.0
 
-| Script | Descrição | Tempo |
-|---|---|---|
-| `checklist.py` | Validação rápida: security, lint, types, tests, UX, SEO | ~30s |
-| `verify_all.py` | Validação completa: Lighthouse, E2E, bundle, mobile, i18n | ~3-5min |
-| `session_manager.py` | Gerenciamento de sessões | - |
-| `auto_preview.py` | Preview automático | - |
+| Script | Descrição | Tempo | Saída |
+|---|---|---|---|
+| `scripts/checklist.py` | Validação rápida: TypeScript, ESLint, security (npm audit), tests, build, SEO básico, code quality | ~30s | `.planning/CHECKLIST_REPORT.json` |
+| `scripts/verify_all.py` | Validação completa: Lighthouse, E2E (Playwright), bundle size, acessibilidade, mobile, i18n, links | ~3-5min | `.planning/VERIFICATION_REPORT.json` |
 
-**Scripts por Skill:**
-- `api-patterns` → `api_validator.py`
-- `database-design` → `schema_validator.py`
-- `frontend-design` → `accessibility_checker.py`, `ux_audit.py`
-- `lint-and-validate` → `lint_runner.py`, `type_coverage.py`
-- `testing-patterns` → `test_runner.py`
-- `vulnerability-scanner` → `security_scan.py`
-- `webapp-testing` → `playwright_runner.py`
+**Categorias verificadas:**
+- `checklist.py`: typescript, eslint, security, tests, build, seo, code_quality
+- `verify_all.py`: lighthouse, e2e, bundle_size, accessibility, mobile, i18n, links
+
+**Ativação no PIPELINE.md:**
+```markdown
+Validation: quick    → roda checklist.py
+Validation: full     → roda verify_all.py
+Validation: none     → pula validação automática
+```
 
 ---
 
@@ -316,6 +324,51 @@ agencia-ai update
 agencia-ai version
 ```
 
+## 🎨 Presets Estéticos (v3.2)
+
+> Local: `presets/` (no repo da agência)
+> Uso: O `design-system-generator` pode carregar presets como ponto de partida
+
+| Preset | Identidade | Uso Ideal | Mood |
+|---|---|---|---|
+| `tech-organico` | Tecnologia que respira. Natureza digital. | SaaS, climate tech, wellness tech, produtividade | Calmo, confiável, inovador |
+| `luxo-noturno` | Elegância noturna. Sofisticação digital. | Fintech, luxury brands, consultoria executiva | Exclusivo, sofisticado, poderoso |
+| `sinal-brutalista` | Direto, sem filtros. Força bruta digital. | Agências criativas, portfolios, streetwear, disruptivas | Bold, cru, impactante |
+| `clinica-vapor` | Precisão médica. Clareza científica. | Health tech, telemedicina, biotech, insurance tech | Profissional, limpo, confiável |
+
+**Cada preset inclui:**
+- Paleta completa (primária, destaque, neutros, gradientes)
+- Tipografia (display, body, escala)
+- Component behaviors (cards, botões, inputs)
+- Animações (hero, scroll, hover, background)
+- Padrão de hero (wireframe ASCII)
+- Regras premium (diretrizes de design)
+
+---
+
+## 🧩 Templates de Componentes LP (v3.2)
+
+> Local: `templates/lp-components/` (no repo da agência)
+> Uso: O `landing-page-scaffold` pode usar templates como ponto de partida
+
+| Componente | Arquivo | Uso |
+|---|---|---|
+| Navbar | `navbar.md` | Navegação fixa com scroll behavior e mobile menu |
+| Hero | `hero.md` | Seção principal com headline, CTAs, social proof, mockup |
+| Features | `features.md` | Grid de funcionalidades/benefícios com ícones |
+| Filosofia/Sobre | `filosofia.md` | Propósito, valores, stats, imagem |
+| Protocolo/Como Funciona | `protocolo.md` | Steps numerados, timeline, cards sequenciais |
+| Planos/Pricing | `planos.md` | Cards de preço, tabela comparativa, toggle |
+| Footer | `footer.md` | Rodapé multi-coluna, links, newsletter, social |
+
+**Cada template inclui:**
+- Estrutura de código (TSX/React)
+- Comportamentos (interactions, estados)
+- Animações (CSS keyframes)
+- Props/Interface
+- Checklist de implementação
+- Layout variations
+
 ---
 
 ## 📝 Notas
@@ -326,8 +379,20 @@ agencia-ai version
 - **Skills marketing:** 38 (coreyhaines31)
 - **Skills dev/design:** 37+ (claude/shared)
 - **Skills GSD:** 60+
-- **Agentes:** 20 (Antigravity Kit)
+- **Agentes:** 10 (Agência AI Adaptável v3.2)
 - **Workflows:** 11 (Antigravity Kit)
+- **Scripts de validação:** 2 (checklist.py, verify_all.py)
+- **Presets estéticos:** 4
+- **Templates LP:** 7 componentes
+
+**Novidades v3.2:**
+1. **Agentes especializados:** 10 agentes com personas e file type ownership
+2. **Orquestração multi-agent:** Execução paralela de fases complexas
+3. **Scripts Python de validação:** Quality Gate automatizado
+4. **Presets estéticos:** 4 presets plug-and-play para design system
+5. **Templates de componentes LP:** 7 componentes fixos com behaviors detalhados
+6. **Questionários socráticos por playbook:** Entrevistas específicas por tipo de projeto
+7. **Metadata estendida no PIPELINE.md:** Agent, Orchestration, Validation
 
 **Para adicionar novas skills:**
 1. Criar diretório `nome-da-skill/SKILL.md`
@@ -336,4 +401,4 @@ agencia-ai version
 
 ---
 
-*Agencia AI Adaptável — SKILL-REGISTRY v2.0*
+*Agencia AI Adaptável — SKILL-REGISTRY v3.2*

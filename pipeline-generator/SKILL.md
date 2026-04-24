@@ -150,54 +150,66 @@ Um único arquivo: `.planning/PIPELINE.md`
 
 ```markdown
 - [ ] Fase 1: Scaffold Next.js + Vercel config
+      Agent: devops-engineer
       Skills: landing-page-scaffold, deployment-procedures
       Output: package.json, next.config.js, vercel.json, .nvmrc
       Shift-Left: sim
+      Validation: quick
       Critérios de aceite:
         - npm run build passa
         - Deploy preview Vercel funcionando
         - Node version travada no .nvmrc e package.json
 
 - [ ] Fase 2: Research rápido (concorrentes, tom de voz, referências visuais)
+      Agent: copywriter-specialist
       Skills: niche-research, competitor-intel
       Output: .planning/RESEARCH.md
       Shift-Left: não
+      Validation: none
       Critérios de aceite:
         - 3+ concorrentes analisados
         - Tom de voz identificado
         - 5+ referências visuais coletadas
 
 - [ ] Fase 3: Copy deck completo (headlines, seções, CTAs)
+      Agent: copywriter-specialist
       Skills: copywriting, marketing-psychology, page-cro
       Output: .planning/COPY_DECK.md
       Shift-Left: não
+      Validation: none
       Critérios de aceite:
         - Hero com headline + subheadline + CTA principal
         - Mínimo 5 seções (problema, solução, benefícios, prova, CTA)
         - Objeções tratadas em FAQ ou seção dedicada
 
 - [ ] Fase 4: Design system (cores, tipografia, tokens)
+      Agent: design-specialist
       Skills: psychology-color-picker, frontend-design
       Output: .planning/DESIGN_SYSTEM.md + app/tokens.css ou tailwind.config.js
       Shift-Left: não
+      Validation: none
       Critérios de aceite:
         - Paleta coerente com psicologia do público-alvo
         - Tipografia par definida (display + body)
         - Tokens exportados em CSS custom properties ou Tailwind theme extend
 
 - [ ] Fase 5: UI spec (estrutura e wireframe em ASCII/markdown)
+      Agent: design-specialist
       Skills: gsd-ui-phase, web-design-guidelines
       Output: .planning/UI-SPEC.md
       Shift-Left: não
+      Validation: none
       Critérios de aceite:
         - Ordem das seções definida
         - Hierarquia visual clara
         - Considerações mobile explicitadas
 
 - [ ] Fase 6: Implementação Next.js responsiva
+      Agent: frontend-specialist
       Skills: nextjs-react-expert, tailwind-patterns, web-design-guidelines
       Output: app/page.tsx, app/layout.tsx, componentes em app/sections/
       Shift-Left: não
+      Validation: quick
       Critérios de aceite:
         - Lighthouse Mobile ≥ 85 em Performance
         - 0 erros console
@@ -205,18 +217,22 @@ Um único arquivo: `.planning/PIPELINE.md`
         - Componentes reutilizáveis (Button, Section, Hero, etc.)
 
 - [ ] Fase 7: SEO + analytics + schema
+      Agent: seo-specialist
       Skills: seo-audit, schema-markup, ai-seo, analytics-tracking
       Output: metadata em layout.tsx, JSON-LD component, Open Graph, Pixel/GA4
       Shift-Left: não
+      Validation: quick
       Critérios de aceite:
         - title/description < 60/160 chars
         - JSON-LD validado em validator.schema.org
         - Pixel/GA4 disparando em sandbox
 
 - [ ] Fase 8: QA final + deploy
+      Agent: test-engineer
       Skills: gsd-ui-review, agencia-verify-work
       Output: docs/entrega/checklist.md
       Shift-Left: não
+      Validation: full
       Critérios de aceite:
         - Checklist de QA preenchido (20+ itens)
         - Deploy em produção funcional
@@ -235,15 +251,32 @@ Um único arquivo: `.planning/PIPELINE.md`
         - Auth provider ativo (Clerk/Supabase Auth/Auth.js)
         - Env vars documentadas
 
-- [ ] Fase 2: Schema e arquitetura
-      Skills: architecture, database-design
-      Output: .planning/ARCHITECTURE.md, prisma/schema.prisma
+- [ ] Fase 2: Arquitetura Técnica (PRDs)
+      Agent: orchestrator
+      Orchestration: true
+      Agents: backend-specialist, database-architect, frontend-specialist
+      Skills: architecture, database-design, nextjs-react-expert
+      Output: .planning/PRD-BACKEND.md, .planning/PRD-FRONTEND.md, .planning/ARCHITECTURE.md
+      Validation: none
+      Critérios de aceite:
+        - PRD-BACKEND: schema, endpoints, auth flow, security considerations
+        - PRD-FRONTEND: páginas, componentes, design system tech specs
+        - ARCHITECTURE: diagrama de dependências, stack decisions justificadas
+        - Tasks de 5-15 min organizadas por batch para implementação
+
+- [ ] Fase 3: Schema e database
+      Agent: database-architect
+      Skills: database-design
+      Output: prisma/schema.prisma, migrations/
+      Validation: quick
       Critérios de aceite:
         - Todas entidades modeladas
         - Relacionamentos definidos
         - Índices críticos identificados
+        - RLS policies definidas (se Supabase)
 
-- [ ] Fase 3: UX/UI dos fluxos principais
+- [ ] Fase 4: UX/UI dos fluxos principais
+      Agent: design-specialist
       Skills: gsd-ui-phase, frontend-design
       Output: .planning/UI-SPEC.md com fluxos de auth, onboarding, core
       Critérios de aceite:
@@ -251,37 +284,53 @@ Um único arquivo: `.planning/PIPELINE.md`
         - Empty states definidos
         - Error states definidos
 
-- [ ] Fase 4: Scaffold do app (rotas, layouts, auth)
+- [ ] Fase 5: Scaffold do app (rotas, layouts, auth)
+      Agent: frontend-specialist
+      Orchestration: true
+      Agents: frontend-specialist, backend-specialist, security-auditor
       Skills: nextjs-react-expert, nodejs-best-practices
-      Output: src/app/*, src/server/*
+      Output: src/app/*, src/server/*, middleware/auth.*
+      Validation: quick
       Critérios de aceite:
         - Rotas protegidas funcionando
         - Layout de app (sidebar/nav) implementado
         - Loading/error boundaries
+        - Auth middleware configurado
 
-- [ ] Fase 5: Core features
+- [ ] Fase 6: Core features
+      Agent: orchestrator
+      Orchestration: true
+      Agents: frontend-specialist, backend-specialist, test-engineer
       Skills: nextjs-react-expert, api-patterns, testing-patterns
       Output: features implementadas + testes
+      Validation: quick
       Critérios de aceite:
         - Cada feature tem teste E2E básico
         - Dados persistem entre sessões
         - Validação de inputs em server + client
+        - API documentation atualizada
 
-- [ ] Fase 6: Billing + observability
+- [ ] Fase 7: Billing + observability
+      Agent: backend-specialist
       Skills: pricing-strategy, churn-prevention, analytics-tracking
       Output: Stripe webhook, PostHog/Plausible, error tracking
+      Validation: quick
       Critérios de aceite:
         - Checkout Stripe funcional (teste)
         - Webhook processando eventos
         - Error tracking capturando exceções
 
-- [ ] Fase 7: Security + QA
-      Skills: gsd-code-review, security-review, agencia-verify-work
-      Output: security report, E2E suite verde
+- [ ] Fase 8: Security + QA
+      Agent: security-auditor
+      Skills: gsd-code-review, vulnerability-scanner, agencia-verify-work
+      Output: .planning/SECURITY_REPORT.md, E2E suite verde
+      Validation: full
       Critérios de aceite:
         - CSRF, XSS, SQL injection cobertos
         - Rate limiting em endpoints críticos
         - Secrets apenas em env vars
+        - Lighthouse ≥ 85 em todos os checks
+        - 0 vulnerabilidades high/critical
 ```
 
 ### Playbook D — Automação Python (Scraping, ETL, Bot)

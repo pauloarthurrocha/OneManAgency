@@ -1,16 +1,17 @@
 ---
 name: agencia-executor
-description: Orquestrador dinâmico da Agência AI Adaptável. Lê o PIPELINE.md do projeto e executa a próxima fase pendente com as skills corretas, gate humano, detecção de arquivos incompletos, Quality Gate pós-fase e atualização de memória. Se o PIPELINE.md não existe, delega para client-onboarding. Funciona em qualquer IDE (Claude Code, OpenCode, Antigravity, Cursor, Codex).
+description: Orquestrador dinâmico da Agência AI Adaptável v3.2. Lê o PIPELINE.md do projeto e executa a próxima fase pendente com as skills corretas, gate humano, detecção de arquivos incompletos, Quality Gate pós-fase e atualização de memória. Agora com suporte a agentes especializados por fase e orquestração multi-agent. Se o PIPELINE.md não existe, delega para client-onboarding. Funciona em qualquer IDE (Claude Code, OpenCode, Antigravity, Cursor, Codex).
 metadata:
-  version: 3.1.0
+  version: 3.2.0
   changelog:
+    - v3.2: Adiciona suporte a agentes especializados por fase (metadata Agent:), orquestração multi-agent (metadata Orchestration:), e sistema de File Type Ownership.
     - v3.1: Merge v2.0 (operacional) + v3.0 (dinâmico). Preserva R1-R7, Quality Gate, hierarquia de carregamento, few-shot. Remove Modo Arquiteto (delegado para client-onboarding).
     - v3.0: PIPELINE.md dinâmico + Shift-Left Deploy + validação via MCPs.
     - v2.0: Auto-detect IDE cross-IDE, carregamento inteligente de skills, atualização de memória pós-fase.
     - v1.0: Deteccao automatica de fase + gate humano.
 ---
 
-# Agencia AI Adaptavel — Executor Dinâmico v3.1
+# Agencia AI Adaptavel — Executor Dinâmico v3.2
 
 Você é o **orquestrador do workflow** da Agência AI Adaptável. Sua responsabilidade é:
 1. Ler o mapa do projeto (`.planning/PIPELINE.md`)
@@ -392,7 +393,142 @@ Opções:
 
 ---
 
-## 8. Integração por IDE (enxuto)
+## 8. Agente Especializado por Fase (v3.2)
+
+O executor pode invocar **agentes especializados** para executar fases específicas, garantindo maior qualidade e menos alucinações.
+
+### Como funciona
+
+Cada fase no PIPELINE.md pode ter metadata `Agent:` indicando qual especialista deve executá-la:
+
+```markdown
+- [ ] Fase 4: UI Spec
+      Agent: frontend-specialist
+      Skills: gsd-ui-phase, frontend-design, tailwind-patterns
+      Output: .planning/UI-SPEC.md
+```
+
+### Mapeamento de Fase → Agente
+
+| Tipo de Fase | Agente Sugerido | Domínio |
+|---|---|---|
+| Design System, UI Spec, Scaffold (frontend) | `frontend-specialist` | UI/UX, React, Tailwind |
+| API, Backend, Integrações | `backend-specialist` | Node.js, Python, APIs |
+| Database, Schema, Migrations | `database-architect` | PostgreSQL, Prisma, RLS |
+| Auth, Segurança | `security-auditor` | OWASP, JWT, middleware |
+| Testes, QA | `test-engineer` | Unit, E2E, coverage |
+| Deploy, CI/CD, Infra | `devops-engineer` | Docker, GitHub Actions |
+| SEO, Analytics | `seo-specialist` | Meta tags, schema, Core Web Vitals |
+| Copywriting | `copywriter-specialist` | Headlines, CTAs, copy deck |
+| Design Visual | `design-specialist` | Tokens, componentes, layout |
+| Multi-domínio complexo | `orchestrator` | Coordenação paralela |
+
+### Carregamento do Agente
+
+1. Verificar se `.agents/agents/[agente].md` existe
+2. Se sim, carregar como contexto adicional antes de executar a fase
+3. Se não, executar com skills normais (fallback)
+
+### File Type Ownership
+
+Quando um agente especializado está ativo, ele tem "prioridade de edição" sobre seus tipos de arquivo:
+
+```
+frontend-specialist  → *.tsx, *.jsx, *.css, *.scss, tailwind.config.*
+backend-specialist   → *.ts (API), *.js (API), *.py, routes.*
+database-architect   → *.prisma, schema.*, migrations/*
+security-auditor     → middleware.*, auth.*, security.*
+test-engineer        → *.test.*, *.spec.*, __tests__/*
+devops-engineer      → *.yml, *.yaml, Dockerfile, docker-compose.*
+seo-specialist       → robots.txt, sitemap.xml, manifest.json
+copywriter-specialist → COPY_DECK.md, copy-*.md
+design-specialist    → DESIGN_SYSTEM.md, design-*.md
+```
+
+**Regra**: O agente ativo pode editar QUALQUER arquivo, mas deve respeitar a especialização de outros agentes quando houver conflito.
+
+---
+
+## 9. Orquestração Multi-Agent (v3.2)
+
+Quando uma fase toca múltiplos domínios (ex: full-stack), o executor pode orquestrar agentes em paralelo.
+
+### Ativação
+
+Metadata `Orchestration: true` no PIPELINE.md:
+
+```markdown
+- [ ] Fase 5: Implementação Full-Stack
+      Orchestration: true
+      Agents: frontend-specialist, backend-specialist, database-architect
+      Skills: landing-page-scaffold, nextjs-react-expert, python-patterns
+      Output: src/
+```
+
+### Protocolo de Orquestração
+
+#### Step 1 — Decomposição
+
+O executor (como orchestrator) divide a fase em subtarefas:
+
+```markdown
+## Subtarefa A — Frontend
+- Agente: frontend-specialist
+- Input: UI-SPEC.md, DESIGN_SYSTEM.md
+- Output: app/, components/
+- Dependências: nenhuma
+
+## Subtarefa B — Backend
+- Agente: backend-specialist
+- Input: PRD-BACKEND.md
+- Output: app/api/, services/
+- Dependências: nenhuma
+
+## Subtarefa C — Database
+- Agente: database-architect
+- Input: PRD-BACKEND.md
+- Output: prisma/schema.prisma
+- Dependências: nenhuma
+```
+
+#### Step 2 — Execução em Waves
+
+```
+Wave 1 (paralelo):
+  → frontend-specialist: Scaffold + Components
+  → backend-specialist: API routes + Services
+  → database-architect: Schema + Migrations
+
+Wave 2 (paralelo, depende da Wave 1):
+  → frontend-specialist: Integração com API
+  → backend-specialist: Webhooks + Auth
+  → test-engineer: Tests de integração
+
+Wave 3 (sequencial):
+  → security-auditor: Security review
+  → devops-engineer: Deploy config
+```
+
+#### Step 3 — Sincronização
+
+Após cada wave, verificar:
+- Todos os outputs foram gerados?
+- Não há conflitos entre arquivos?
+- Interfaces (API ↔ Frontend) estão alinhadas?
+
+Arquivo de sincronização: `.planning/ORCHESTRATION.md`
+
+#### Step 4 — Consolidação
+
+Combinar todos os outputs e executar Quality Gate final.
+
+### Fallback
+
+Se `Orchestration: true` mas não há múltiplos agentes listados, executar sequencialmente com skills indicadas.
+
+---
+
+## 10. Integração por IDE (enxuto)
 
 Cross-IDE funciona porque `.planning/` e `.agents/skills/` são **commitados no repo**. Qualquer IDE que abrir o projeto lê esses dois caminhos.
 
