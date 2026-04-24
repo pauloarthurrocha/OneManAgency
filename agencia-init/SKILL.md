@@ -190,9 +190,9 @@ Instalar skills de repositórios externos. Priorizar cópia do SSoT local para m
 # Prioridade 1: Buscar versão mais recente online via NPX
 if npx -y @vudovn/ag-kit init 2>/dev/null; then
   echo "Antigravity Kit instalado via NPX."
-elif [ -d "$HOME/.claude/shared/skills" ]; then
+elif [ -d "$HOME/.agencia-ai/skills" ]; then
   # Fallback: Copiar do SSoT global (Modo Offline)
-  cp -r "$HOME/.claude/shared/skills/"* .agents/skills/ 2>/dev/null
+  cp -r "$HOME/.agencia-ai/skills/"* .agents/skills/ 2>/dev/null
 fi
 ```
 
@@ -202,9 +202,9 @@ fi
 rm -rf /tmp/marketingskills 2>/dev/null
 if git clone https://github.com/coreyhaines31/marketingskills.git /tmp/marketingskills 2>/dev/null; then
   cp -r /tmp/marketingskills/* .agents/skills/ 2>/dev/null
-elif [ -d "$HOME/.claude/shared/marketing-skills" ]; then
+elif [ -d "$HOME/.agencia-ai/marketing-skills" ]; then
   # Fallback: Usar cache local SSoT (Modo Offline)
-  cp -r "$HOME/.claude/shared/marketing-skills/"* .agents/skills/ 2>/dev/null
+  cp -r "$HOME/.agencia-ai/marketing-skills/"* .agents/skills/ 2>/dev/null
 fi
 ```
 
@@ -217,8 +217,8 @@ for REPO in "nextlevelbuilder/ui-ux-pro-max-skill" "anthropics/skills/frontend-d
   
   if git clone "https://github.com/$REPO.git" "/tmp/$SKILL_NAME" 2>/dev/null; then
     cp -r "/tmp/$SKILL_NAME" .agents/skills/ 2>/dev/null
-  elif [ -d "$HOME/.claude/shared/$SKILL_NAME" ]; then
-    cp -r "$HOME/.claude/shared/$SKILL_NAME" .agents/skills/ 2>/dev/null
+  elif [ -d "$HOME/.agencia-ai/$SKILL_NAME" ]; then
+    cp -r "$HOME/.agencia-ai/$SKILL_NAME" .agents/skills/ 2>/dev/null
   fi
 done
 ```
@@ -237,7 +237,7 @@ mkdir -p .codex/skills
 mkdir -p .gemini/antigravity/skills
 
 # Copiar skills da agência do SSoT local
-AGENCIA_SKILLS="$HOME/.claude/shared/agencia-adaptavel/skills"
+AGENCIA_SKILLS="$HOME/.agencia-ai/skills"
 
 if [ -d "$AGENCIA_SKILLS" ]; then
   cp -r "$AGENCIA_SKILLS/"* .agents/skills/ 2>/dev/null
@@ -424,7 +424,7 @@ Copiar templates do `.agent/templates/context-engineering/` do repositório da a
 
 ```bash
 # Diretório de templates da agência (SSoT Global)
-AGENCIA_TEMPLATES="~/.claude/shared/agencia-adaptavel/templates/context-engineering"
+AGENCIA_TEMPLATES="~/.agencia-ai/templates/context-engineering"
 
 # 1. AGENTS.md — Protocolos universais (NÃO editar no projeto)
 cp "$AGENCIA_TEMPLATES/AGENTS.md.template" ./AGENTS.md
