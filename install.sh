@@ -93,6 +93,46 @@ else
   echo "  ⚠️  Marketing skills não disponível (offline?)"
 fi
 
+# ── Instalar Antigravity Kit ──
+echo ""
+echo "📦 Instalando Antigravity Kit..."
+
+AG_KIT_TMP="/tmp/antigravity-kit-install"
+rm -rf "$AG_KIT_TMP"
+if git clone --depth 1 "https://github.com/vudovn/antigravity-kit.git" "$AG_KIT_TMP" 2>/dev/null; then
+  if [ -d "$AG_KIT_TMP/.agent" ]; then
+    AG_KIT_DEST="$INSTALL_DIR/antigravity-kit"
+    rm -rf "$AG_KIT_DEST"
+    mkdir -p "$AG_KIT_DEST"
+    
+    # Copiar agentes
+    cp -r "$AG_KIT_TMP/.agent/agents" "$AG_KIT_DEST/" 2>/dev/null || true
+    agent_count=$(ls -1 "$AG_KIT_DEST/agents" 2>/dev/null | wc -l)
+    echo "  ✅ $agent_count agentes"
+    
+    # Copiar workflows
+    cp -r "$AG_KIT_TMP/.agent/workflows" "$AG_KIT_DEST/" 2>/dev/null || true
+    workflow_count=$(ls -1 "$AG_KIT_DEST/workflows" 2>/dev/null | wc -l)
+    echo "  ✅ $workflow_count workflows"
+    
+    # Copiar shared
+    cp -r "$AG_KIT_TMP/.agent/.shared" "$AG_KIT_DEST/" 2>/dev/null || true
+    echo "  ✅ UI/UX Pro Max completo"
+    
+    # Copiar scripts
+    cp -r "$AG_KIT_TMP/.agent/scripts" "$AG_KIT_DEST/" 2>/dev/null || true
+    echo "  ✅ Scripts Python"
+    
+    # Copiar configs
+    cp "$AG_KIT_TMP/.agent/ARCHITECTURE.md" "$AG_KIT_DEST/" 2>/dev/null || true
+    cp "$AG_KIT_TMP/.agent/mcp_config.json" "$AG_KIT_DEST/" 2>/dev/null || true
+    echo "  ✅ Configs"
+  fi
+  rm -rf "$AG_KIT_TMP"
+else
+  echo "  ⚠️  Antigravity Kit não disponível (offline?)"
+fi
+
 # ── Criar symlink por IDE ──
 install_for_ide() {
   local ide_path=$1

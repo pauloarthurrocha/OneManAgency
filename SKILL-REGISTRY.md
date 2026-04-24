@@ -160,6 +160,83 @@ skill(name="nome-da-skill")
 
 ---
 
+## 🤖 Agentes Especializados (Antigravity Kit)
+
+> Instalado em: `~/.agencia-ai/antigravity-kit/agents/`
+> Uso: O executor pode invocar agentes por fase (futuro v3.2+)
+
+| Agente | Domínio | Uso |
+|---|---|---|
+| `orchestrator` | Coordenação multi-agent | Decompõe tarefas complexas, invoca especialistas em paralelo |
+| `frontend-specialist` | Frontend & UI | React, Next.js, Tailwind, componentes, animações |
+| `backend-specialist` | Backend & API | Node.js, Express, FastAPI, databases |
+| `database-architect` | Database & Schema | Prisma, migrations, optimization, RLS |
+| `security-auditor` | Security & Auth | Authentication, vulnerabilities, OWASP |
+| `penetration-tester` | Security Testing | Active vulnerability testing, red team |
+| `test-engineer` | Testing & QA | Unit tests, E2E, coverage, TDD |
+| `devops-engineer` | DevOps & Infra | Deployment, CI/CD, PM2, monitoring |
+| `mobile-developer` | Mobile Apps | React Native, Flutter, Expo |
+| `performance-optimizer` | Performance | Profiling, optimization, bottlenecks |
+| `debugger` | Debugging | Root cause analysis, systematic debugging |
+| `explorer-agent` | Discovery | Codebase exploration, dependencies |
+| `project-planner` | Planning | Task breakdown, milestones, roadmap |
+| `seo-specialist` | SEO & Marketing | SEO optimization, meta tags, analytics |
+| `game-developer` | Game Development | Unity, Godot, Unreal, Phaser |
+| `product-manager` | Product Management | Feature prioritization, user stories |
+| `product-owner` | Product Ownership | Requirements, acceptance criteria |
+| `qa-automation-engineer` | QA Automation | Automated testing pipelines |
+| `code-archaeologist` | Legacy Code | Understanding old codebases |
+| `documentation-writer` | Documentation | Docs, README, API documentation |
+
+**Fonte:** `~/.agencia-ai/antigravity-kit/agents/` (v2.0.1)
+
+---
+
+## 🔄 Workflows (Antigravity Kit)
+
+> Instalado em: `~/.agencia-ai/antigravity-kit/workflows/`
+> Uso: Slash commands disponíveis no projeto
+
+| Workflow | Descrição | Quando Usar |
+|---|---|---|
+| `/brainstorm` | Explore opções antes de implementar | Requisitos unclear |
+| `/create` | Crie novas features ou apps | Novo projeto ou feature |
+| `/debug` | Debugging sistemático | Bugs, erros, falhas |
+| `/deploy` | Deploy da aplicação | Pronto para produção |
+| `/enhance` | Melhore código existente | Refactoring, otimização |
+| `/orchestrate` | Coordenação multi-agent | Tarefas complexas multi-domínio |
+| `/plan` | Crie breakdown de tarefas | Projetos grandes |
+| `/preview` | Preview local de mudanças | Antes de commitar |
+| `/status` | Checa status do projeto | Progress check |
+| `/test` | Gere e execute testes | Antes de deploy |
+| `/ui-ux-pro-max` | Design com 50 estilos | Fase de design |
+
+**Fonte:** `~/.agencia-ai/antigravity-kit/workflows/` (v2.0.1)
+
+---
+
+## 🧪 Scripts de Validação (Antigravity Kit)
+
+> Instalado em: `~/.agencia-ai/antigravity-kit/scripts/`
+
+| Script | Descrição | Tempo |
+|---|---|---|
+| `checklist.py` | Validação rápida: security, lint, types, tests, UX, SEO | ~30s |
+| `verify_all.py` | Validação completa: Lighthouse, E2E, bundle, mobile, i18n | ~3-5min |
+| `session_manager.py` | Gerenciamento de sessões | - |
+| `auto_preview.py` | Preview automático | - |
+
+**Scripts por Skill:**
+- `api-patterns` → `api_validator.py`
+- `database-design` → `schema_validator.py`
+- `frontend-design` → `accessibility_checker.py`, `ux_audit.py`
+- `lint-and-validate` → `lint_runner.py`, `type_coverage.py`
+- `testing-patterns` → `test_runner.py`
+- `vulnerability-scanner` → `security_scan.py`
+- `webapp-testing` → `playwright_runner.py`
+
+---
+
 ## ⚙️ GSD Commands (Get Shit Done)
 
 | Skill | Versão | Descrição | Trigger |
@@ -200,8 +277,16 @@ skill(name="nome-da-skill")
 - [x] web-artifacts-builder
 - [x] xlsx
 - [x] templates (Context Engineering)
+- [x] 38 skills de marketing (coreyhaines31/marketingskills)
+- [x] 37 skills de dev/design (claude/shared)
 
-### ✅ Instalado em IDEs
+### ✅ Antigravity Kit Instalado (`~/.agencia-ai/antigravity-kit/`)
+- [x] 20 agentes especializados
+- [x] 11 workflows (slash commands)
+- [x] UI/UX Pro Max completo (dados CSV + scripts Python)
+- [x] 4 scripts Python de validação
+
+### ✅ Instalado em IDEs (82+ skills cada)
 - [x] Claude Code (`~/.claude/skills/`)
 - [x] OpenCode (`~/.opencode/skills/`)
 - [x] Antigravity (`~/.gemini/antigravity/skills/`)
@@ -235,12 +320,14 @@ agencia-ai version
 
 ## 📝 Notas
 
-- **Total estimado de skills:** 160+ (incluindo GSD commands)
+- **Total estimado de skills:** 200+ (incluindo GSD commands + agentes)
 - **Skills core:** 6 (repo principal)
 - **Skills Anthropic:** 7 (instaladas globalmente)
-- **Skills marketing:** 30+
-- **Skills dev/design:** 30+
+- **Skills marketing:** 38 (coreyhaines31)
+- **Skills dev/design:** 37+ (claude/shared)
 - **Skills GSD:** 60+
+- **Agentes:** 20 (Antigravity Kit)
+- **Workflows:** 11 (Antigravity Kit)
 
 **Para adicionar novas skills:**
 1. Criar diretório `nome-da-skill/SKILL.md`
@@ -249,4 +336,4 @@ agencia-ai version
 
 ---
 
-*Agencia AI Adaptável — SKILL-REGISTRY v1.0*
+*Agencia AI Adaptável — SKILL-REGISTRY v2.0*

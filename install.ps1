@@ -107,6 +107,46 @@ try {
     Write-Host "  ⚠️  Marketing skills não disponível (offline?)" -ForegroundColor Yellow
 }
 
+# ── Instalar Antigravity Kit ──
+Write-Host ""
+Write-Host "📦 Instalando Antigravity Kit..." -ForegroundColor Blue
+
+try {
+    $agKitTmp = "$env:TEMP\antigravity-kit-install"
+    if (Test-Path $agKitTmp) { Remove-Item -Recurse -Force $agKitTmp }
+    git clone --depth 1 "https://github.com/vudovn/antigravity-kit.git" $agKitTmp 2>$null
+    if (Test-Path "$agKitTmp\.agent") {
+        $agKitDest = "$INSTALL_DIR\antigravity-kit"
+        if (Test-Path $agKitDest) { Remove-Item -Recurse -Force $agKitDest }
+        New-Item -ItemType Directory -Path $agKitDest -Force | Out-Null
+        
+        # Copiar agentes
+        robocopy "$agKitTmp\.agent\agents" "$agKitDest\agents" /E /NFL /NDL /NJH /NJS | Out-Null
+        $agentCount = (Get-ChildItem "$agKitDest\agents" -File -ErrorAction SilentlyContinue).Count
+        Write-Host "  ✅ $agentCount agentes" -ForegroundColor Green
+        
+        # Copiar workflows
+        robocopy "$agKitTmp\.agent\workflows" "$agKitDest\workflows" /E /NFL /NDL /NJH /NJS | Out-Null
+        $workflowCount = (Get-ChildItem "$agKitDest\workflows" -File -ErrorAction SilentlyContinue).Count
+        Write-Host "  ✅ $workflowCount workflows" -ForegroundColor Green
+        
+        # Copiar shared (UI/UX Pro Max)
+        robocopy "$agKitTmp\.agent\.shared" "$agKitDest\shared" /E /NFL /NDL /NJH /NJS | Out-Null
+        Write-Host "  ✅ UI/UX Pro Max completo" -ForegroundColor Green
+        
+        # Copiar scripts
+        robocopy "$agKitTmp\.agent\scripts" "$agKitDest\scripts" /E /NFL /NDL /NJH /NJS | Out-Null
+        Write-Host "  ✅ Scripts Python" -ForegroundColor Green
+        
+        # Copiar configs
+        Copy-Item "$agKitTmp\.agent\ARCHITECTURE.md" "$agKitDest\ARCHITECTURE.md" -ErrorAction SilentlyContinue
+        Copy-Item "$agKitTmp\.agent\mcp_config.json" "$agKitDest\mcp_config.json" -ErrorAction SilentlyContinue
+        Write-Host "  ✅ Configs" -ForegroundColor Green
+    }
+} catch {
+    Write-Host "  ⚠️  Antigravity Kit não disponível (offline?)" -ForegroundColor Yellow
+}
+
 # ── Criar cópias por IDE (Windows não suporta symlink bem) ──
 function Install-ForIde {
     param($idePath, $ideName)
