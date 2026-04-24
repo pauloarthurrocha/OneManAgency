@@ -71,7 +71,7 @@ Antes de detectar fase, verifique integridade do Context Engineering:
 | `.agent/rules/PROJECT.md` | Avisar: *"Fonte canônica não existe. Execute `skill(name='client-onboarding')` para preencher."* |
 | `.planning/STATE.md` | Criar a partir do template |
 | `.planning/discovery-notes.md` | Criar a partir do template |
-| `.planning/PIPELINE.md` | **Delegar para `client-onboarding`** — não tente adivinhar as fases |
+| `.planning/PIPELINE.md` | **Delegar para `client-onboarding`**: execute `skill(name="client-onboarding")` — não tente adivinhar as fases |
 
 Se tudo OK → prosseguir para Step 3 (Detecção de Fase).
 

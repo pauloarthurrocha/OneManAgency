@@ -37,8 +37,17 @@ if [ -d "$INSTALL_DIR/.git" ]; then
   git pull --ff-only
 else
   echo "📦 Clonando repositório..."
+  # Guarda contra path vazio ou perigoso
+  if [ -z "$INSTALL_DIR" ] || [ "$INSTALL_DIR" = "/" ] || [ "$INSTALL_DIR" = "$HOME" ]; then
+    echo "❌ Path de instalação inválido: '$INSTALL_DIR'"
+    exit 1
+  fi
   rm -rf "$INSTALL_DIR"
   git clone --depth 1 "$REPO_URL" "$INSTALL_DIR"
+  if [ ! -d "$INSTALL_DIR/.git" ]; then
+    echo "❌ Falha ao clonar repositório. Verifique sua conexão."
+    exit 1
+  fi
 fi
 
 # ── Instalar skills globais ──
@@ -172,7 +181,13 @@ cmd_update() {
   for skill in "$AGENCIA_HOME"/*; do
     if [ -d "$skill" ] && [ -f "$skill/SKILL.md" ]; then
       local name=$(basename "$skill")
-      rm -rf "$SKILLS_DIR/$name"
+      local skill_dest="$SKILLS_DIR/$name"
+      # Guarda contra path vazio
+      if [ -z "$skill_dest" ] || [ "$skill_dest" = "/" ] || [ "$skill_dest" = "$HOME" ]; then
+        echo "⚠️  Pulando skill com path inválido: $name"
+        continue
+      fi
+      rm -rf "$skill_dest"
       cp -r "$skill" "$SKILLS_DIR/"
       echo "  ✅ $name"
     fi

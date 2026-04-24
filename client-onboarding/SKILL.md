@@ -141,7 +141,9 @@ Preencher os placeholders `{{...}}` do template já existente. Obrigatórios:
 
 #### C) `.planning/PIPELINE.md` — **O Mapa Dinâmico**
 
-Usar um dos 6 playbooks abaixo como ponto de partida, e **customizar** para o caso específico. Se nenhum encaixa, compor à mão seguindo os princípios.
+**Opção 1 (Recomendada):** Invocar `skill(name="pipeline-generator")` passando o `BRIEFING.md` como contexto. O gerador monta o PIPELINE automaticamente com playbooks completos, critérios de aceite e Shift-Left Deploy.
+
+**Opção 2 (Manual):** Usar um dos 6 playbooks abaixo como ponto de partida e customizar para o caso específico.
 
 ```markdown
 # PIPELINE.md — [NOME_DO_PROJETO]

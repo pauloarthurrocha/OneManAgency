@@ -439,6 +439,12 @@ cp "$AGENCIA_TEMPLATES/STATE.md.template" ./.planning/STATE.md
 
 # 4. .planning/discovery-notes.md — Memória dinâmica
 cp "$AGENCIA_TEMPLATES/discovery-notes.md.template" ./.planning/discovery-notes.md
+
+# 5. .planning/CHANGELOG_LLM.md — Changelog para IAs
+cp "$AGENCIA_TEMPLATES/CHANGELOG_LLM.md.template" ./.planning/CHANGELOG_LLM.md
+
+# 6. .planning/CONTEXT_SNIPPET.md — Snippet para IAs externas
+cp "$AGENCIA_TEMPLATES/CONTEXT_SNIPPET.md.template" ./.planning/CONTEXT_SNIPPET.md
 ```
 
 **Preencher placeholders:**
@@ -446,6 +452,8 @@ cp "$AGENCIA_TEMPLATES/discovery-notes.md.template" ./.planning/discovery-notes.
 - `.agent/rules/PROJECT.md` → preencher TODOS os `{{...}}` durante o onboarding
 - `.planning/STATE.md` → inicializar com dados do projeto
 - `.planning/discovery-notes.md` → deixar vazio (será preenchido durante o projeto)
+- `.planning/CHANGELOG_LLM.md` → deixar vazio (será preenchido automaticamente)
+- `.planning/CONTEXT_SNIPPET.md` → preencher stack + estado (atualizar a cada sessão)
 
 > 💡 **Dica:** Se os templates não estiverem disponíveis localmente, usar `skill(name="agencia-init")` que contém os templates embutidos.
 
@@ -471,6 +479,9 @@ sed -i "s/{{PROJECT_NAME}}/$PROJECT_NAME/g" .planning/STATE.md
 sed -i "s/{{DATE}}/$(date +%Y-%m-%d)/g" .planning/STATE.md
 sed -i "s/{{CURRENT_PHASE}}/Onboarding (aguardando client-onboarding)/g" .planning/STATE.md
 sed -i "s/{{DATE}}/$(date +%Y-%m-%d)/g" .planning/discovery-notes.md
+sed -i "s/{{DATE}}/$(date +%Y-%m-%d)/g" .planning/CHANGELOG_LLM.md
+sed -i "s/{{PROJECT_NAME}}/$PROJECT_NAME/g" .planning/CONTEXT_SNIPPET.md
+sed -i "s/{{DATE}}/$(date +%Y-%m-%d)/g" .planning/CONTEXT_SNIPPET.md
 ```
 
 ### Step 11.5: Criar PIPELINE.md vazio (placeholder)
@@ -541,6 +552,8 @@ Confirmar que todos os arquivos de contexto foram criados:
 - ✅ `.agent/rules/PROJECT.md` — Fonte canônica (aguardando preenchimento no onboarding)
 - ✅ `.planning/STATE.md` — Estado inicial
 - ✅ `.planning/discovery-notes.md` — Memória vazia
+- ✅ `.planning/CHANGELOG_LLM.md` — Changelog para IAs
+- ✅ `.planning/CONTEXT_SNIPPET.md` — Snippet para IAs externas
 - ✅ `.planning/PIPELINE.md` — Placeholder (será preenchido pelo client-onboarding)
 - ✅ `.agents/skills/` — Skills da agencia (cross-IDE)
 - ✅ `.claude/skills/`, `.codex/skills/`, `.gemini/antigravity/skills/` — Cópias por IDE
@@ -571,6 +584,8 @@ Estrutura criada:
   📁 .agent/rules/PROJECT.md — Fonte canônica (vazia, preencher no onboarding)
   📁 .planning/STATE.md — Estado inicial
   📁 .planning/discovery-notes.md — Memória dinâmica (vazia)
+  📁 .planning/CHANGELOG_LLM.md — Changelog para IAs
+  📁 .planning/CONTEXT_SNIPPET.md — Snippet para IAs externas
   📁 .planning/PIPELINE.md — Placeholder (será montado pelo client-onboarding)
   📁 .agents/skills/ — Skills da agencia (cross-IDE, COMMITADAS)
   📁 .claude/skills/, .codex/skills/, .gemini/antigravity/skills/ — Cópias por IDE

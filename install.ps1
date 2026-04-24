@@ -40,10 +40,19 @@ if (Test-Path "$INSTALL_DIR\.git") {
     git pull --ff-only
 } else {
     Write-Host "📦 Clonando repositório..." -ForegroundColor Blue
+    # Guarda contra path vazio ou perigoso
+    if ([string]::IsNullOrEmpty($INSTALL_DIR) -or $INSTALL_DIR -eq "C:\\" -or $INSTALL_DIR -eq $env:USERPROFILE) {
+        Write-Host "❌ Path de instalação inválido: '$INSTALL_DIR'" -ForegroundColor Red
+        exit 1
+    }
     if (Test-Path $INSTALL_DIR) {
         Remove-Item -Recurse -Force $INSTALL_DIR
     }
     git clone --depth 1 $REPO_URL $INSTALL_DIR
+    if (!(Test-Path "$INSTALL_DIR\.git")) {
+        Write-Host "❌ Falha ao clonar repositório. Verifique sua conexão." -ForegroundColor Red
+        exit 1
+    }
 }
 
 # ── Instalar skills globais ──
@@ -64,7 +73,13 @@ foreach ($skill in $coreSkills) {
 # Copiar templates
 if (Test-Path "$INSTALL_DIR\templates") {
     $templatesDest = "$GLOBAL_SKILLS_DIR\templates"
-    if (Test-Path $templatesDest) { Remove-Item -Recurse -Force $templatesDest }
+    if (Test-Path $templatesDest) {
+        if ([string]::IsNullOrEmpty($templatesDest) -or $templatesDest -eq "C:\\" -or $templatesDest -eq $env:USERPROFILE) {
+            Write-Host "⚠️  Pulando templates com path inválido" -ForegroundColor Yellow
+        } else {
+            Remove-Item -Recurse -Force $templatesDest
+        }
+    }
     Copy-Item -Recurse "$INSTALL_DIR\templates" $templatesDest
     Write-Host "  ✅ templates" -ForegroundColor Green
 }
@@ -78,7 +93,11 @@ function Install-ForIde {
         New-Item -ItemType Directory -Force -Path $skillsPath | Out-Null
         
         # Limpar e recriar
-        Get-ChildItem $skillsPath -Directory | Remove-Item -Recurse -Force
+        if ([string]::IsNullOrEmpty($skillsPath) -or $skillsPath -eq "C:\\" -or $skillsPath -eq $env:USERPROFILE) {
+            Write-Host "⚠️  Pulando $ideName com path inválido" -ForegroundColor Yellow
+            return
+        }
+        Get-ChildItem $skillsPath -Directory -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force
         
         foreach ($skillDir in Get-ChildItem $GLOBAL_SKILLS_DIR -Directory) {
             $target = "$skillsPath\$($skillDir.Name)"
@@ -101,46 +120,46 @@ if (!(Test-Path $PROFILE_DIR)) {
     New-Item -ItemType Directory -Force -Path $PROFILE_DIR | Out-Null
 }
 
-$agenciaFunction = @"
+$agenciaFunction = @'
 # Agencia AI Adaptável — Funções globais
-`$AGENCIA_HOME = `$env:AGENCIA_HOME
-if (!`$AGENCIA_HOME) { `$AGENCIA_HOME = "$INSTALL_DIR" }
-`$SKILLS_DIR = "`$AGENCIA_HOME\skills"
+$AGENCIA_HOME = $env:AGENCIA_HOME
+if (!$AGENCIA_HOME) { $AGENCIA_HOME = "' + $INSTALL_DIR + '" }
+$SKILLS_DIR = "$AGENCIA_HOME\skills"
 
 function agencia-ai {
-    param([Parameter(ValueFromRemainingArguments=`$true)] `$args)
+    param([Parameter(ValueFromRemainingArguments=$true)] $args)
     
-    `$cmd = `$args[0]
-    `$arg1 = `$args[1]
+    $cmd = $args[0]
+    $arg1 = $args[1]
     
-    switch (`$cmd) {
+    switch ($cmd) {
         "init" {
-            `$target = if (`$arg1) { `$arg1 } else { "." }
-            Write-Host "🏗️  Inicializando projeto em `$target..." -ForegroundColor Cyan
+            $target = if ($arg1) { $arg1 } else { "." }
+            Write-Host "🏗️  Inicializando projeto em $target..." -ForegroundColor Cyan
             Write-Host "   Execute no IDE: skill(name='agencia-init')" -ForegroundColor Gray
-            Write-Host "   Skills disponíveis em: `$SKILLS_DIR" -ForegroundColor Gray
+            Write-Host "   Skills disponíveis em: $SKILLS_DIR" -ForegroundColor Gray
         }
         "doctor" {
             Write-Host "🔍 Diagnóstico da Agencia AI" -ForegroundColor Cyan
-            Write-Host "Home: `$AGENCIA_HOME" -ForegroundColor Gray
+            Write-Host "Home: $AGENCIA_HOME" -ForegroundColor Gray
             Write-Host "Skills:" -ForegroundColor Gray
-            if (Test-Path `$SKILLS_DIR) {
-                Get-ChildItem `$SKILLS_DIR -Directory | ForEach-Object { Write-Host "  ✅ `$(`$_.Name)" -ForegroundColor Green }
+            if (Test-Path $SKILLS_DIR) {
+                Get-ChildItem $SKILLS_DIR -Directory | ForEach-Object { Write-Host "  ✅ $($_.Name)" -ForegroundColor Green }
             }
         }
         "update" {
             Write-Host "🔄 Atualizando..." -ForegroundColor Cyan
-            Set-Location `$AGENCIA_HOME
+            Set-Location $AGENCIA_HOME
             git pull --ff-only
             Write-Host "✅ Atualizado!" -ForegroundColor Green
         }
-        "version" { Write-Host "Agencia AI v$VERSION" }
+        "version" { Write-Host "Agencia AI v' + $VERSION + '" }
         default {
             Write-Host "Uso: agencia-ai <init|doctor|update|version>" -ForegroundColor Yellow
         }
     }
 }
-"@
+'@
 
 # Adicionar ao profile se não existir
 if (!(Select-String -Path $PROFILE -Pattern "function agencia-ai" -ErrorAction SilentlyContinue)) {

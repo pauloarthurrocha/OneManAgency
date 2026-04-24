@@ -3,13 +3,13 @@
 
 $ErrorActionPreference = "Stop"
 $source = $PSScriptRoot
-$ssot = "$env:USERPROFILE\.claude\shared\agencia-adaptavel\skills"
+$ssot = "$env:USERPROFILE\.agencia-ai\skills"
 $claude = "$env:USERPROFILE\.claude\skills"
 
 Write-Host ""
 Write-Host "Sincronizando skills da agencia..." -ForegroundColor Cyan
 
-$skills = @("agencia-init", "agencia-executor")
+$skills = @("agencia-init", "agencia-executor", "client-onboarding", "pipeline-generator", "agencia-verify-work")
 
 foreach ($skill in $skills) {
     $sourceFile = Join-Path $source "$skill\SKILL.md"

@@ -151,14 +151,76 @@ Um único arquivo: `.planning/PIPELINE.md`
 ```markdown
 - [ ] Fase 1: Scaffold Next.js + Vercel config
       Skills: landing-page-scaffold, deployment-procedures
-      Output: package.json, next.config.js, vercel.json
+      Output: package.json, next.config.js, vercel.json, .nvmrc
       Shift-Left: sim
       Critérios de aceite:
         - npm run build passa
         - Deploy preview Vercel funcionando
-        - Node version travada no package.json
+        - Node version travada no .nvmrc e package.json
 
-[... demais fases similares ao Playbook A, ajustadas para React ...]
+- [ ] Fase 2: Research rápido (concorrentes, tom de voz, referências visuais)
+      Skills: niche-research, competitor-intel
+      Output: .planning/RESEARCH.md
+      Shift-Left: não
+      Critérios de aceite:
+        - 3+ concorrentes analisados
+        - Tom de voz identificado
+        - 5+ referências visuais coletadas
+
+- [ ] Fase 3: Copy deck completo (headlines, seções, CTAs)
+      Skills: copywriting, marketing-psychology, page-cro
+      Output: .planning/COPY_DECK.md
+      Shift-Left: não
+      Critérios de aceite:
+        - Hero com headline + subheadline + CTA principal
+        - Mínimo 5 seções (problema, solução, benefícios, prova, CTA)
+        - Objeções tratadas em FAQ ou seção dedicada
+
+- [ ] Fase 4: Design system (cores, tipografia, tokens)
+      Skills: psychology-color-picker, frontend-design
+      Output: .planning/DESIGN_SYSTEM.md + app/tokens.css ou tailwind.config.js
+      Shift-Left: não
+      Critérios de aceite:
+        - Paleta coerente com psicologia do público-alvo
+        - Tipografia par definida (display + body)
+        - Tokens exportados em CSS custom properties ou Tailwind theme extend
+
+- [ ] Fase 5: UI spec (estrutura e wireframe em ASCII/markdown)
+      Skills: gsd-ui-phase, web-design-guidelines
+      Output: .planning/UI-SPEC.md
+      Shift-Left: não
+      Critérios de aceite:
+        - Ordem das seções definida
+        - Hierarquia visual clara
+        - Considerações mobile explicitadas
+
+- [ ] Fase 6: Implementação Next.js responsiva
+      Skills: nextjs-react-expert, tailwind-patterns, web-design-guidelines
+      Output: app/page.tsx, app/layout.tsx, componentes em app/sections/
+      Shift-Left: não
+      Critérios de aceite:
+        - Lighthouse Mobile ≥ 85 em Performance
+        - 0 erros console
+        - Responsivo 320px-1920px sem quebra
+        - Componentes reutilizáveis (Button, Section, Hero, etc.)
+
+- [ ] Fase 7: SEO + analytics + schema
+      Skills: seo-audit, schema-markup, ai-seo, analytics-tracking
+      Output: metadata em layout.tsx, JSON-LD component, Open Graph, Pixel/GA4
+      Shift-Left: não
+      Critérios de aceite:
+        - title/description < 60/160 chars
+        - JSON-LD validado em validator.schema.org
+        - Pixel/GA4 disparando em sandbox
+
+- [ ] Fase 8: QA final + deploy
+      Skills: gsd-ui-review, agencia-verify-work
+      Output: docs/entrega/checklist.md
+      Shift-Left: não
+      Critérios de aceite:
+        - Checklist de QA preenchido (20+ itens)
+        - Deploy em produção funcional
+        - Monitoramento de erros ativo (Sentry ou equivalente opcional)
 ```
 
 ### Playbook C — SaaS Completo (Next.js + Auth + DB)
