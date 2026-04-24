@@ -23,6 +23,7 @@ Sistema de **agent skills** para execução de projetos de software via IA. Func
 | `pipeline-generator` | v1.0 | Gera PIPELINE.md a partir do briefing. Contém 9 playbooks (LP estática, LP Next.js, SaaS, Python, Low-Ticket, etc.) |
 | `agencia-executor` | v3.1 | Orquestrador dinâmico. Lê PIPELINE.md, executa próxima fase pendente, carrega skills corretas, aplica Quality Gate |
 | `agencia-verify-work` | v1.0 | Quality Gate pós-fase. Valida outputs contra critérios de aceite. Gera `VERIFICATION_REPORT.md` (PASS/WARNING/FAIL) |
+| `skill-creator` | v1.0 | Criação e otimização de skills. Wizard interativo, A/B testing, evals, description optimizer. Baseado no Anthropic skill-creator |
 
 ---
 
@@ -144,6 +145,7 @@ agencia-ai-adaptavel-skills/
 ├── client-onboarding/         # Arquiteto socrático
 ├── pipeline-generator/        # Gerador de PIPELINE.md
 ├── agencia-verify-work/       # Quality Gate
+├── skill-creator/             # Criação/otimização de skills (Anthropic-based)
 ├── templates/                 # Templates de Context Engineering
 │   └── context-engineering/
 │       ├── AGENTS.md.template

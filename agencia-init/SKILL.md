@@ -260,6 +260,7 @@ ln -sf ../../../.agents/skills/* .gemini/antigravity/skills/ 2>/dev/null || cp -
 - `client-onboarding/` — Arquiteto socrático v3.1 (gera PIPELINE.md)
 - `pipeline-generator/` — Playbooks por tipo de projeto (auxiliar do onboarding)
 - `agencia-verify-work/` — Quality Gate pós-fase
+- `skill-creator/` — Criação e otimização de novas skills (baseado no Anthropic skill-creator)
 
 **Skills auxiliares (opcionais — adicionar conforme domínio do projeto):**
 - `niche-research/`, `competitor-intel/`, `web-scraper-intel/` — research
@@ -271,6 +272,8 @@ ln -sf ../../../.agents/skills/* .gemini/antigravity/skills/ 2>/dev/null || cp -
 - `deployment-procedures/`, `server-management/` — deploy
 - `seo-audit/`, `schema-markup/`, `ai-seo/` — SEO
 - `gsd-ui-phase/`, `gsd-ui-review/`, `gsd-code-review/` — QA
+- `docx/`, `pdf/`, `pptx/`, `xlsx/` — geração de documentos (Anthropic skills)
+- `brand-guidelines/`, `web-artifacts-builder/`, `doc-coauthoring/` — design e conteúdo (Anthropic skills)
 
 ### Step 4: Criar CLAUDE.md
 
