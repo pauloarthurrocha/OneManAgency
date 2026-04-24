@@ -163,7 +163,7 @@ skill(name="nome-da-skill")
 
 ## 🤖 Agentes Especializados (Agência AI Adaptável v3.2)
 
-> Local: `.agents/agents/` (no repo da agência, commitado)
+> Local: `src/agents/` (no repo da agência, commitado)
 > Uso: O `agencia-executor` v3.2 invoca agentes por fase via metadata `Agent:`
 > File Type Ownership: Cada agente tem prioridade de edição sobre seus tipos de arquivo
 
@@ -195,7 +195,7 @@ skill(name="nome-da-skill")
       Agents: frontend-specialist, backend-specialist, database-architect
 ```
 
-**Fonte:** `.agents/agents/` (v3.2.0)
+**Fonte:** `src/agents/` (v3.2.0)
 
 ---
 

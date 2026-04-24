@@ -54,20 +54,41 @@ fi
 echo "📂 Instalando skills em $GLOBAL_SKILLS_DIR..."
 mkdir -p "$GLOBAL_SKILLS_DIR"
 
-# Copiar skills core
+# Copiar skills core (v3.0: src/skills/)
 for skill in agencia-init agencia-executor client-onboarding pipeline-generator agencia-verify-work skill-creator; do
-  if [ -d "$INSTALL_DIR/$skill" ]; then
+  if [ -d "$INSTALL_DIR/src/skills/$skill" ]; then
     rm -rf "$GLOBAL_SKILLS_DIR/$skill"
-    cp -r "$INSTALL_DIR/$skill" "$GLOBAL_SKILLS_DIR/"
+    cp -r "$INSTALL_DIR/src/skills/$skill" "$GLOBAL_SKILLS_DIR/"
     echo "  ✅ $skill"
   fi
 done
 
-# Copiar templates
-if [ -d "$INSTALL_DIR/templates" ]; then
-  rm -rf "$GLOBAL_SKILLS_DIR/templates"
-  cp -r "$INSTALL_DIR/templates" "$GLOBAL_SKILLS_DIR/"
+# Copiar templates (v3.0: src/templates/)
+if [ -d "$INSTALL_DIR/src/templates" ]; then
+  rm -rf "$INSTALL_DIR/templates"
+  cp -r "$INSTALL_DIR/src/templates" "$INSTALL_DIR/"
   echo "  ✅ templates"
+fi
+
+# Copiar agents (v3.0: src/agents/)
+if [ -d "$INSTALL_DIR/src/agents" ]; then
+  rm -rf "$INSTALL_DIR/agents"
+  cp -r "$INSTALL_DIR/src/agents" "$INSTALL_DIR/"
+  echo "  ✅ agents"
+fi
+
+# Copiar presets (v3.0: src/presets/)
+if [ -d "$INSTALL_DIR/src/presets" ]; then
+  rm -rf "$INSTALL_DIR/presets"
+  cp -r "$INSTALL_DIR/src/presets" "$INSTALL_DIR/"
+  echo "  ✅ presets"
+fi
+
+# Copiar scripts (v3.0: src/scripts/)
+if [ -d "$INSTALL_DIR/src/scripts" ]; then
+  rm -rf "$INSTALL_DIR/scripts"
+  cp -r "$INSTALL_DIR/src/scripts" "$INSTALL_DIR/"
+  echo "  ✅ scripts"
 fi
 
 # ── Instalar skills externas (Marketing) ──

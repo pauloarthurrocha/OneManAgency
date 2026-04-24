@@ -3,7 +3,7 @@
 > **Repo:** github.com/pauloarthurrocha/agencia-ai-adaptavel-skills
 > **Versão:** 3.2.0 (Agentes Especializados + Orquestração Multi-Agent + Validação Automatizada)
 > **Formato:** Agent Skills (SKILL.md)
-> **NPM:** `npm install -g agencia-ai-adaptavel`
+> **NPM (GitHub Packages):** `npm install -g @pauloarthurrocha/agencia-ai-adaptavel --registry=https://npm.pkg.github.com`
 
 ---
 
@@ -57,12 +57,12 @@ npx @pauloarthurrocha/agencia-ai-adaptavel init --registry=https://npm.pkg.githu
 
 **Linux/macOS:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/pauloarthurrocha/agencia-ai-adaptavel-skills/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/pauloarthurrocha/agencia-ai-adaptavel-skills/main/install/install.sh | bash
 ```
 
 **Windows (PowerShell admin):**
 ```powershell
-irm https://raw.githubusercontent.com/pauloarthurrocha/agencia-ai-adaptavel-skills/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/pauloarthurrocha/agencia-ai-adaptavel-skills/main/install/install.ps1 | iex
 ```
 
 ### Opção 3 — Git Clone + npm link
@@ -78,10 +78,17 @@ cd ~/.agencia-ai && npm link
 
 ```bash
 # === TERMINAL (fora do IDE) ===
-# 1. Instalar CLI globalmente
-npm install -g agencia-ai-adaptavel
+# 1. Autenticar no GitHub Packages (uma vez por maquina)
+#    Gerar token em: github.com > Settings > Developer settings > Tokens (classic)
+#    Permissoes: read:packages
+npm login --registry=https://npm.pkg.github.com
 
-# 2. Instalar recursos do sistema em ~/.agencia-ai/
+# 2. Instalar CLI globalmente (pacote privado no GitHub Packages)
+npm install -g @pauloarthurrocha/agencia-ai-adaptavel --registry=https://npm.pkg.github.com
+
+# 3. (Opcional) Re-propagar skills para IDEs instaladas depois
+#    O postinstall ja faz isso automaticamente. Rode manualmente se
+#    instalar uma IDE nova (Cursor, Codex...) DEPOIS do npm install.
 agencia-ai install-global
 
 # === IDE (dentro do projeto) ===
@@ -125,8 +132,17 @@ skill(name="agencia-executor")
 ┌─────────────────────────────────────────────────────────────────┐
 │  PASSO 0: Terminal — Instalar sistema globalmente               │
 │                                                                  │
-│  npm install -g agencia-ai-adaptavel                            │
-│  agencia-ai install-global   # → ~/.agencia-ai/                 │
+│  npm login --registry=https://npm.pkg.github.com                │
+│  npm install -g @pauloarthurrocha/agencia-ai-adaptavel \        │
+│       --registry=https://npm.pkg.github.com                     │
+│                                                                  │
+│  O postinstall popula automaticamente:                          │
+│   • ~/.agencia-ai/        (SSoT global)                         │
+│   • ~/.claude/skills/     (se Claude Code detectado)            │
+│   • ~/.cursor/skills/     (se Cursor detectado)                 │
+│   • ~/.codex/skills/      (se Codex detectado)                  │
+│   • ~/.opencode/skills/   (se OpenCode detectado)               │
+│   • ~/.gemini/antigravity/skills/ (se Antigravity detectado)    │
 └─────────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────────┐
@@ -207,32 +223,42 @@ skill(name="client-onboarding")   # Entrevista e gera PIPELINE.md
 
 ```
 agencia-ai-adaptavel-skills/
+├── README.md
+├── LICENSE
+├── package.json
+├── .npmrc
 ├── bin/
-│   └── agencia-ai.js          # CLI global (install-global, update, doctor)
-├── agencia-init/              # Skill de inicialização de projetos
-├── agencia-executor/          # Orquestrador dinâmico (v3.2 — multi-agent)
-├── client-onboarding/         # Arquiteto socrático (v3.2 — questionários por playbook)
-├── pipeline-generator/        # Gerador de PIPELINE.md (9 playbooks + PRDs)
-├── agencia-verify-work/       # Quality Gate (v2.0 — scripts Python)
-├── skill-creator/             # Criação/otimização de skills (Anthropic-based)
-├── .agents/agents/            # 10 Agentes especializados (orchestrator, frontend, backend...)
-├── presets/                   # 4 Presets estéticos (tech-organico, luxo-noturno...)
-├── scripts/                   # Scripts Python de validação (checklist.py, verify_all.py)
-├── templates/
-│   ├── context-engineering/   # Templates de Context Engineering
-│   │   ├── AGENTS.md.template
-│   │   ├── PROJECT.md.template
-│   │   ├── STATE.md.template
-│   │   ├── discovery-notes.md.template
-│   │   ├── CHANGELOG_LLM.md.template
-│   │   └── CONTEXT_SNIPPET.md.template
-│   └── lp-components/         # 7 Templates de componentes LP
-├── install.sh                 # Instalador Linux/macOS
-├── install.ps1                # Instalador Windows
-├── postinstall.js             # Instalação automática após npm install
-├── package.json               # Pacote npm (@pauloarthurrocha/agencia-ai-adaptavel)
-├── .npmrc                     # Registry GitHub Packages
-└── README.md                  # Este arquivo
+│   └── agencia-ai.js                   # CLI
+├── src/                                # TUDO que é distribuído
+│   ├── skills/
+│   │   ├── agencia-init/SKILL.md
+│   │   ├── agencia-executor/SKILL.md
+│   │   ├── client-onboarding/SKILL.md
+│   │   ├── pipeline-generator/SKILL.md
+│   │   ├── agencia-verify-work/SKILL.md
+│   │   └── skill-creator/SKILL.md
+│   ├── agents/
+│   │   ├── orchestrator.md
+│   │   └── ... (10 agentes)
+│   ├── presets/
+│   │   └── ... (4 presets)
+│   ├── scripts/                        # SÓ scripts distribuídos
+│   │   ├── checklist.py
+│   │   └── verify_all.py
+│   └── templates/
+│       ├── context-engineering/
+│       ├── lp-components/
+│       └── skill/
+├── install/                            # Instaladores alternativos
+│   ├── install.sh
+│   └── install.ps1
+├── build/                              # Scripts de build/release
+│   ├── installer.js
+│   └── postinstall.js
+├── docs/
+│   ├── SKILL-REGISTRY.md
+│   └── ARCHITECTURE.md
+└── examples/                           # (opcional)
 ```
 
 ---
@@ -276,13 +302,13 @@ O instalador da Agência AI Adaptável foi projetado para ser **não-destrutivo*
 ## 📝 Changelog
 
 ### v3.2.0 — Agentes Especializados + Validação Automatizada
-- **10 Agentes Especializados** em `.agents/agents/` (frontend, backend, security, etc.)
+- **10 Agentes Especializados** em `src/agents/` (frontend, backend, security, etc.)
 - **Orquestração Multi-Agent** — execução paralela de fases complexas
 - **Scripts Python de Validação** — `checklist.py` (30s) e `verify_all.py` (3-5min)
 - **4 Presets Estéticos** — tech-organico, luxo-noturno, sinal-brutalista, clinica-vapor
 - **7 Templates de Componentes LP** — navbar, hero, features, filosofia, protocolo, planos, footer
 - **Questionários Socráticos por Playbook** — entrevistas específicas por tipo de projeto
-- **Instalação via NPM** — `npm install -g agencia-ai-adaptavel`
+- **Instalação via NPM** — `npm install -g @pauloarthurrocha/agencia-ai-adaptavel --registry=https://npm.pkg.github.com`
 
 ### v3.0.0 — Agência Neutra + Universal
 - `agencia-init` agora é neutro (não pressupõe LP/Next.js)

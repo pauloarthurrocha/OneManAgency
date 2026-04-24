@@ -8,9 +8,11 @@ $ErrorActionPreference = "Stop"
 $REPO_URL = "https://github.com/pauloarthurrocha/agencia-ai-adaptavel-skills.git"
 $INSTALL_DIR = "$env:USERPROFILE\.agencia-ai"
 $GLOBAL_SKILLS_DIR = "$INSTALL_DIR\skills"
-$VERSION = "3.0.0"
 
-Write-Host "🚀 Agencia AI Adaptável — Instalador v$VERSION" -ForegroundColor Cyan
+# Versao sera lida do package.json apos o clone. Placeholder inicial.
+$VERSION = "unknown"
+
+Write-Host "🚀 Agencia AI Adaptável — Instalador" -ForegroundColor Cyan
 Write-Host ""
 
 # ── Verificar dependências ──
@@ -55,13 +57,24 @@ if (Test-Path "$INSTALL_DIR\.git") {
     }
 }
 
+# Ler versao do package.json (fonte unica de verdade)
+if (Test-Path "$INSTALL_DIR\package.json") {
+    try {
+        $pkg = Get-Content "$INSTALL_DIR\package.json" -Raw | ConvertFrom-Json
+        $VERSION = $pkg.version
+        Write-Host "✅ Versão detectada: $VERSION" -ForegroundColor Green
+    } catch {
+        Write-Host "⚠️ Falha ao ler versão do package.json; usando 'unknown'" -ForegroundColor Yellow
+    }
+}
+
 # ── Instalar skills globais ──
 Write-Host "📂 Instalando skills em $GLOBAL_SKILLS_DIR..." -ForegroundColor Blue
 New-Item -ItemType Directory -Force -Path $GLOBAL_SKILLS_DIR | Out-Null
 
 $coreSkills = @("agencia-init", "agencia-executor", "client-onboarding", "pipeline-generator", "agencia-verify-work", "skill-creator")
 foreach ($skill in $coreSkills) {
-    $source = "$INSTALL_DIR\$skill"
+    $source = "$INSTALL_DIR\src\skills\$skill"
     $dest = "$GLOBAL_SKILLS_DIR\$skill"
     if (Test-Path $source) {
         if (Test-Path $dest) { Remove-Item -Recurse -Force $dest }
@@ -70,9 +83,9 @@ foreach ($skill in $coreSkills) {
     }
 }
 
-# Copiar templates
-if (Test-Path "$INSTALL_DIR\templates") {
-    $templatesDest = "$GLOBAL_SKILLS_DIR\templates"
+# Copiar templates (src/templates/)
+if (Test-Path "$INSTALL_DIR\src\templates") {
+    $templatesDest = "$INSTALL_DIR\templates"
     if (Test-Path $templatesDest) {
         if ([string]::IsNullOrEmpty($templatesDest) -or $templatesDest -eq "C:\\" -or $templatesDest -eq $env:USERPROFILE) {
             Write-Host "⚠️  Pulando templates com path inválido" -ForegroundColor Yellow
@@ -80,8 +93,21 @@ if (Test-Path "$INSTALL_DIR\templates") {
             Remove-Item -Recurse -Force $templatesDest
         }
     }
-    Copy-Item -Recurse "$INSTALL_DIR\templates" $templatesDest
+    Copy-Item -Recurse "$INSTALL_DIR\src\templates" $templatesDest
     Write-Host "  ✅ templates" -ForegroundColor Green
+}
+
+# Copiar agents, presets, scripts de src/
+$GLOBAL_DIR = "$INSTALL_DIR"
+$foldersToCopy = @("agents", "presets", "scripts")
+foreach ($folder in $foldersToCopy) {
+    $source = "$INSTALL_DIR\src\$folder"
+    $dest = "$GLOBAL_DIR\$folder"
+    if (Test-Path $source) {
+        if (Test-Path $dest) { Remove-Item -Recurse -Force $dest }
+        Copy-Item -Recurse $source $dest
+        Write-Host "  ✅ $folder" -ForegroundColor Green
+    }
 }
 
 # ── Instalar skills externas (Marketing, etc.) ──

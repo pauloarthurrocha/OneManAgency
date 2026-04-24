@@ -7,7 +7,7 @@
     "agencia-ai": "./bin/agencia-ai.js"
   },
   "scripts": {
-    "postinstall": "node scripts/postinstall.js",
+    "postinstall": "node build/postinstall.js",
     "publish:github": "npm publish --registry=https://npm.pkg.github.com"
   },
   "publishConfig": {
@@ -40,17 +40,10 @@
   },
   "files": [
     "bin/",
-    "scripts/",
-    "agencia-init/",
-    "agencia-executor/",
-    "client-onboarding/",
-    "pipeline-generator/",
-    "agencia-verify-work/",
-    "skill-creator/",
-    "templates/",
-    "presets/",
-    ".agents/",
+    "src/",
+    "build/",
+    "install/",
     "README.md",
-    "SKILL-REGISTRY.md"
+    "docs/SKILL-REGISTRY.md"
   ]
 }

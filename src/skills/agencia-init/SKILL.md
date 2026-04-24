@@ -315,15 +315,33 @@ ln -sf ../../../.agents/skills/* .gemini/antigravity/skills/ 2>/dev/null || cp -
 - `seo-audit/`, `schema-markup/`, `ai-seo/` — SEO
 - `gsd-ui-phase/`, `gsd-ui-review/`, `gsd-code-review/` — QA
 
-### Step 4: Criar CLAUDE.md
+### Step 4: Sincronizar arquivos de instrução por IDE
 
-Copiar `AGENTS.md` para `CLAUDE.md` (Claude Code nao le `AGENTS.md` nativamente):
+Cada IDE procura um arquivo diferente para ler o contexto do projeto. Criar cópias sincronizadas de `AGENTS.md` para todos os formatos suportados:
+
+| IDE | Arquivo lido automaticamente | Convenção |
+|---|---|---|
+| Claude Code | `CLAUDE.md` | legado específico da Anthropic |
+| Gemini / Antigravity | `GEMINI.md` | específico do Google |
+| Cursor | `.cursor/rules/project.mdc` (novo) ou `.cursorrules` (legado) | rules MDC |
+| Codex | `AGENTS.md` | padrão emergente [agents.md](https://agents.md) |
+| OpenCode | `AGENTS.md` | padrão emergente |
 
 ```bash
-# CLAUDE.md = copia exata de AGENTS.md
-# Criado no Step 6 (Arquivos de Contexto), aqui apenas garantir existencia
-# Se AGENTS.md mudar no futuro, atualizar CLAUDE.md tambem
+# AGENTS.md já foi criado no Step 9 como fonte única. Agora replicar:
+cp AGENTS.md CLAUDE.md                # Claude Code
+cp AGENTS.md GEMINI.md                # Gemini / Antigravity
+
+# Cursor usa .cursor/rules/*.mdc (recomendado) ou .cursorrules (legado)
+mkdir -p .cursor/rules
+cp AGENTS.md .cursor/rules/project.mdc
+
+# Codex e OpenCode já leem AGENTS.md nativamente — nada a fazer
 ```
+
+> ⚠️ **Regra de sincronização:** `AGENTS.md` é a fonte canônica. Se alterar algo, replicar em `CLAUDE.md`, `GEMINI.md` e `.cursor/rules/project.mdc` para evitar drift entre IDEs.
+
+> 💡 Em runtime, antes de gerar arquivos específicos por IDE, você pode checar quais IDEs estão instaladas e só gerar os arquivos relevantes — mas o custo de manter todos é baixo (arquivos pequenos, cópia idempotente) e garante que qualquer IDE que abrir o projeto funcione.
 
 > 💡 **Nota:** `CLAUDE.md` e lido automaticamente pelo Claude Code como contexto do projeto.
 
