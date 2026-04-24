@@ -1,0 +1,67 @@
+---
+name: {{skill-name}}
+description: {{one-line-description}}. Use when users want to {{trigger-action}}. Cross-IDE compatible (Claude Code, OpenCode, Antigravity, Codex, Cursor).
+metadata:
+  version: 0.1.0
+  changelog:
+    - v0.1.0: Initial creation
+  dependencies: []
+  aliases: []
+---
+
+# {{Skill Name}} — v0.1.0
+
+> **Role:** {{role-description}}
+> **Trigger:** {{trigger-phrases}}
+
+---
+
+## 🎯 When to Invoke
+
+| Trigger | Context |
+|---------|---------|
+| `{{trigger-1}}` | {{when-to-use-1}} |
+| `{{trigger-2}}` | {{when-to-use-2}} |
+
+---
+
+## 🧠 Protocol
+
+### Step 1: {{step-1-name}}
+
+{{step-1-instructions}}
+
+### Step 2: {{step-2-name}}
+
+{{step-2-instructions}}
+
+### Step 3: {{step-3-name}}
+
+{{step-3-instructions}}
+
+---
+
+## 📤 Output Format
+
+```
+{{expected-output-format}}
+```
+
+---
+
+## ⚠️ Rules
+
+- **NEVER** {{rule-1}}
+- **ALWAYS** {{rule-2}}
+- **CHECK** {{rule-3}}
+
+---
+
+## 🔗 Integration
+
+- **Upstream:** `{{upstream-skill}}`
+- **Downstream:** `{{downstream-skill}}`
+
+---
+
+*{{Skill Name}} v0.1.0 — {{one-line-summary}}*
