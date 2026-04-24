@@ -11,7 +11,7 @@ coverage/
 out/
 
 # Production
-build/
+# NOTE: build/ is intentionally removed from ignore — it contains distribution scripts (installer.js, postinstall.js), not build output.
 dist/
 
 # Misc

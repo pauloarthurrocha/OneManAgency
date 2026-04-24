@@ -106,6 +106,26 @@ function loadCopyHelper() {
   return { copyDir };
 }
 
+// ─── init ──────────────────────────────────────────────────────────
+function cmdInit(targetDir) {
+  const dir = targetDir || '.';
+  log('\n🏗️  Project Initialization Guide', 'bold');
+  log('');
+  log('The CLI does not create projects directly. Use your IDE:', 'cyan');
+  log('');
+  log('  1. mkdir my-project && cd my-project');
+  log('  2. Open the folder in your IDE (Claude, OpenCode, Cursor, etc.)');
+  log('  3. Run: skill(name="agencia-init")');
+  log('');
+  log('This will:');
+  log('  • Copy core skills from ~/.agencia-ai/');
+  log('  • Download updated external skills (Marketing, UI/UX, Anthropic, Antigravity)');
+  log('  • Set up Context Engineering (AGENTS.md, PROJECT.md, STATE.md)');
+  log('  • Create cross-IDE skill structure');
+  log('');
+  info(`Target directory: ${path.resolve(dir)}`);
+}
+
 // ─── update ────────────────────────────────────────────────────────
 function cmdUpdate() {
   log('\n🔄 Atualizando Agencia AI Adaptavel...', 'bold');
@@ -158,8 +178,8 @@ function cmdDoctor() {
     issues++;
   } else {
     for (const t of targets) {
-      const installed = CORE_SKILLS.filter(s => fs.existsSync(path.join(t.skills, s)));
-      const missing = CORE_SKILLS.filter(s => !fs.existsSync(path.join(t.skills, s)));
+      const installed = CORE_SKILLS.filter(s => fs.existsSync(path.join(t.skillsPath, s)));
+      const missing = CORE_SKILLS.filter(s => !fs.existsSync(path.join(t.skillsPath, s)));
       if (missing.length === 0) {
         success(`${t.name.padEnd(14)} ${installed.length}/${CORE_SKILLS.length} skills core`);
       } else {
@@ -187,6 +207,7 @@ function cmdHelp() {
   log('    --only=k1,k2           so estas IDEs (claude,cursor,codex,opencode,antigravity,gemini-cli)');
   log('    --exclude=k1,k2        pular estas IDEs');
   log('    --dry-run              mostrar sem alterar');
+  log('  init [dir]               Mostra como inicializar um projeto novo');
   log('  update                   Re-instala com backup automatico');
   log('  doctor                   Diagnostica instalacao');
   log('  version                  Mostra versao\n');
@@ -204,6 +225,7 @@ const [, , command, ...rest] = process.argv;
 
 switch (command) {
   case 'install-global': cmdInstallGlobal(rest); break;
+  case 'init':           cmdInit(rest[0]); break;
   case 'update':         cmdUpdate(); break;
   case 'doctor':         cmdDoctor(); break;
   case 'version':

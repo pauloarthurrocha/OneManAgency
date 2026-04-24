@@ -1,326 +1,95 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════
-# Agencia AI Adaptável — Instalador Universal (Unix)
+# Agencia AI Adaptável — Bootstrap Installer (Unix)
 # ═══════════════════════════════════════════════════════
+#
+# This bootstrap clones the repository and delegates installation
+# to build/postinstall.js. It also symlinks the CLI into ~/.local/bin.
+#
+# curl -fsSL https://raw.githubusercontent.com/pauloarthurrocha/agencia-ai-adaptavel-skills/main/install/install.sh | bash
 
 set -e
 
 REPO_URL="https://github.com/pauloarthurrocha/agencia-ai-adaptavel-skills.git"
 INSTALL_DIR="$HOME/.agencia-ai"
-GLOBAL_SKILLS_DIR="$INSTALL_DIR/skills"
-VERSION="3.0.0"
+BIN_DIR="$HOME/.local/bin"
 
-echo "🚀 Agencia AI Adaptável — Instalador v$VERSION"
+echo "🚀 Agencia AI Adaptável — Bootstrap Installer"
 echo ""
 
-# ── Verificar dependências ──
-command -v git >/dev/null 2>&1 || { echo "❌ Git é obrigatório. Instale: https://git-scm.com/"; exit 1; }
+# ── Check dependencies ──
+command -v git >/dev/null 2>&1 || { echo "❌ Git is required. Install: https://git-scm.com/"; exit 1; }
+command -v node >/dev/null 2>&1 || { echo "❌ Node.js >= 18 is required. Install: https://nodejs.org/"; exit 1; }
 
-# ── Detectar IDE instalada ──
+# ── Detect installed IDEs ──
 IDE=""
-[ -d "$HOME/.opencode" ] && IDE="opencode"
-[ -d "$HOME/.claude" ] && IDE="claude"
-[ -d "$HOME/.gemini" ] && IDE="antigravity"
-[ -d "$HOME/.codex" ] && IDE="codex"
-[ -d "$HOME/.cursor" ] && IDE="cursor"
+[ -d "$HOME/.opencode" ] && IDE="$IDE opencode"
+[ -d "$HOME/.claude" ] && IDE="$IDE claude"
+[ -d "$HOME/.gemini" ] && IDE="$IDE antigravity"
+[ -d "$HOME/.codex" ] && IDE="$IDE codex"
+[ -d "$HOME/.cursor" ] && IDE="$IDE cursor"
 
 if [ -n "$IDE" ]; then
-  echo "✅ IDE detectada: $IDE"
+  echo "✅ IDE(s) detected:$IDE"
 else
-  echo "⚠️ Nenhuma IDE detectada. Skills serão instaladas globalmente."
+  echo "⚠️ No IDE detected. Skills will be installed globally only."
 fi
 
-# ── Clonar ou atualizar repo ──
+# ── Clone or update repository ──
 if [ -d "$INSTALL_DIR/.git" ]; then
-  echo "📦 Atualizando instalação existente..."
+  echo "📦 Updating repository..."
   cd "$INSTALL_DIR"
   git pull --ff-only
 else
-  echo "📦 Clonando repositório..."
-  # Guarda contra path vazio ou perigoso
+  echo "📦 Cloning repository..."
   if [ -z "$INSTALL_DIR" ] || [ "$INSTALL_DIR" = "/" ] || [ "$INSTALL_DIR" = "$HOME" ]; then
-    echo "❌ Path de instalação inválido: '$INSTALL_DIR'"
+    echo "❌ Invalid install path: '$INSTALL_DIR'"
     exit 1
   fi
   rm -rf "$INSTALL_DIR"
   git clone --depth 1 "$REPO_URL" "$INSTALL_DIR"
   if [ ! -d "$INSTALL_DIR/.git" ]; then
-    echo "❌ Falha ao clonar repositório. Verifique sua conexão."
+    echo "❌ Failed to clone repository. Check your connection."
     exit 1
   fi
 fi
 
-# ── Instalar skills globais ──
-echo "📂 Instalando skills em $GLOBAL_SKILLS_DIR..."
-mkdir -p "$GLOBAL_SKILLS_DIR"
-
-# Copiar skills core (v3.0: src/skills/)
-for skill in agencia-init agencia-executor client-onboarding pipeline-generator agencia-verify-work skill-creator; do
-  if [ -d "$INSTALL_DIR/src/skills/$skill" ]; then
-    rm -rf "$GLOBAL_SKILLS_DIR/$skill"
-    cp -r "$INSTALL_DIR/src/skills/$skill" "$GLOBAL_SKILLS_DIR/"
-    echo "  ✅ $skill"
-  fi
-done
-
-# Copiar templates (v3.0: src/templates/)
-if [ -d "$INSTALL_DIR/src/templates" ]; then
-  rm -rf "$INSTALL_DIR/templates"
-  cp -r "$INSTALL_DIR/src/templates" "$INSTALL_DIR/"
-  echo "  ✅ templates"
+# ── Read version ──
+VERSION="unknown"
+if [ -f "$INSTALL_DIR/package.json" ]; then
+  VERSION=$(node -p "require('$INSTALL_DIR/package.json').version" 2>/dev/null || echo "unknown")
+  echo "✅ Version: $VERSION"
 fi
 
-# Copiar agents (v3.0: src/agents/)
-if [ -d "$INSTALL_DIR/src/agents" ]; then
-  rm -rf "$INSTALL_DIR/agents"
-  cp -r "$INSTALL_DIR/src/agents" "$INSTALL_DIR/"
-  echo "  ✅ agents"
-fi
+# ── Delegate to Node installer ──
+cd "$INSTALL_DIR"
+echo "🔧 Running installer..."
+node build/postinstall.js
 
-# Copiar presets (v3.0: src/presets/)
-if [ -d "$INSTALL_DIR/src/presets" ]; then
-  rm -rf "$INSTALL_DIR/presets"
-  cp -r "$INSTALL_DIR/src/presets" "$INSTALL_DIR/"
-  echo "  ✅ presets"
-fi
-
-# Copiar scripts (v3.0: src/scripts/)
-if [ -d "$INSTALL_DIR/src/scripts" ]; then
-  rm -rf "$INSTALL_DIR/scripts"
-  cp -r "$INSTALL_DIR/src/scripts" "$INSTALL_DIR/"
-  echo "  ✅ scripts"
-fi
-
-# ── Instalar skills externas (Marketing) ──
-echo ""
-echo "📦 Instalando skills externas..."
-
-MARKETING_TMP="/tmp/marketingskills-install"
-rm -rf "$MARKETING_TMP"
-if git clone --depth 1 "https://github.com/coreyhaines31/marketingskills.git" "$MARKETING_TMP" 2>/dev/null; then
-  if [ -d "$MARKETING_TMP/skills" ]; then
-    for skill_dir in "$MARKETING_TMP/skills"/*; do
-      if [ -d "$skill_dir" ]; then
-        skill_name=$(basename "$skill_dir")
-        if [ ! -d "$GLOBAL_SKILLS_DIR/$skill_name" ]; then
-          cp -r "$skill_dir" "$GLOBAL_SKILLS_DIR/"
-          echo "  ✅ $skill_name (marketing)"
-        fi
-      fi
-    done
-  fi
-  rm -rf "$MARKETING_TMP"
-else
-  echo "  ⚠️  Marketing skills não disponível (offline?)"
-fi
-
-# ── Instalar Antigravity Kit ──
-echo ""
-echo "📦 Instalando Antigravity Kit..."
-
-AG_KIT_TMP="/tmp/antigravity-kit-install"
-rm -rf "$AG_KIT_TMP"
-if git clone --depth 1 "https://github.com/vudovn/antigravity-kit.git" "$AG_KIT_TMP" 2>/dev/null; then
-  if [ -d "$AG_KIT_TMP/.agent" ]; then
-    AG_KIT_DEST="$INSTALL_DIR/antigravity-kit"
-    rm -rf "$AG_KIT_DEST"
-    mkdir -p "$AG_KIT_DEST"
-    
-    # Copiar agentes
-    cp -r "$AG_KIT_TMP/.agent/agents" "$AG_KIT_DEST/" 2>/dev/null || true
-    agent_count=$(ls -1 "$AG_KIT_DEST/agents" 2>/dev/null | wc -l)
-    echo "  ✅ $agent_count agentes"
-    
-    # Copiar workflows
-    cp -r "$AG_KIT_TMP/.agent/workflows" "$AG_KIT_DEST/" 2>/dev/null || true
-    workflow_count=$(ls -1 "$AG_KIT_DEST/workflows" 2>/dev/null | wc -l)
-    echo "  ✅ $workflow_count workflows"
-    
-    # Copiar shared
-    cp -r "$AG_KIT_TMP/.agent/.shared" "$AG_KIT_DEST/" 2>/dev/null || true
-    echo "  ✅ UI/UX Pro Max completo"
-    
-    # Copiar scripts
-    cp -r "$AG_KIT_TMP/.agent/scripts" "$AG_KIT_DEST/" 2>/dev/null || true
-    echo "  ✅ Scripts Python"
-    
-    # Copiar configs
-    cp "$AG_KIT_TMP/.agent/ARCHITECTURE.md" "$AG_KIT_DEST/" 2>/dev/null || true
-    cp "$AG_KIT_TMP/.agent/mcp_config.json" "$AG_KIT_DEST/" 2>/dev/null || true
-    echo "  ✅ Configs"
-  fi
-  rm -rf "$AG_KIT_TMP"
-else
-  echo "  ⚠️  Antigravity Kit não disponível (offline?)"
-fi
-
-# ── Criar symlink por IDE ──
-install_for_ide() {
-  local ide_path=$1
-  local ide_name=$2
-  
-  if [ -d "$ide_path" ]; then
-    mkdir -p "$ide_path/skills"
-    
-    # Limpar symlinks antigos quebrados
-    find "$ide_path/skills" -type l ! -exec test -e {} \; -delete 2>/dev/null || true
-    
-    # Criar symlinks (apenas para skills que não existem ainda)
-    local copied=0
-    for skill_dir in "$GLOBAL_SKILLS_DIR"/*; do
-      if [ -d "$skill_dir" ]; then
-        local skill_name=$(basename "$skill_dir")
-        local target="$ide_path/skills/$skill_name"
-        if [ ! -e "$target" ]; then
-          ln -sf "$skill_dir" "$target" 2>/dev/null || true
-          copied=$((copied + 1))
-        fi
-      fi
-    done
-    
-    local total=$(ls -1 "$ide_path/skills" 2>/dev/null | wc -l)
-    echo "  🔗 $ide_name: $copied novas | $total total → $ide_path/skills/"
-  fi
-}
-
-install_for_ide "$HOME/.claude" "Claude Code"
-install_for_ide "$HOME/.opencode" "OpenCode"
-install_for_ide "$HOME/.codex" "Codex"
-install_for_ide "$HOME/.cursor" "Cursor"
-install_for_ide "$HOME/.gemini/antigravity" "Antigravity"
-
-# ── Criar comando global (opcional) ──
-BIN_DIR="$HOME/.local/bin"
+# ── Create global command (symlink) ──
 mkdir -p "$BIN_DIR"
 
-cat > "$BIN_DIR/agencia-ai" << 'EOF'
-#!/bin/bash
-# CLI da Agencia AI Adaptável
+if [ -f "$INSTALL_DIR/bin/agencia-ai.js" ]; then
+  rm -f "$BIN_DIR/agencia-ai"
+  ln -sf "$INSTALL_DIR/bin/agencia-ai.js" "$BIN_DIR/agencia-ai"
+  chmod +x "$BIN_DIR/agencia-ai"
+  echo "🔗 Created: $BIN_DIR/agencia-ai"
+fi
 
-AGENCIA_HOME="${AGENCIA_HOME:-$HOME/.agencia-ai}"
-SKILLS_DIR="$AGENCIA_HOME/skills"
-
-show_help() {
-  echo "Agencia AI Adaptável — CLI v3.0"
-  echo ""
-  echo "Uso: agencia-ai <comando>"
-  echo ""
-  echo "Comandos:"
-  echo "  init [pasta]     Inicializa projeto novo (padrão: pasta atual)"
-  echo "  doctor           Diagnostica instalação"
-  echo "  update           Atualiza skills da agência"
-  echo "  version          Mostra versão"
-  echo ""
-  echo "Variáveis de ambiente:"
-  echo "  AGENCIA_HOME     Diretório de instalação (padrão: ~/.agencia-ai)"
-}
-
-cmd_init() {
-  local target_dir="${1:-.}"
-  target_dir=$(cd "$target_dir" && pwd)
-  
-  echo "🏗️  Inicializando projeto em $target_dir..."
-  
-  # Carregar skill agencia-init
-  INIT_SKILL="$SKILLS_DIR/agencia-init/SKILL.md"
-  if [ ! -f "$INIT_SKILL" ]; then
-    echo "❌ Skill agencia-init não encontrada em $SKILLS_DIR"
-    echo "   Rode: agencia-ai update"
-    exit 1
-  fi
-  
-  # Executar init (delega para a skill)
-  echo "📖 Skill carregada: $INIT_SKILL"
-  echo "   Execute no seu IDE: skill(name='agencia-init')"
-  echo ""
-  echo "   Ou manualmente:"
-  echo "   1. Copiar templates de $AGENCIA_HOME/templates/"
-  echo "   2. Copiar skills de $SKILLS_DIR/ para .agents/skills/"
-}
-
-cmd_doctor() {
-  echo "🔍 Diagnóstico da Agencia AI Adaptável"
-  echo ""
-  echo "Diretório de instalação: $AGENCIA_HOME"
-  echo "Skills disponíveis:"
-  
-  if [ -d "$SKILLS_DIR" ]; then
-    for skill in "$SKILLS_DIR"/*; do
-      if [ -d "$skill" ]; then
-        echo "  ✅ $(basename "$skill")"
-      fi
-    done
-  else
-    echo "  ❌ Nenhuma skill encontrada"
-  fi
-  
-  echo ""
-  echo "IDEs detectadas:"
-  [ -d "$HOME/.claude" ] && echo "  ✅ Claude Code"
-  [ -d "$HOME/.opencode" ] && echo "  ✅ OpenCode"
-  [ -d "$HOME/.codex" ] && echo "  ✅ Codex"
-  [ -d "$HOME/.cursor" ] && echo "  ✅ Cursor"
-  [ -d "$HOME/.gemini" ] && echo "  ✅ Antigravity"
-}
-
-cmd_update() {
-  echo "🔄 Atualizando Agencia AI..."
-  cd "$AGENCIA_HOME"
-  git pull --ff-only
-  
-  # Reinstalar skills
-  echo "🔄 Reinstalando skills..."
-  for skill in "$AGENCIA_HOME"/*; do
-    if [ -d "$skill" ] && [ -f "$skill/SKILL.md" ]; then
-      local name=$(basename "$skill")
-      local skill_dest="$SKILLS_DIR/$name"
-      # Guarda contra path vazio
-      if [ -z "$skill_dest" ] || [ "$skill_dest" = "/" ] || [ "$skill_dest" = "$HOME" ]; then
-        echo "⚠️  Pulando skill com path inválido: $name"
-        continue
-      fi
-      rm -rf "$skill_dest"
-      cp -r "$skill" "$SKILLS_DIR/"
-      echo "  ✅ $name"
-    fi
-  done
-  
-  echo ""
-  echo "✅ Atualização concluída!"
-}
-
-cmd_version() {
-  echo "Agencia AI Adaptável v3.0.0"
-  echo "Home: $AGENCIA_HOME"
-}
-
-# ── Main ──
-case "${1:-help}" in
-  init) cmd_init "${2:-.}" ;;
-  doctor) cmd_doctor ;;
-  update) cmd_update ;;
-  version|--version|-v) cmd_version ;;
-  help|--help|-h) show_help ;;
-  *) echo "Comando desconhecido: $1"; show_help; exit 1 ;;
-esac
-EOF
-
-chmod +x "$BIN_DIR/agencia-ai"
-
-# ── Adicionar ao PATH se necessário ──
+# ── Add to PATH if needed ──
 if [[ ":$PATH:" != *":$BIN_DIR:"* ]]; then
   echo ""
-  echo "⚠️  $BIN_DIR não está no PATH."
-  echo "   Adicione ao seu ~/.bashrc ou ~/.zshrc:"
+  echo "⚠️  $BIN_DIR is not in your PATH."
+  echo "   Add this to your ~/.bashrc or ~/.zshrc:"
   echo "   export PATH=\"\$PATH:$BIN_DIR\""
 fi
 
 echo ""
-echo "✅ Instalação concluída!"
+echo "✅ Installation complete!"
 echo ""
-echo "Próximos passos:"
-echo "  1. Reinicie seu terminal (ou rode: source ~/.bashrc)"
-echo "  2. Verifique: agencia-ai doctor"
-echo "  3. Inicie projeto: agencia-ai init"
+echo "Next steps:"
+echo "  1. Restart your terminal (or: source ~/.bashrc)"
+echo "  2. Verify: agencia-ai doctor"
+echo "  3. Create project: mkdir my-project && cd my-project"
+echo "  4. In your IDE: skill(name='agencia-init')"
 echo ""
-echo "Ou em qualquer IDE: skill(name='agencia-init')"
