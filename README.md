@@ -1,8 +1,9 @@
-# Agencia AI Adaptável — Skills v3.0
+# Agencia AI Adaptável — Skills v3.2
 
 > **Repo:** github.com/pauloarthurrocha/agencia-ai-adaptavel-skills
-> **Versão:** 3.0.0 (Neutro + Cross-IDE + Universal Installer)
+> **Versão:** 3.2.0 (Agentes Especializados + Orquestração Multi-Agent + Validação Automatizada)
 > **Formato:** Agent Skills (SKILL.md)
+> **NPM:** `npm install -g agencia-ai-adaptavel`
 
 ---
 
@@ -19,17 +20,35 @@ Sistema de **agent skills** para execução de projetos de software via IA. Func
 | Skill | Versão | Descrição |
 |---|---|---|
 | `agencia-init` | v3.0 | Inicialização de projetos. Detecta IDE, configura MCPs, cria estrutura Context Engineering. **Próximo passo sempre: `client-onboarding`** |
-| `client-onboarding` | v3.1 | Arquiteto Socrático. Entrevista adaptativa, valida stack/deploy via MCPs, gera `BRIEFING.md` + `PROJECT.md` + `PIPELINE.md` |
-| `pipeline-generator` | v1.0 | Gera PIPELINE.md a partir do briefing. Contém 9 playbooks (LP estática, LP Next.js, SaaS, Python, Low-Ticket, etc.) |
-| `agencia-executor` | v3.1 | Orquestrador dinâmico. Lê PIPELINE.md, executa próxima fase pendente, carrega skills corretas, aplica Quality Gate |
-| `agencia-verify-work` | v1.0 | Quality Gate pós-fase. Valida outputs contra critérios de aceite. Gera `VERIFICATION_REPORT.md` (PASS/WARNING/FAIL) |
+| `client-onboarding` | v3.2 | Arquiteto Socrático. Entrevista adaptativa com **questionários por playbook** (SaaS, LP, Python, Low-ticket). Valida stack/deploy via MCPs |
+| `pipeline-generator` | v1.0 | Gera PIPELINE.md a partir do briefing. Contém 9 playbooks. **Novo:** Fase "Arquitetura Técnica" com PRDs para SaaS/Full-stack |
+| `agencia-executor` | v3.2 | Orquestrador dinâmico. **Novo:** Suporte a **agentes especializados por fase** e **orquestração multi-agent** (execução paralela) |
+| `agencia-verify-work` | v2.0 | Quality Gate pós-fase. **Novo:** Integração automática com **scripts Python** (`checklist.py`, `verify_all.py`) |
 | `skill-creator` | v1.0 | Criação e otimização de skills. Wizard interativo, A/B testing, evals, description optimizer. Baseado no Anthropic skill-creator |
 
 ---
 
 ## 🚀 Instalação
 
-### Opção 1 — One-liner (Recomendado)
+### Opção 1 — NPM (Recomendado)
+
+Instala globalmente via npm (Node.js >= 18):
+
+```bash
+npm install -g agencia-ai-adaptavel
+```
+
+**Ou use npx (sem instalar global):**
+```bash
+npx agencia-ai-adaptavel init
+```
+
+**Windows (PowerShell admin):**
+```powershell
+npm install -g agencia-ai-adaptavel
+```
+
+### Opção 2 — One-liner (Sem NPM)
 
 **Linux/macOS:**
 ```bash
@@ -41,18 +60,31 @@ curl -fsSL https://raw.githubusercontent.com/pauloarthurrocha/agencia-ai-adaptav
 irm https://raw.githubusercontent.com/pauloarthurrocha/agencia-ai-adaptavel-skills/main/install.ps1 | iex
 ```
 
-### Opção 2 — Git Clone
+### Opção 3 — Git Clone
 
 ```bash
 git clone https://github.com/pauloarthurrocha/agencia-ai-adaptavel-skills.git ~/.agencia-ai
-cd ~/.agencia-ai && ./install.sh
+cd ~/.agencia-ai && npm link
 ```
 
-### Opção 3 — NPM (futuro)
+---
+
+## 🏁 Uso Rápido
+
+Após instalar globalmente:
 
 ```bash
-npm install -g agencia-ai-adaptavel
+# 1. Criar novo projeto
+mkdir meu-projeto && cd meu-projeto
+
+# 2. Inicializar com a Agencia AI
 agencia-ai init
+
+# 3. Iniciar onboarding (entrevista com o cliente)
+skill(name="client-onboarding")
+
+# 4. Executar fases
+skill(name="agencia-executor")
 ```
 
 ---
@@ -186,7 +218,28 @@ Este repositório é **privado**. Skills externas são instaladas sob demanda pe
 
 ---
 
+## 🔒 Segurança da Instalação
+
+O instalador da Agência AI Adaptável foi projetado para ser **não-destrutivo**:
+
+- ✅ **Nunca sobrescreve arquivos existentes** — pergunta antes ou faz backup
+- ✅ **Nunca deleta arquivos do seu sistema** — apenas remove arquivos da própria ferramenta
+- ✅ **Instala apenas em `~/.agencia-ai/`** — nunca toca em outras pastas do sistema
+- ✅ **Backups automáticos** — ao atualizar, cria backup com timestamp
+- ✅ **Sem permissões de admin** — não requer sudo (exceto para `npm install -g`)
+
+---
+
 ## 📝 Changelog
+
+### v3.2.0 — Agentes Especializados + Validação Automatizada
+- **10 Agentes Especializados** em `.agents/agents/` (frontend, backend, security, etc.)
+- **Orquestração Multi-Agent** — execução paralela de fases complexas
+- **Scripts Python de Validação** — `checklist.py` (30s) e `verify_all.py` (3-5min)
+- **4 Presets Estéticos** — tech-organico, luxo-noturno, sinal-brutalista, clinica-vapor
+- **7 Templates de Componentes LP** — navbar, hero, features, filosofia, protocolo, planos, footer
+- **Questionários Socráticos por Playbook** — entrevistas específicas por tipo de projeto
+- **Instalação via NPM** — `npm install -g agencia-ai-adaptavel`
 
 ### v3.0.0 — Agência Neutra + Universal
 - `agencia-init` agora é neutro (não pressupõe LP/Next.js)

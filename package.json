@@ -1,0 +1,52 @@
+{
+  "name": "agencia-ai-adaptavel",
+  "version": "3.2.0",
+  "description": "Sistema de execução de projetos via IA. Agência AI Adaptável - funciona em qualquer IDE e adapta-se a qualquer projeto.",
+  "main": "index.js",
+  "bin": {
+    "agencia-ai": "./bin/agencia-ai.js"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "keywords": [
+    "ai",
+    "agency",
+    "workflow",
+    "claude",
+    "opencode",
+    "cursor",
+    "automation",
+    "landing-page",
+    "saas",
+    "scaffold"
+  ],
+  "author": "Agencia AI Adaptavel",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pauloarthurrocha/agencia-ai-adaptavel-skills.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pauloarthurrocha/agencia-ai-adaptavel-skills/issues"
+  },
+  "homepage": "https://github.com/pauloarthurrocha/agencia-ai-adaptavel-skills#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "agencia-init/",
+    "agencia-executor/",
+    "client-onboarding/",
+    "pipeline-generator/",
+    "agencia-verify-work/",
+    "skill-creator/",
+    "templates/",
+    "presets/",
+    ".agents/",
+    "README.md",
+    "SKILL-REGISTRY.md"
+  ]
+}
