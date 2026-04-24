@@ -37,9 +37,11 @@ next-env.d.ts
 # Graphify
 .graphify/cache/
 
-# Planning
+# Planning / Development-only files
 .planning/HANDOFF.json
 .continue-here.md
+HANDOFF.md
+docs/internal/
 
 # IMPORTANTE: NÃO ignorar .agents/, .claude/, .codex/, .gemini/
 # Essas pastas contêm as skills que precisam ser commitadas para

@@ -1,0 +1,25 @@
+# npm ignore — extra safety layer beyond package.json files[]
+# These files should NEVER be included in the published npm package
+
+# Development-only files
+HANDOFF.md
+.continue-here.md
+.planning/
+
+# Internal documentation
+docs/internal/
+
+# Git
+.git/
+.gitignore
+
+# Dependencies
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
