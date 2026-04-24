@@ -1,0 +1,93 @@
+# STATE.md — Estado Atual do Projeto
+
+> **Regra:** Este arquivo é ATUALIZADO a cada sessão. Serve como snapshot do projeto.
+> **Não é histórico completo** — para histórico, ver `.planning/discovery-notes.md`.
+
+---
+
+## 📋 Informações Básicas
+
+| Campo | Valor |
+|-------|-------|
+| **Projeto** | {{PROJECT_NAME}} |
+| **Fase Atual** | {{CURRENT_PHASE}} |
+| **Última Atualização** | {{DATE}} |
+| **Sessão Atual** | {{SESSION_NUMBER}} |
+
+---
+
+## ✅ Progresso por Fase
+
+| Fase | Status | Arquivo Gerado |
+|------|--------|----------------|
+| 0 — Onboarding | {{PHASE_0_STATUS}} | BRIEFING.md |
+| 1 — Niche Research | {{PHASE_1_STATUS}} | RESEARCH.md |
+| 2 — Competitor Intel | {{PHASE_2_STATUS}} | COMPETITOR_INTEL.md |
+| 3 — Design System | {{PHASE_3_STATUS}} | DESIGN_SYSTEM.md |
+| 4 — Copy Deck | {{PHASE_4_STATUS}} | COPY_DECK.md |
+| 5 — UI Spec | {{PHASE_5_STATUS}} | UI-SPEC.md |
+| 6 — Scaffold | {{PHASE_6_STATUS}} | [código] |
+| 7 — QA & Delivery | {{PHASE_7_STATUS}} | docs/entrega/ |
+
+---
+
+## 🔧 Estado Técnico
+
+### Último Build
+- Status: {{BUILD_STATUS}}
+- Erros: {{BUILD_ERRORS}}
+- Warnings: {{BUILD_WARNINGS}}
+
+### Testes
+- Status: {{TEST_STATUS}}
+- Cobertura: {{TEST_COVERAGE}}
+
+### Lint/Type Check
+- Status: {{LINT_STATUS}}
+
+---
+
+## 🚧 Bloqueios Atuais
+
+| # | Descrição | Desde | Responsável |
+|---|-----------|-------|-------------|
+| 1 | {{BLOCKER_1}} | {{BLOCKER_1_DATE}} | {{BLOCKER_1_OWNER}} |
+| 2 | {{BLOCKER_2}} | {{BLOCKER_2_DATE}} | {{BLOCKER_2_OWNER}} |
+
+---
+
+## 📌 Próximos 3 Passos
+
+1. {{NEXT_STEP_1}}
+2. {{NEXT_STEP_2}}
+3. {{NEXT_STEP_3}}
+
+---
+
+## 🧠 Contexto da Sessão Anterior
+
+- Última ação: {{LAST_ACTION}}
+- Arquivos modificados: {{LAST_FILES}}
+- Decisões tomadas: {{LAST_DECISIONS}}
+
+---
+
+## 📝 Notas Rápidas
+
+{{QUICK_NOTES}}
+
+---
+
+## 🧮 Estatísticas do Projeto
+
+| Métrica | Valor |
+|---------|-------|
+| Total de Commits | {{COMMIT_COUNT}} |
+| Último Memory Sync | {{LAST_MEMORY_SYNC}} |
+| Tamanho do discovery-notes.md | {{DISCOVERY_NOTES_LINES}} linhas |
+| Arquivos de contexto | {{CONTEXT_FILES_COUNT}} |
+| Backups mantidos | {{BACKUP_COUNT}}/10 |
+
+---
+
+*Atualizado em: {{DATE}}*

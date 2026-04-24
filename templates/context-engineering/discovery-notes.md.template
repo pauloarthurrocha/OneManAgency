@@ -1,0 +1,106 @@
+# Discovery Notes — Memória do Projeto
+
+> **Fonte de verdade dinâmica.** Leia no início de TODA sessão antes de sugerir qualquer código.
+> **Regras imutáveis de stack** estão em `.agent/rules/PROJECT.md`.
+> **Atualizado por:** `skill(name="update-discovery-notes")`
+> **Compactado por:** `skill(name="memory-sync")` (a cada 25 commits)
+
+---
+
+## 📝 Changelog Interno
+
+<!-- Adicionar novas entradas AQUI, no topo. Formato: [YYYY-MM-DD HH:MM]: [descrição] -->
+
+---
+
+## 🧠 Regras Aprendidas
+
+<!-- Adicionar novas regras AQUI, no topo -->
+<!-- Formato: [YYYY-MM-DD] Categoria: SEMPRE/NUNCA fazer X porque Y -->
+<!-- Scoring: importance (1-5) | relevance (1-5) | recency (auto) | tags: tag1,tag2 -->
+
+<!--
+Exemplo:
+[2026-04-23] Frontend: NUNCA usar métricas fake. [importance:5|relevance:5|tags:frontend,legal]
+Contexto: Paulo rejeitou BigNumbers com dados fictícios na landing page.
+Versão: v1 (original)
+-->
+
+---
+
+## ✅ Estado Atual
+
+<!-- Progresso do projeto. Atualizar conforme fases são concluídas -->
+
+---
+
+## 📅 Decisões Travadas
+
+<!-- Decisões que não podem ser alteradas sem discussão -->
+
+---
+
+## 🐛 Bugs e Problemas Resolvidos
+
+<!-- Formato: [DATA] Bug: X → Causa: Y → Solução: Z -->
+
+---
+
+## 💡 Insights e Descobertas
+
+<!-- Formato: [DATA] Insight: X (contexto: Y) -->
+
+---
+
+## 📚 Referências Úteis
+
+<!-- Links, docs, repos externos relevantes -->
+
+---
+
+## 🔄 Templates de Entrada
+
+### Nova Entrada no Changelog
+```
+[YYYY-MM-DD HH:MM]: [descrição da mudança/decisão/feature]
+```
+
+### Nova Regra Aprendida (com scoring)
+```
+[YYYY-MM-DD] Categoria: SEMPRE/NUNCA fazer X porque Y.
+Contexto: [quando a regra se aplica]
+Scoring: [importance:1-5|relevance:1-5|tags:categoria1,categoria2]
+Versão: v1 (original) / v2 (atualizada em YYYY-MM-DD)
+```
+
+### Tags/Categorias Disponíveis
+- `frontend` — UI, CSS, HTML, componentes
+- `backend` — API, banco, workers
+- `copy` — Copywriting, headlines, CTAs
+- `design` — Cores, branding, layout
+- `legal` — Disclaimer, LGPD, termos
+- `deploy` — Infra, CI/CD, hosting
+- `seo` — Meta tags, schema, performance
+- `conversion` — Checkout, CRO, funil
+- `data` — Estatísticas, métricas, analytics
+- `security` — Auth, credenciais, headers
+
+### Nova Decisão
+```
+[YYYY-MM-DD] Decisão: [o que foi decidido]
+Motivação: [por que foi decidido]
+Alternativas consideradas: [outras opções]
+```
+
+### Novo Bug Resolvido
+```
+[YYYY-MM-DD] Bug: [descrição]
+Causa raiz: [por que aconteceu]
+Solução: [como foi resolvido]
+Prevenção: [como evitar no futuro]
+```
+
+---
+
+*Criado em: {{DATE}}*
+*Último backup: .planning/backup/discovery-notes-[timestamp].md*

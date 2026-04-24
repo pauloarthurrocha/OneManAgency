@@ -1,0 +1,197 @@
+---
+trigger: always_on
+---
+
+<!-- AGENTS.md — v2.0 (Context Engineering Universal)
+     Arquivo: AGENTS.md
+     Escopo: UNIVERSAL — aplica-se a QUALQUER projeto gerado pela Agência
+     Arquitetura: XML Context Engineering + Cognitive Density + Anti-LiTM
+     
+     REGRA DE OURO: Este arquivo é GENÉRICO. NUNCA coloque stack específica,
+     proibições de tecnologia ou guardrails de produção aqui.
+     Esses vão em .agent/rules/PROJECT.md (gerado pelo agencia-init).
+-->
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 1: HIERARQUIA DE VERDADE (Anti-LiTM)
+     ═══════════════════════════════════════════════════════ -->
+
+<hierarquia_verdade>
+Em caso de conflito de contexto, a ordem estrita de precedência é:
+1. `.agent/rules/PROJECT.md` — Verdade Máxima Inviolável (stack, proibições, guardrails)
+2. `AGENTS.md` — Este arquivo (protocolos universais)
+3. `.planning/STATE.md` — Arquitetura e estado atual do projeto
+4. `.planning/discovery-notes.md` — Memória dinâmica (regras aprendidas, decisões)
+5. Skills carregadas via `skill(name="...")` — Conhecimento de domínio
+
+**Read-First Obrigatório:**
+Antes de QUALQUER ação, carregue o contexto nesta ordem:
+1. Se `.agent/rules/PROJECT.md` existir → ler PRIMEIRO
+2. Se `.planning/STATE.md` existir → ler
+3. Se `.planning/discovery-notes.md` existir → ler
+4. Confirmar: `"Contexto carregado: [lista de arquivos lidos]"`
+
+NUNCA assuma o estado do projeto. Sempre leia os arquivos acima primeiro.
+</hierarquia_verdade>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 2: KICKOFF E SILÊNCIO OPERACIONAL
+     ═══════════════════════════════════════════════════════ -->
+
+<kickoff_padronizado>
+Ao iniciar qualquer sessão, responda começando exatamente com:
+`"🔄 [NOME_DO_PROJETO] — Status: [travado/feito] | Último: [ação] | Próximo: [ação]. O que vamos resolver?"`
+
+Se não souber o status: `"🔄 [NOME_DO_PROJETO] — O que vamos resolver hoje?"`
+</kickoff_padronizado>
+
+<silencio_operacional>
+- NUNCA despejar conteúdo completo de arquivos no terminal
+- Confirmar apenas: resumo da alteração, arquivos tocados, comando de validação
+- Usar edição pontual (patch) — preservar o que não é escopo
+- Ao ler arquivos: `"Contexto carregado: [lista]"`
+</silencio_operacional>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 3: PROTOCOLOS UNIVERSAIS (Independente de Stack)
+     ═══════════════════════════════════════════════════════ -->
+
+<protocolo_read_first>
+ANTES de qualquer modificação:
+1. Ler o arquivo completo que será editado
+2. Entender o contexto e padrões existentes
+3. Confirmar: `"Contexto carregado: [arquivos lidos]"`
+4. SÓ ENTÃO propor ou executar a mudança
+</protocolo_read_first>
+
+<protocolo_micro_batches>
+- Limite de 1 a 3 arquivos por vez
+- Cada batch deve ser testável isoladamente
+- Validar antes de prosseguir para o próximo batch
+</protocolo_micro_batches>
+
+<protocolo_reverse_prompting>
+Se o escopo for ambíguo ou houver múltiplas abordagens:
+- Fazer NO MÁXIMO 3 perguntas incisivas de clarificação
+- NUNCA alucinar código sem entender o objetivo
+</protocolo_reverse_prompting>
+
+<protocolo_validacao>
+Jamais afirmar que algo está corrigido/funcional sem:
+- Executar comandos verificadores (lint, test, build)
+- Produzir evidências antes de asserções
+</protocolo_validacao>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 4: METODOLOGIA AGENT → SKILL → WORKFLOW
+     ═══════════════════════════════════════════════════════ -->
+
+<metodologia_skills_first>
+Adoção OBRIGATÓRIA de abordagem "Skills-first":
+
+1. ANTES de propor plano, buscar skill relevante:
+   - Listar skills disponíveis: `node ~/.claude/scripts/skill-find.js "keyword"`
+   - Ou consultar `~/.claude/SKILLS_INDEX.md`
+
+2. Carregar skill apropriada ANTES de gerar código:
+   ```
+   skill(name="nome-da-skill")
+   ```
+
+3. Se ferramenta nativa disponível (filesystem, bash), DEVO executar:
+   - É PROIBIDO responder com checklist manual se posso fazer autonomamente
+
+4. Skills por domínio (exemplos):
+   - **Frontend/UI**: `frontend-design`, `web-design-guidelines`, `tailwind-patterns`
+   - **Backend/API**: `api-patterns`, `database-design`, `nodejs-best-practices`
+   - **Copy/Marketing**: `copywriting`, `copy-editing`, `page-cro`
+   - **Deploy/Infra**: `deployment-procedures`, `server-management`
+   - **QA/Debug**: `systematic-debugging`, `lint-and-validate`, `testing-patterns`
+</metodologia_skills_first>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 5: GIT HYGIENE (Universal)
+     ═══════════════════════════════════════════════════════ -->
+
+<git_hygiene>
+- NUNCA commitar `.env` real (apenas `.env.example`)
+- NUNCA usar `--no-verify` em commits
+- NUNCA `git push --force` em `main`/`develop`/`master`
+- Preferir PRs para branches principais
+- Mensagens de commit em português ou inglês (seguir padrão do projeto)
+</git_hygiene>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 6: MODOS DE OPERAÇÃO (Behavioral Modes)
+     ═══════════════════════════════════════════════════════ -->
+
+<modos_operacao>
+O agente deve adaptar seu comportamento conforme o contexto:
+
+**Modo Implementação:**
+- Usar quando: usuário pede para criar/codificar/implementar
+- Prioridade: velocity, micro-batches, validação contínua
+- Ativar: skills de código + tdd + lint-and-validate
+
+**Modo Pesquisa:**
+- Usar quando: usuário pede para analisar/investigar/estudar
+- Prioridade: thoroughness, evidências, múltiplas fontes
+- Ativar: librarian + explore agents + web-search
+
+**Modo Debug:**
+- Usar quando: usuário reporta erro/bug/falha
+- Prioridade: root-cause analysis, minimal fix, testes
+- Ativar: systematic-debugging + tracing
+
+**Modo Review:**
+- Usar quando: usuário pede para revisar/auditar/verificar
+- Prioridade: critical eye, standards compliance, security
+- Ativar: code-review-checklist + vulnerability-scanner
+
+**Modo Planning:**
+- Usar quando: usuário pede para planejar/estruturar/organizar
+- Prioridade: clarity, dependencies, risk assessment
+- Ativar: plan-writing + architecture skills
+</modos_operacao>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 7: HANDOFF E CONTINUIDADE
+     ═══════════════════════════════════════════════════════ -->
+
+<handoff>
+Ao encerrar sessão ou pausar trabalho:
+1. Atualizar `.planning/STATE.md` com progresso atual
+2. Atualizar `.planning/discovery-notes.md` com decisões/regras aprendidas
+3. Se próxima sessão continuará este trabalho: criar `.continue-here.md`
+4. Confirmar: `"Handoff salvo em .planning/STATE.md e .continue-here.md"`
+</handoff>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 7: ONDE COLOCAR O QUÊ (Guia Rápido)
+     ═══════════════════════════════════════════════════════ -->
+
+<onde_colocar>
+| Tipo de Informação | Vai em |
+|---|---|
+| Stack do projeto | `.agent/rules/PROJECT.md` |
+| Proibições de tecnologia | `.agent/rules/PROJECT.md` |
+| Guardrails de produção | `.agent/rules/PROJECT.md` |
+| Contexto de infra/deploy | `.agent/rules/PROJECT.md` |
+| Regras aprendidas do projeto | `.planning/discovery-notes.md` |
+| Estado atual do projeto | `.planning/STATE.md` |
+| Protocolos universais | `AGENTS.md` (este arquivo) |
+| Hierarquia de contexto | `AGENTS.md` (este arquivo) |
+| Metodologia skills-first | `AGENTS.md` (este arquivo) |
+| Git hygiene | `AGENTS.md` (este arquivo) |
+</onde_colocar>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 8: NOTAS
+     ═══════════════════════════════════════════════════════ -->
+
+<notas>
+- Este arquivo é COPIADO para todo projeto novo pelo agencia-init
+- NÃO EDITAR este arquivo com conteúdo específico do projeto
+- Para restrições específicas, editar `.agent/rules/PROJECT.md`
+- Para memória do projeto, editar `.planning/discovery-notes.md`
+</notas>

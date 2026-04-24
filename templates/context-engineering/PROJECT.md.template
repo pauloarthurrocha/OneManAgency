@@ -1,0 +1,153 @@
+---
+trigger: always_on
+---
+
+<!-- PROJECT.md — Fonte Canônica do Projeto
+     Arquivo: .agent/rules/PROJECT.md
+     Escopo: ESPECÍFICO DESTE PROJETO
+     Gerado por: agencia-init (Fase 0)
+     Atualizado por: time (conforme decisões são tomadas)
+     
+     REGRA DE OURO: Este arquivo contém APENAS informações específicas
+     deste projeto (stack, proibições, guardrails, infra). Não coloque
+     protocolos universais aqui — esses ficam em AGENTS.md.
+-->
+
+<fonte_canonica>
+Este arquivo é a VERDADE MÁXIMA INVIOLÁVEL para este projeto.
+Em caso de conflito: PROJECT.md > AGENTS.md > skills > conhecimento genérico.
+</fonte_canonica>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 1: IDENTIDADE DO PROJETO (Preencher no onboarding)
+     ═══════════════════════════════════════════════════════ -->
+
+<identidade>
+Nome do Projeto: {{PROJECT_NAME}}
+Descrição: {{PROJECT_DESCRIPTION}}
+Missão: {{PROJECT_MISSION}}
+ICP (Público-alvo): {{ICP}}
+</identidade>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 2: STACK CONGELADA (NÃO SUGERIR ALTERNATIVAS)
+     ═══════════════════════════════════════════════════════ -->
+
+<stack_congelada>
+| Camada | Tecnologia | Versão |
+|--------|-----------|--------|
+| Frontend | {{FRONTEND_STACK}} | {{FRONTEND_VERSION}} |
+| Backend | {{BACKEND_STACK}} | {{BACKEND_VERSION}} |
+| Banco de Dados | {{DATABASE}} | {{DATABASE_VERSION}} |
+| Cache & Filas | {{CACHE_QUEUES}} | {{CACHE_VERSION}} |
+| IA / LLM | {{AI_LLM}} | {{AI_VERSION}} |
+| Auth | {{AUTH_METHOD}} | {{AUTH_VERSION}} |
+| Billing/Pagamentos | {{BILLING}} | {{BILLING_VERSION}} |
+| Scraping (se houver) | {{SCRAPING}} | {{SCRAPING_VERSION}} |
+| Email | {{EMAIL}} | {{EMAIL_VERSION}} |
+| Infra/Deploy | {{INFRA}} | {{INFRA_VERSION}} |
+| Observabilidade | {{OBSERVABILITY}} | {{OBS_VERSION}} |
+</stack_congelada>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 3: PROIBIÇÕES ABSOLUTAS
+     ═══════════════════════════════════════════════════════ -->
+
+<proibicoes_absolutas>
+TECNOLOGIAS PROIBIDAS (sem exceção):
+- {{PROIBIDO_1}}
+- {{PROIBIDO_2}}
+- {{PROIBIDO_3}}
+- [ADICIONAR MAIS SE NECESSÁRIO]
+
+AÇÕES PROIBIDAS (sem exceção):
+- {{ACAO_PROIBIDA_1}}
+- {{ACAO_PROIBIDA_2}}
+- git push --force em main/develop
+- git commit --no-verify
+- Hardcodar host/porta/credenciais → usar variáveis de ambiente
+</proibicoes_absolutas>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 4: DESIGN SYSTEM E BRANDING (se aplicável)
+     ═══════════════════════════════════════════════════════ -->
+
+<branding>
+Paleta de cores:
+- Background: {{COLOR_BG}}
+- Surface: {{COLOR_SURFACE}}
+- Primária: {{COLOR_PRIMARY}}
+- Secundária: {{COLOR_SECONDARY}}
+- Detalhes: {{COLOR_ACCENT}}
+
+Restrições:
+- {{BRANDING_RESTRICAO_1}}
+- {{BRANDING_RESTRICAO_2}}
+- [ADICIONAR MAIS SE NECESSÁRIO]
+</branding>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 5: INFRAESTRUTURA E DEPLOY
+     ═══════════════════════════════════════════════════════ -->
+
+<infraestrutura>
+Ambiente de Desenvolvimento:
+- {{DEV_ENV}}
+
+Ambiente de Produção:
+- URL: {{PROD_URL}}
+- {{PROD_ENV}}
+
+Deploy:
+- {{DEPLOY_METHOD}}
+- {{DEPLOY_TRIGGER}}
+</infraestrutura>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 6: GUARDRAILS DE PRODUÇÃO
+     ═══════════════════════════════════════════════════════ -->
+
+<guardrails_producao>
+- Toda mudança em auth, billing, scraping ou infra: explicar risco + plano de rollback ANTES
+- NUNCA reiniciar servidor sem aprovação explícita
+- NUNCA deletar dados/volumes/DBs sem confirmação
+- {{GUARDRAIL_1}}
+- {{GUARDRAIL_2}}
+- [ADICIONAR MAIS SE NECESSÁRIO]
+</guardrails_producao>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 7: CONTEXTO ESPECÍFICO
+     ═══════════════════════════════════════════════════════ -->
+
+<contexto>
+[ADICIONAR contexto específico do projeto: containers rodando, IPs, paths úteis, comandos de diagnóstico, etc.]
+</contexto>
+
+<problemas_conhecidos>
+VERIFICAR PRIMEIRO antes de diagnosticar:
+1. {{PROBLEMA_1}}
+2. {{PROBLEMA_2}}
+3. [ADICIONAR MAIS SE NECESSÁRIO]
+</problemas_conhecidos>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 8: DECISÕES TRAVADAS
+     ═══════════════════════════════════════════════════════ -->
+
+<decisoes_travadas>
+- {{DECISAO_1}}
+- {{DECISAO_2}}
+- [ADICIONAR MAIS CONFORME DECISÕES SÃO TOMADAS]
+</decisoes_travadas>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEÇÃO 9: CHECKLIST DE PRÉ-DEPLOY
+     ═══════════════════════════════════════════════════════ -->
+
+<pre_deploy_checklist>
+- [ ] {{CHECKLIST_1}}
+- [ ] {{CHECKLIST_2}}
+- [ ] {{CHECKLIST_3}}
+- [ ] [ADICIONAR MAIS]
+</pre_deploy_checklist>

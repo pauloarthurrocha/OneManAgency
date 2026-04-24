@@ -1,0 +1,14 @@
+# CHANGELOG_LLM.md — Changelog para IAs
+
+> **Regra:** Este arquivo é ACUMULATIVO. Novas entradas no TOPO.
+> Formato: `[YYYY-MM-DD HH:MM] (hash) tipo: descrição`
+> Atualizado automaticamente por: `skill(name="update-discovery-notes")`
+
+---
+
+<!-- Adicionar novas entradas AQUI, no topo -->
+
+---
+
+*Criado em: {{DATE}}*
+*Atualizado por: post-commit-audit ou update-discovery-notes*

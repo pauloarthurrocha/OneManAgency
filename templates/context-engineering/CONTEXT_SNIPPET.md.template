@@ -1,0 +1,17 @@
+# {{PROJECT_NAME}} — Context Refresh [{{DATE}}]
+> Cole este bloco ao iniciar nova conversa com qualquer IA.
+
+## Stack (congelada — não sugerir alternativas)
+[Preencher do .agent/rules/PROJECT.md]
+
+## Estado atual
+[Preencher do .planning/STATE.md]
+
+## Últimas 3 decisões
+[Copiar as 3 primeiras linhas do CHANGELOG_LLM.md]
+
+## Próximos passos
+[Copiar do .planning/STATE.md]
+
+## Restrições críticas
+[Preencher do .agent/rules/PROJECT.md]
