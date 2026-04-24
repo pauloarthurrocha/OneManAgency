@@ -1,9 +1,10 @@
 ---
 name: agencia-init
-description: When starting a new client project from scratch. Use this BEFORE /agencia-executor to initialize the project structure, install skills from external repositories, configure MCPs, set up Context Engineering, and prepare the workspace. Works across ANY IDE (Claude Code, OpenCode, Antigravity, Cursor, Codex).
+description: Inicializa um projeto de cliente da Agência AI Adaptável do zero. Detecta IDE ativa, instala skills externas e da agência, configura MCPs, cria estrutura Context Engineering e PIPELINE.md vazio. Neutro quanto ao tipo de projeto (não pressupõe LP/Next.js). Próximo passo após o init é sempre o `client-onboarding` para definir o PIPELINE. Funciona cross-IDE (Claude Code, OpenCode, Antigravity, Cursor, Codex).
 metadata:
-  version: 2.3.0
+  version: 3.0.0
   changelog:
+    - v3.0: Neutro quanto ao tipo de projeto (remove criação hardcoded de DESIGN_SYSTEM/COPY_DECK/UI-SPEC). Cria PIPELINE.md vazio. Conserta .gitignore (não ignora mais .agents/.claude/.codex/.gemini). Adiciona context7 ao .mcp.json. Inclui client-onboarding e pipeline-generator nas skills copiadas.
     - v2.3: Auto-install external skills (Antigravity Kit, Marketing Skills, Design Skills)
     - v2.3: Detect IDE (Claude, OpenCode, Antigravity, Cursor, Codex)
     - v2.3: Copy agency skills to .agents/skills/ inside repo
@@ -15,7 +16,7 @@ metadata:
     - v2.0: Separate universal protocols (AGENTS.md) from project rules (PROJECT.md)
 ---
 
-# Agencia Init v2.3 — Deep Project Initialization
+# Agencia Init v3.0 — Deep Project Initialization (Neutral)
 
 You are the project initializer for the Agencia AI Adaptavel. Your job is to prepare a pristine workspace that supports the full 7-phase workflow, installs skills from external repositories, configures MCPs, and works across ANY IDE.
 
@@ -58,11 +59,8 @@ cliente-projeto/
 │   ├── discovery-notes.md          # Memoria dinamica
 │   ├── CHANGELOG_LLM.md           # Changelog para IAs
 │   ├── CONTEXT_SNIPPET.md         # Snippet curto para IAs externas
-│   ├── BRIEFING.md                 # (sera criado na Fase 0)
-│   ├── RESEARCH.md                 # (sera criado na Fase 1)
-│   ├── DESIGN_SYSTEM.md            # (sera criado na Fase 3)
-│   ├── COPY_DECK.md                # (sera criado na Fase 4)
-│   └── UI-SPEC.md                  # (sera criado na Fase 5)
+│   ├── PIPELINE.md                 # Mapa dinâmico de fases (criado pelo client-onboarding)
+│   └── [outros artefatos]          # BRIEFING.md, RESEARCH.md, COPY_DECK.md, etc. — criados conforme o PIPELINE pedir
 ├── .agent/
 │   ├── rules/
 │   │   └── PROJECT.md              # Fonte canonica (stack, proibicoes, guardrails)
@@ -256,16 +254,23 @@ ln -sf ../../.agents/skills/* .codex/skills/ 2>/dev/null || cp -r .agents/skills
 ln -sf ../../../.agents/skills/* .gemini/antigravity/skills/ 2>/dev/null || cp -r .agents/skills/* .gemini/antigravity/skills/
 ```
 
-**Skills da agencia a copiar:**
-- `agencia-init/` — Este init
-- `agencia-executor/` — Executor automatico
-- `client-onboarding/` — Fase 0
-- `niche-research/` — Fase 1
-- `competitor-intel/` — Fase 2
-- `copywriting/` — Fase 4
-- `page-cro/` — Otimizacao
-- `seo-audit/` — SEO
-- `marketing-ideas/` — Estrategia
+**Skills da agencia a copiar (núcleo — obrigatórias):**
+- `agencia-init/` — Este init (auto-bootstrap)
+- `agencia-executor/` — Executor dinâmico v3.1
+- `client-onboarding/` — Arquiteto socrático v3.1 (gera PIPELINE.md)
+- `pipeline-generator/` — Playbooks por tipo de projeto (auxiliar do onboarding)
+- `agencia-verify-work/` — Quality Gate pós-fase
+
+**Skills auxiliares (opcionais — adicionar conforme domínio do projeto):**
+- `niche-research/`, `competitor-intel/`, `web-scraper-intel/` — research
+- `copywriting/`, `copy-editing/`, `marketing-psychology/` — copy
+- `page-cro/`, `popup-cro/`, `signup-flow-cro/` — otimização de conversão
+- `psychology-color-picker/`, `design-system-generator/`, `frontend-design/`, `ui-ux-pro-max/` — design
+- `nextjs-react-expert/`, `tailwind-patterns/`, `landing-page-scaffold/` — implementação web
+- `python-patterns/`, `nodejs-best-practices/`, `api-patterns/` — backend/automação
+- `deployment-procedures/`, `server-management/` — deploy
+- `seo-audit/`, `schema-markup/`, `ai-seo/` — SEO
+- `gsd-ui-phase/`, `gsd-ui-review/`, `gsd-code-review/` — QA
 
 ### Step 4: Criar CLAUDE.md
 
@@ -293,6 +298,10 @@ Criar `.mcp.json` no projeto com MCPs essenciais:
         "BRAVE_API_KEY": "${BRAVE_API_KEY}"
       }
     },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
     "playwright": {
       "command": "npx",
       "args": ["-y", "@executeautomation/playwright-mcp-server"]
@@ -316,10 +325,11 @@ Criar `.mcp.json` no projeto com MCPs essenciais:
 ```
 
 **MCPs configurados:**
-- **Brave Search** (`@brave/brave-search-mcp-server`) — Pesquisa web para research
+- **Brave Search** (`@brave/brave-search-mcp-server`) — Pesquisa web para research e tendências
+- **Context7** (`@upstash/context7-mcp`) — Docs atualizadas de bibliotecas (usado pelo client-onboarding para validar stack)
 - **Playwright** (`@executeautomation/playwright-mcp-server`) — Navegacao e scraping
 - **Firecrawl** (`firecrawl-mcp`) — Scraping de sites
-- **GitHub** (`@modelcontextprotocol/server-github`) — Gerenciamento de repos (deprecated, mas funcional)
+- **GitHub** (`@modelcontextprotocol/server-github`) — Gerenciamento de repos
 
 > ⚠️ **API Keys:** Adicionar em `.env.local` (ja no .gitignore). Nunca commitar.
 
@@ -376,15 +386,15 @@ next-env.d.ts
 .planning/HANDOFF.json
 .continue-here.md
 
-# Cross-IDE skills (copiados do repo, nao precisa commitar)
-.agents/
-.claude/
-.codex/
-.gemini/
+# IMPORTANTE: NÃO ignorar .agents/, .claude/, .codex/, .gemini/
+# Essas pastas contêm as skills que precisam ser commitadas para
+# continuidade cross-IDE. Se ignorar, outra IDE/PC não acha as skills.
 
-# MCP config (pode conter secrets)
+# MCP config (pode conter secrets — usar .mcp.json.example se precisar compartilhar)
 .mcp.json
 ```
+
+> ⚠️ **Regra crítica:** As pastas `.agents/`, `.claude/`, `.codex/`, `.gemini/` **devem ser commitadas**. Se você ignorá-las, ao clonar o projeto em outra máquina ou IDE, as skills da agência não chegam e o workflow quebra.
 
 ### Step 8: .env.local Template
 
@@ -453,15 +463,40 @@ Cria `.graphify/graph.json` para knowledge graph do projeto.
 
 ### Step 11: Inicializar Templates de Estado
 
-Os arquivos `.planning/STATE.md` e `.planning/discovery-notes.md` já foram copiados do template no Step 5. Agora inicializar com dados do projeto:
+Os arquivos `.planning/STATE.md` e `.planning/discovery-notes.md` já foram copiados do template no Step 9. Agora inicializar com dados do projeto:
 
 ```bash
 # Substituir placeholders básicos
 sed -i "s/{{PROJECT_NAME}}/$PROJECT_NAME/g" .planning/STATE.md
 sed -i "s/{{DATE}}/$(date +%Y-%m-%d)/g" .planning/STATE.md
-sed -i "s/{{CURRENT_PHASE}}/Fase 0 — Onboarding/g" .planning/STATE.md
+sed -i "s/{{CURRENT_PHASE}}/Onboarding (aguardando client-onboarding)/g" .planning/STATE.md
 sed -i "s/{{DATE}}/$(date +%Y-%m-%d)/g" .planning/discovery-notes.md
 ```
+
+### Step 11.5: Criar PIPELINE.md vazio (placeholder)
+
+```bash
+cat > .planning/PIPELINE.md << 'EOF'
+# PIPELINE.md — [preenchido pelo client-onboarding]
+
+> Este arquivo é o **mapa dinâmico** do projeto. Cada projeto tem um pipeline customizado.
+> Estrutura esperada: ver documentação do `client-onboarding` ou `pipeline-generator`.
+
+## Status
+⏸️ **Vazio** — execute `skill(name="client-onboarding")` para montar o pipeline.
+
+## Formato Esperado
+```
+- [ ] Fase 1: [Nome]
+      Skills: [skill1, skill2]
+      Output: [arquivo/diretório]
+      Shift-Left: [sim/não]
+```
+
+EOF
+```
+
+> 💡 O `client-onboarding` vai **substituir** esse conteúdo quando for executado.
 
 ### Step 12: Preparar README.md
 
@@ -502,15 +537,21 @@ git status
 Confirmar que todos os arquivos de contexto foram criados:
 - ✅ `AGENTS.md` — Protocolos universais
 - ✅ `CLAUDE.md` — Copia para Claude Code
-- ✅ `.mcp.json` — MCPs configurados
+- ✅ `.mcp.json` — MCPs configurados (brave-search, context7, playwright, firecrawl, github)
 - ✅ `.agent/rules/PROJECT.md` — Fonte canônica (aguardando preenchimento no onboarding)
 - ✅ `.planning/STATE.md` — Estado inicial
 - ✅ `.planning/discovery-notes.md` — Memória vazia
+- ✅ `.planning/PIPELINE.md` — Placeholder (será preenchido pelo client-onboarding)
 - ✅ `.agents/skills/` — Skills da agencia (cross-IDE)
-- ✅ `.claude/skills/` — Skills para Claude Code
+- ✅ `.claude/skills/`, `.codex/skills/`, `.gemini/antigravity/skills/` — Cópias por IDE
 - ✅ External skills instalados (Antigravity Kit + Marketing + Design)
 
-> 🎯 **Próximo passo:** Executar `skill(name="client-onboarding")` para preencher `PROJECT.md` e `BRIEFING.md`
+> 🎯 **Próximo passo OBRIGATÓRIO:** Executar `skill(name="client-onboarding")` para:
+> - Entrevistar o cliente socraticamente
+> - Validar stack e hospedagem via MCPs
+> - Gerar `BRIEFING.md`, preencher `PROJECT.md`, e montar `PIPELINE.md` customizado
+>
+> Sem esse passo, o `agencia-executor` não tem como saber o que executar.
 
 ---
 
@@ -519,32 +560,36 @@ Confirmar que todos os arquivos de contexto foram criados:
 Após o init, o executor deve ser chamado automaticamente:
 
 ```
-✅ Projeto inicializado! (v2.3 — Cross-IDE + Skills)
+✅ Projeto inicializado! (v3.0 — Neutro + Cross-IDE)
 
 Ferramenta detectada: [ACTIVE_TOOL]
 
 Estrutura criada:
   📄 AGENTS.md — Protocolos universais (Context Engineering)
   📄 CLAUDE.md — Copia para Claude Code
-  📄 .mcp.json — MCPs configurados
-  📁 .agent/rules/PROJECT.md — Fonte canônica do projeto
-  📁 .planning/STATE.md — Estado atual
-  📁 .planning/discovery-notes.md — Memória dinâmica
-  📁 .agents/skills/ — Skills da agencia (cross-IDE)
-  📁 .claude/skills/ — Skills para Claude Code
+  📄 .mcp.json — MCPs configurados (brave-search, context7, playwright, firecrawl, github)
+  📁 .agent/rules/PROJECT.md — Fonte canônica (vazia, preencher no onboarding)
+  📁 .planning/STATE.md — Estado inicial
+  📁 .planning/discovery-notes.md — Memória dinâmica (vazia)
+  📁 .planning/PIPELINE.md — Placeholder (será montado pelo client-onboarding)
+  📁 .agents/skills/ — Skills da agencia (cross-IDE, COMMITADAS)
+  📁 .claude/skills/, .codex/skills/, .gemini/antigravity/skills/ — Cópias por IDE
   📁 .graphify/graph.json — Knowledge graph
   🔒 .env.local (template)
   🔒 .env.example — Variáveis de ambiente
-  🔒 .gitignore
+  🔒 .gitignore (NÃO ignora .agents/ e afins — essencial para cross-IDE)
 
 Skills instalados:
-  📦 Antigravity Kit (20 agents + 37 skills + 11 workflows)
-  📦 Marketing Skills (38 skills)
-  📦 Design Skills (ui-ux-pro-max, frontend-design, taste-skill, web-design-guidelines)
+  📦 Skills da agência (core): agencia-init, agencia-executor, client-onboarding, pipeline-generator, agencia-verify-work
+  📦 Antigravity Kit (opcional)
+  📦 Marketing Skills (opcional, sob demanda)
+  📦 Design Skills (opcional, sob demanda)
 
-Próximo passo: Iniciar Fase 0 (Onboarding)?
+⚠️ PROJETO AINDA NÃO TEM PIPELINE DEFINIDO.
 
-[Y] → Executa client-onboarding
+Próximo passo: Iniciar onboarding socrático?
+
+[Y] → Executa skill(name="client-onboarding") — arquiteto entrevista e gera PIPELINE.md
 [n] → Aguarda comando manual
 ```
 

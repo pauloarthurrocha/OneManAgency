@@ -18,16 +18,27 @@
 
 ## ✅ Progresso por Fase
 
-| Fase | Status | Arquivo Gerado |
-|------|--------|----------------|
-| 0 — Onboarding | {{PHASE_0_STATUS}} | BRIEFING.md |
-| 1 — Niche Research | {{PHASE_1_STATUS}} | RESEARCH.md |
-| 2 — Competitor Intel | {{PHASE_2_STATUS}} | COMPETITOR_INTEL.md |
-| 3 — Design System | {{PHASE_3_STATUS}} | DESIGN_SYSTEM.md |
-| 4 — Copy Deck | {{PHASE_4_STATUS}} | COPY_DECK.md |
-| 5 — UI Spec | {{PHASE_5_STATUS}} | UI-SPEC.md |
-| 6 — Scaffold | {{PHASE_6_STATUS}} | [código] |
-| 7 — QA & Delivery | {{PHASE_7_STATUS}} | docs/entrega/ |
+> **Fonte de verdade:** `.planning/PIPELINE.md` — cada projeto tem um pipeline customizado.
+> Esta tabela é um **espelho resumido** para leitura rápida. Se conflito, prevalece o PIPELINE.md.
+
+| # | Fase | Status | Output |
+|---|------|--------|--------|
+| — | Aguardando client-onboarding gerar o PIPELINE | ⏸️ | `.planning/PIPELINE.md` |
+
+<!--
+Após o client-onboarding rodar, esta tabela deve ser regenerada com base no PIPELINE.md real do projeto.
+Exemplo (projeto tipo landing_page):
+
+| # | Fase | Status | Output |
+|---|------|--------|--------|
+| 1 | Setup Cloudflare + domínio | ✅ | wrangler.toml |
+| 2 | Copywriting e oferta | ⏳ | .planning/COPY_DECK.md |
+| 3 | Design System | ⏸️ | .planning/DESIGN_SYSTEM.md |
+| ... | ... | ... | ... |
+
+Legenda: ✅ concluída | ⏳ em progresso | ⏸️ pendente | ⚠️ bloqueada
+-->
+
 
 ---
 
