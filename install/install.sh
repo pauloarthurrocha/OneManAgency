@@ -234,7 +234,7 @@ cmd_init() {
   echo "   Execute no seu IDE: skill(name='agencia-init')"
   echo ""
   echo "   Ou manualmente:"
-  echo "   1. Copiar templates de $SKILLS_DIR/templates/"
+  echo "   1. Copiar templates de $AGENCIA_HOME/templates/"
   echo "   2. Copiar skills de $SKILLS_DIR/ para .agents/skills/"
 }
 

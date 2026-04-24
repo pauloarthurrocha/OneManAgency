@@ -64,7 +64,7 @@ skill(name="nome-da-skill")
 | `landing-page-scaffold` | v1.0 | Scaffold de landing pages Next.js | `landing page`, `scaffold`, `next.js lp` |
 | `tailwind-patterns` | v1.0 | Padrões Tailwind CSS | `tailwind`, `css`, `estilos` |
 
-**Fonte:** `~/.claude/skills/` (instaladas globalmente)
+**Fonte:** `~/.agencia-ai/skills/` (instaladas globalmente)
 
 ---
 
@@ -100,7 +100,7 @@ skill(name="nome-da-skill")
 | `sales-enablement` | v1.0 | Material de vendas | `sales deck`, `pitch deck`, `one-pager` |
 | `revops` | v1.0 | Revenue Operations | `revops`, `lead scoring`, `crm automation` |
 
-**Fonte:** `~/.claude/skills/` (instaladas globalmente)
+**Fonte:** `~/.agencia-ai/skills/` (instaladas globalmente)
 
 ---
 
@@ -137,7 +137,7 @@ skill(name="nome-da-skill")
 | `website-cloner` | v1.0 | Clonagem de websites | `clone site`, `replicate`, `reverse engineer` |
 | `web-scraper-intel` | v1.0 | Web scraping para inteligência | `scrape`, `extract`, `crawl` |
 
-**Fonte:** `~/.claude/skills/` (instaladas globalmente)
+**Fonte:** `~/.agencia-ai/skills/` (instaladas globalmente)
 
 ---
 
@@ -157,7 +157,7 @@ skill(name="nome-da-skill")
 | `game-art` | v1.0 | Arte de jogos | `game art`, `assets`, `sprites` |
 | `game-audio` | v1.0 | Áudio de jogos | `game audio`, `sound design`, `music` |
 
-**Fonte:** `~/.claude/skills/` (instaladas globalmente)
+**Fonte:** `~/.agencia-ai/skills/` (instaladas globalmente)
 
 ---
 
@@ -264,7 +264,7 @@ Validation: none     → pula validação automática
 | `gsd-do` | v1.0 | Roteia comando para skill GSD | `gsd do`, `route command` |
 | ... (60+ comandos) | | | |
 
-**Fonte:** `~/.claude/skills/` (instaladas globalmente)
+**Fonte:** `~/.agencia-ai/skills/` (instaladas globalmente)
 
 ---
 
@@ -295,7 +295,7 @@ Validation: none     → pula validação automática
 - [x] 4 scripts Python de validação
 
 ### ✅ Instalado em IDEs (82+ skills cada)
-- [x] Claude Code (`~/.claude/skills/`)
+- [x] Claude Code (`~/.agencia-ai/skills/`)
 - [x] OpenCode (`~/.opencode/skills/`)
 - [x] Antigravity (`~/.gemini/antigravity/skills/`)
 - [ ] Codex (`~/.codex/skills/`) — não detectado

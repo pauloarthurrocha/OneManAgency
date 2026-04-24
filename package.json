@@ -2,7 +2,7 @@
   "name": "@pauloarthurrocha/agencia-ai-adaptavel",
   "version": "3.2.1",
   "description": "Sistema de execução de projetos via IA. Agência AI Adaptável - funciona em qualquer IDE e adapta-se a qualquer projeto.",
-  "main": "index.js",
+  "main": "bin/agencia-ai.js",
   "bin": {
     "agencia-ai": "./bin/agencia-ai.js"
   },
