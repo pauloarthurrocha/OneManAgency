@@ -59,7 +59,7 @@ if (Test-Path "$INSTALL_DIR\.git") {
 Write-Host "📂 Instalando skills em $GLOBAL_SKILLS_DIR..." -ForegroundColor Blue
 New-Item -ItemType Directory -Force -Path $GLOBAL_SKILLS_DIR | Out-Null
 
-$coreSkills = @("agencia-init", "agencia-executor", "client-onboarding", "pipeline-generator", "agencia-verify-work")
+$coreSkills = @("agencia-init", "agencia-executor", "client-onboarding", "pipeline-generator", "agencia-verify-work", "skill-creator")
 foreach ($skill in $coreSkills) {
     $source = "$INSTALL_DIR\$skill"
     $dest = "$GLOBAL_SKILLS_DIR\$skill"
@@ -84,6 +84,29 @@ if (Test-Path "$INSTALL_DIR\templates") {
     Write-Host "  ✅ templates" -ForegroundColor Green
 }
 
+# ── Instalar skills externas (Marketing, etc.) ──
+Write-Host ""
+Write-Host "📦 Instalando skills externas..." -ForegroundColor Blue
+
+# Marketing Skills
+try {
+    $marketingTmp = "$env:TEMP\marketingskills-install"
+    if (Test-Path $marketingTmp) { Remove-Item -Recurse -Force $marketingTmp }
+    git clone --depth 1 "https://github.com/coreyhaines31/marketingskills.git" $marketingTmp 2>$null
+    if (Test-Path "$marketingTmp\skills") {
+        $mSkills = Get-ChildItem "$marketingTmp\skills" -Directory
+        foreach ($skill in $mSkills) {
+            $dest = "$GLOBAL_SKILLS_DIR\$($skill.Name)"
+            if (-not (Test-Path $dest)) {
+                Copy-Item -Recurse $skill.FullName $dest
+                Write-Host "  ✅ $($skill.Name) (marketing)" -ForegroundColor Green
+            }
+        }
+    }
+} catch {
+    Write-Host "  ⚠️  Marketing skills não disponível (offline?)" -ForegroundColor Yellow
+}
+
 # ── Criar cópias por IDE (Windows não suporta symlink bem) ──
 function Install-ForIde {
     param($idePath, $ideName)
@@ -92,19 +115,23 @@ function Install-ForIde {
         $skillsPath = "$idePath\skills"
         New-Item -ItemType Directory -Force -Path $skillsPath | Out-Null
         
-        # Limpar e recriar
         if ([string]::IsNullOrEmpty($skillsPath) -or $skillsPath -eq "C:\\" -or $skillsPath -eq $env:USERPROFILE) {
             Write-Host "⚠️  Pulando $ideName com path inválido" -ForegroundColor Yellow
             return
         }
-        Get-ChildItem $skillsPath -Directory -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force
         
+        # Adicionar/atualizar skills (NUNCA deletar existentes)
+        $copied = 0
         foreach ($skillDir in Get-ChildItem $GLOBAL_SKILLS_DIR -Directory) {
             $target = "$skillsPath\$($skillDir.Name)"
-            Copy-Item -Recurse $skillDir.FullName $target
+            if (-not (Test-Path $target)) {
+                Copy-Item -Recurse $skillDir.FullName $target
+                $copied++
+            }
         }
         
-        Write-Host "  📂 $ideName → $skillsPath" -ForegroundColor Green
+        $total = (Get-ChildItem $skillsPath -Directory).Count
+        Write-Host "  📂 $ideName`: $copied novas | $total total → $skillsPath" -ForegroundColor Green
     }
 }
 

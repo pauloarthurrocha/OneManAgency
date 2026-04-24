@@ -55,8 +55,9 @@ echo "📂 Instalando skills em $GLOBAL_SKILLS_DIR..."
 mkdir -p "$GLOBAL_SKILLS_DIR"
 
 # Copiar skills core
-for skill in agencia-init agencia-executor client-onboarding pipeline-generator agencia-verify-work; do
+for skill in agencia-init agencia-executor client-onboarding pipeline-generator agencia-verify-work skill-creator; do
   if [ -d "$INSTALL_DIR/$skill" ]; then
+    rm -rf "$GLOBAL_SKILLS_DIR/$skill"
     cp -r "$INSTALL_DIR/$skill" "$GLOBAL_SKILLS_DIR/"
     echo "  ✅ $skill"
   fi
@@ -64,8 +65,32 @@ done
 
 # Copiar templates
 if [ -d "$INSTALL_DIR/templates" ]; then
+  rm -rf "$GLOBAL_SKILLS_DIR/templates"
   cp -r "$INSTALL_DIR/templates" "$GLOBAL_SKILLS_DIR/"
   echo "  ✅ templates"
+fi
+
+# ── Instalar skills externas (Marketing) ──
+echo ""
+echo "📦 Instalando skills externas..."
+
+MARKETING_TMP="/tmp/marketingskills-install"
+rm -rf "$MARKETING_TMP"
+if git clone --depth 1 "https://github.com/coreyhaines31/marketingskills.git" "$MARKETING_TMP" 2>/dev/null; then
+  if [ -d "$MARKETING_TMP/skills" ]; then
+    for skill_dir in "$MARKETING_TMP/skills"/*; do
+      if [ -d "$skill_dir" ]; then
+        skill_name=$(basename "$skill_dir")
+        if [ ! -d "$GLOBAL_SKILLS_DIR/$skill_name" ]; then
+          cp -r "$skill_dir" "$GLOBAL_SKILLS_DIR/"
+          echo "  ✅ $skill_name (marketing)"
+        fi
+      fi
+    done
+  fi
+  rm -rf "$MARKETING_TMP"
+else
+  echo "  ⚠️  Marketing skills não disponível (offline?)"
 fi
 
 # ── Criar symlink por IDE ──
@@ -79,15 +104,21 @@ install_for_ide() {
     # Limpar symlinks antigos quebrados
     find "$ide_path/skills" -type l ! -exec test -e {} \; -delete 2>/dev/null || true
     
-    # Criar novos symlinks
+    # Criar symlinks (apenas para skills que não existem ainda)
+    local copied=0
     for skill_dir in "$GLOBAL_SKILLS_DIR"/*; do
       if [ -d "$skill_dir" ]; then
         local skill_name=$(basename "$skill_dir")
-        ln -sf "$skill_dir" "$ide_path/skills/$skill_name" 2>/dev/null || true
+        local target="$ide_path/skills/$skill_name"
+        if [ ! -e "$target" ]; then
+          ln -sf "$skill_dir" "$target" 2>/dev/null || true
+          copied=$((copied + 1))
+        fi
       fi
     done
     
-    echo "  🔗 $ide_name → $ide_path/skills/"
+    local total=$(ls -1 "$ide_path/skills" 2>/dev/null | wc -l)
+    echo "  🔗 $ide_name: $copied novas | $total total → $ide_path/skills/"
   fi
 }
 
