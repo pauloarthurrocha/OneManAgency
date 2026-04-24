@@ -185,61 +185,51 @@ ls -la
 
 ### Step 2: Instalar Skills Externos (Auto-Install)
 
-Instalar skills de repositorios externos usando fallback inteligente:
+Instalar skills de repositórios externos. Priorizar cópia do SSoT local para maior velocidade, com fallback para git clone.
 
 #### 2A: Antigravity Kit
 ```bash
-# Fallback 1: npx (se @vudovn/ag-kit disponivel)
-npx @vudovn/ag-kit init 2>/dev/null
-
-# Fallback 2: skills CLI
-skills add vudovn/antigravity-kit 2>/dev/null
-
-# Fallback 3: gh CLI
-gh skill install vudovn/antigravity-kit 2>/dev/null
-
-# Fallback 4: git clone (ultimo recurso)
-git clone https://github.com/vudovn/antigravity-kit.git /tmp/ag-kit 2>/dev/null
+# Prioridade 1: Buscar versão mais recente online via NPX
+if npx -y @vudovn/ag-kit init 2>/dev/null; then
+  echo "Antigravity Kit instalado via NPX."
+elif [ -d "$HOME/.claude/shared/skills" ]; then
+  # Fallback: Copiar do SSoT global (Modo Offline)
+  cp -r "$HOME/.claude/shared/skills/"* .agents/skills/ 2>/dev/null
+fi
 ```
-
-**O que instala:** 20 agents + 37 skills + 11 workflows
 
 #### 2B: Marketing Skills
 ```bash
-# Fallback 1: skills CLI
-skills add coreyhaines31/marketingskills 2>/dev/null
-
-# Fallback 2: gh CLI (se disponivel)
-gh skill install coreyhaines31/marketingskills 2>/dev/null
-
-# Fallback 3: git clone
-git clone https://github.com/coreyhaines31/marketingskills.git /tmp/marketingskills 2>/dev/null
+# Prioridade 1: Online First (Buscar sempre a última versão do GitHub)
+rm -rf /tmp/marketingskills 2>/dev/null
+if git clone https://github.com/coreyhaines31/marketingskills.git /tmp/marketingskills 2>/dev/null; then
+  cp -r /tmp/marketingskills/* .agents/skills/ 2>/dev/null
+elif [ -d "$HOME/.claude/shared/marketing-skills" ]; then
+  # Fallback: Usar cache local SSoT (Modo Offline)
+  cp -r "$HOME/.claude/shared/marketing-skills/"* .agents/skills/ 2>/dev/null
+fi
 ```
-
-**O que instala:** 38 skills de marketing/CRO/SEO
 
 #### 2C: Design Skills (5 essenciais)
 ```bash
-# Instalar individualmente com fallback
+# Para cada repo, prioriza buscar a última versão online. Se falhar, usa SSoT.
 for REPO in "nextlevelbuilder/ui-ux-pro-max-skill" "anthropics/skills/frontend-design" "Leonxlnx/taste-skill" "vercel-labs/agent-skills" "Dammyjay93/interface-design"; do
-  skills add $REPO 2>/dev/null || \
-  gh skill install $REPO 2>/dev/null || \
-  git clone https://github.com/$REPO.git /tmp/$(basename $REPO) 2>/dev/null
+  SKILL_NAME=$(basename $REPO)
+  rm -rf "/tmp/$SKILL_NAME" 2>/dev/null
+  
+  if git clone "https://github.com/$REPO.git" "/tmp/$SKILL_NAME" 2>/dev/null; then
+    cp -r "/tmp/$SKILL_NAME" .agents/skills/ 2>/dev/null
+  elif [ -d "$HOME/.claude/shared/$SKILL_NAME" ]; then
+    cp -r "$HOME/.claude/shared/$SKILL_NAME" .agents/skills/ 2>/dev/null
+  fi
 done
 ```
 
-**O que instala:**
-- `ui-ux-pro-max` — 50+ estilos, 161 paletas, Design System Generator
-- `frontend-design` — Anti-AI-slop philosophy (Anthropic)
-- `taste-skill` — 9 variantes de taste
-- `agent-skills` — Web design guidelines (Vercel)
-- `interface-design` — Dashboards e apps complexos
+> ⚠️ **Importante:** Não importar TODAS as skills dos repos (token bloat). Apenas as listadas acima.
 
-> ⚠️ **Importante:** Nao importar TODAS as skills dos repos (token bloat). Apenas as listadas acima.
+### Step 3: Copiar Skills da Agência para o Repo
 
-### Step 3: Copiar Skills da Agencia para o Repo
-
-Copiar skills proprietarias da agencia para `.agents/skills/` (cross-IDE):
+Copiar skills proprietárias da agência para `.agents/skills/` (cross-IDE):
 
 ```bash
 # Criar estrutura cross-IDE
@@ -248,15 +238,14 @@ mkdir -p .claude/skills
 mkdir -p .codex/skills
 mkdir -p .gemini/antigravity/skills
 
-# Copiar skills da agencia (do repo local ou remoto)
-AGENCIA_SKILLS="https://github.com/pauloarthurrocha/agencia-ai-adaptavel-skills/.agent/skills/"
+# Copiar skills da agência do SSoT local
+AGENCIA_SKILLS="$HOME/.claude/shared/agencia-adaptavel/skills"
 
-# Se repo da agencia disponivel localmente
 if [ -d "$AGENCIA_SKILLS" ]; then
-  cp -r $AGENCIA_SKILLS/* .agents/skills/
+  cp -r "$AGENCIA_SKILLS/"* .agents/skills/ 2>/dev/null
 fi
 
-# Criar symlinks/copias para cada IDE
+# Criar symlinks/cópias para cada IDE
 # Claude Code
 ln -sf ../../.agents/skills/* .claude/skills/ 2>/dev/null || cp -r .agents/skills/* .claude/skills/
 
@@ -424,8 +413,8 @@ WHATSAPP_MESSAGE=Olá! Vi o site e quero mais informações.
 Copiar templates do `.agent/templates/context-engineering/` do repositório da agência:
 
 ```bash
-# Diretório de templates da agência
-AGENCIA_TEMPLATES="https://github.com/pauloarthurrocha/agencia-ai-adaptavel-skills/.agent/templates/context-engineering"
+# Diretório de templates da agência (SSoT Global)
+AGENCIA_TEMPLATES="~/.claude/shared/agencia-adaptavel/templates/context-engineering"
 
 # 1. AGENTS.md — Protocolos universais (NÃO editar no projeto)
 cp "$AGENCIA_TEMPLATES/AGENTS.md.template" ./AGENTS.md
