@@ -30,25 +30,30 @@ Sistema de **agent skills** para execução de projetos de software via IA. Func
 
 ## 🚀 Instalação
 
-### Opção 1 — NPM (Recomendado)
+> **⚠️ Este pacote é privado.** É publicado no **GitHub Packages** (não no npm público).
 
-Instala globalmente via npm (Node.js >= 18):
+### Opção 1 — GitHub Packages (Privado, Recomendado)
 
+1. **Autenticar no GitHub Packages** (uma vez por máquina):
 ```bash
-npm install -g agencia-ai-adaptavel
+# Crie um token em: Settings > Developer settings > Personal access tokens > Tokens (classic)
+# Permissões necessárias: read:packages, write:packages (se for publicar)
+npm login --registry=https://npm.pkg.github.com
+# Username: seu-usuario-github
+# Password: o token gerado
 ```
 
-**Ou use npx (sem instalar global):**
+2. **Instalar globalmente:**
 ```bash
-npx agencia-ai-adaptavel init
+npm install -g @pauloarthurrocha/agencia-ai-adaptavel --registry=https://npm.pkg.github.com
 ```
 
-**Windows (PowerShell admin):**
-```powershell
-npm install -g agencia-ai-adaptavel
+3. **Ou use npx (sem instalar global):**
+```bash
+npx @pauloarthurrocha/agencia-ai-adaptavel init --registry=https://npm.pkg.github.com
 ```
 
-### Opção 2 — One-liner (Sem NPM)
+### Opção 2 — One-liner (Sem NPM Registry)
 
 **Linux/macOS:**
 ```bash
@@ -60,7 +65,7 @@ curl -fsSL https://raw.githubusercontent.com/pauloarthurrocha/agencia-ai-adaptav
 irm https://raw.githubusercontent.com/pauloarthurrocha/agencia-ai-adaptavel-skills/main/install.ps1 | iex
 ```
 
-### Opção 3 — Git Clone
+### Opção 3 — Git Clone + npm link
 
 ```bash
 git clone https://github.com/pauloarthurrocha/agencia-ai-adaptavel-skills.git ~/.agencia-ai
@@ -71,21 +76,33 @@ cd ~/.agencia-ai && npm link
 
 ## 🏁 Uso Rápido
 
-Após instalar globalmente:
-
 ```bash
-# 1. Criar novo projeto
+# === TERMINAL (fora do IDE) ===
+# 1. Instalar CLI globalmente
+npm install -g agencia-ai-adaptavel
+
+# 2. Instalar recursos do sistema em ~/.agencia-ai/
+agencia-ai install-global
+
+# === IDE (dentro do projeto) ===
+# 3. Criar pasta do projeto
 mkdir meu-projeto && cd meu-projeto
 
-# 2. Inicializar com a Agencia AI
-agencia-ai init
+# 4. Abrir pasta no IDE (Claude, Cursor, OpenCode, etc.)
+# 5. A skill cria a estrutura completa do projeto:
+skill(name="agencia-init")
 
-# 3. Iniciar onboarding (entrevista com o cliente)
+# 6. Iniciar onboarding (entrevista com o cliente)
 skill(name="client-onboarding")
 
-# 4. Executar fases
+# 7. Executar fases
 skill(name="agencia-executor")
 ```
+
+> **🧠 Separacao de responsabilidades:**
+> - **CLI (`agencia-ai`)** = Instala o **sistema** globalmente (`~/.agencia-ai/`)
+> - **Skill (`agencia-init`)** = Cria a **estrutura do projeto** (STATE.md, .planning/, skills cross-IDE)
+> - O CLI **nunca** cria arquivos de projeto. A skill **nunca** instala coisas fora do repo.
 
 ---
 
@@ -93,12 +110,12 @@ skill(name="agencia-executor")
 
 | Dependência | Obrigatória? | Uso | Verificação |
 |---|---|---|---|
-| **Git** | ✅ Sim | Clonar repos de skills | `install.sh` aborta se não tiver |
-| **Node.js + npm** | ⚠️ Recomendado | `npx skills`, MCP servers | `install.sh` avisa, continua com fallback git |
+| **Node.js + npm** | ✅ Sim | Instalar CLI global, MCP servers | `doctor` verifica versão |
+| **Git** | ✅ Sim | Fallback para skills externas | `doctor` verifica |
 | **gh CLI** | ❌ Opcional | Fallback para git clone de skills | Instalável via `npm install -g gh` |
-| **Python 3** | ❌ Opcional | Algumas automações internas | Não obrigatório para iniciar |
+| **Python 3** | ❌ Opcional | Scripts de validação automatizada | Não obrigatório para iniciar |
 
-> 💡 **Nota:** O `agencia-init` tem fallback inteligente. Se `npx skills` não estiver disponível, ele usa `git clone`. Se `git clone` falhar, usa cache local de `~/.agencia-ai/`.
+> 💡 **Nota:** A skill `agencia-init` prioriza `~/.agencia-ai/skills/` (instalado pelo CLI). Só usa `git clone` como fallback se o global não existir. Isso torna o init **10x mais rápido** e funciona offline.
 
 ---
 
@@ -106,14 +123,24 @@ skill(name="agencia-executor")
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  PASSO 0: Usuário abre pasta vazia em qualquer IDE              │
+│  PASSO 0: Terminal — Instalar sistema globalmente               │
+│                                                                  │
+│  npm install -g agencia-ai-adaptavel                            │
+│  agencia-ai install-global   # → ~/.agencia-ai/                 │
 └─────────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│  PASSO 1: skill(name="agencia-init")                            │
+│  PASSO 1: Criar pasta do projeto e abrir no IDE                 │
+│                                                                  │
+│  mkdir meu-projeto && cd meu-projeto                            │
+│  # Abrir no IDE (Claude, Cursor, OpenCode, Codex...)            │
+└─────────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  PASSO 2: skill(name="agencia-init") ← Cria estrutura do projeto│
 │                                                                  │
 │  • Detecta IDE automaticamente                                  │
-│  • Copia skills da agência de ~/.agencia-ai/skills/            │
+│  • Copia skills de ~/.agencia-ai/skills/ (SSoT global)         │
 │  • Cria estrutura cross-IDE (.agents/skills/, .claude/, etc.)   │
 │  • Configura MCPs (.mcp.json)                                   │
 │  • Cria arquivos de contexto (AGENTS.md, PROJECT.md, STATE.md) │
@@ -121,7 +148,7 @@ skill(name="agencia-executor")
 └─────────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│  PASSO 2: skill(name="client-onboarding") ← OBRIGATÓRIO        │
+│  PASSO 3: skill(name="client-onboarding") ← OBRIGATÓRIO        │
 │                                                                  │
 │  • Entrevista socrática adaptativa                              │
 │  • Valida stack e hospedagem via MCPs (brave-search, context7) │
@@ -130,17 +157,17 @@ skill(name="agencia-executor")
 └─────────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│  PASSO 3: skill(name="agencia-executor")                        │
+│  PASSO 4: skill(name="agencia-executor")                        │
 │                                                                  │
 │  • Lê PIPELINE.md                                               │
 │  • Identifica próxima fase pendente                             │
-│  • Carrega skills específicas da fase                           │
+│  • Carrega skills específicas da fase + agentes especializados  │
 │  • Pergunta antes de executar (gate humano)                     │
 │  • Executa → Quality Gate → Atualiza memória                    │
 └─────────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│  PASSO 4: Troca de IDE (ex: OpenCode → Codex)                   │
+│  PASSO 5: Troca de IDE (ex: OpenCode → Codex)                   │
 │                                                                  │
 │  • Abre mesmo projeto no Codex                                  │
 │  • Lê .codex/skills/ (copiados do repo)                         │
@@ -150,20 +177,28 @@ skill(name="agencia-executor")
 
 ---
 
-## 🛠 Comandos CLI (após instalação)
+## 🛠 Comandos CLI (Gerenciamento Global)
+
+> O CLI **não cria projetos**. Ele instala o sistema em `~/.agencia-ai/` para que as skills funcionem.
 
 ```bash
-# Inicializar projeto novo
-agencia-ai init [pasta]
+# Instalar/atualizar recursos globais (skills, agentes, presets, scripts)
+agencia-ai install-global
 
 # Verificar instalação
 agencia-ai doctor
 
-# Atualizar skills da agência
+# Atualizar skills da agência (com backup automático)
 agencia-ai update
 
 # Ver versão
 agencia-ai version
+```
+
+**Para criar um projeto novo, use a skill dentro do IDE:**
+```bash
+skill(name="agencia-init")        # Cria estrutura do projeto
+skill(name="client-onboarding")   # Entrevista e gera PIPELINE.md
 ```
 
 ---
@@ -172,23 +207,31 @@ agencia-ai version
 
 ```
 agencia-ai-adaptavel-skills/
-├── agencia-init/              # Skill de inicialização
-├── agencia-executor/          # Orquestrador dinâmico
-├── client-onboarding/         # Arquiteto socrático
-├── pipeline-generator/        # Gerador de PIPELINE.md
-├── agencia-verify-work/       # Quality Gate
+├── bin/
+│   └── agencia-ai.js          # CLI global (install-global, update, doctor)
+├── agencia-init/              # Skill de inicialização de projetos
+├── agencia-executor/          # Orquestrador dinâmico (v3.2 — multi-agent)
+├── client-onboarding/         # Arquiteto socrático (v3.2 — questionários por playbook)
+├── pipeline-generator/        # Gerador de PIPELINE.md (9 playbooks + PRDs)
+├── agencia-verify-work/       # Quality Gate (v2.0 — scripts Python)
 ├── skill-creator/             # Criação/otimização de skills (Anthropic-based)
-├── templates/                 # Templates de Context Engineering
-│   └── context-engineering/
-│       ├── AGENTS.md.template
-│       ├── PROJECT.md.template
-│       ├── STATE.md.template
-│       ├── discovery-notes.md.template
-│       ├── CHANGELOG_LLM.md.template
-│       └── CONTEXT_SNIPPET.md.template
+├── .agents/agents/            # 10 Agentes especializados (orchestrator, frontend, backend...)
+├── presets/                   # 4 Presets estéticos (tech-organico, luxo-noturno...)
+├── scripts/                   # Scripts Python de validação (checklist.py, verify_all.py)
+├── templates/
+│   ├── context-engineering/   # Templates de Context Engineering
+│   │   ├── AGENTS.md.template
+│   │   ├── PROJECT.md.template
+│   │   ├── STATE.md.template
+│   │   ├── discovery-notes.md.template
+│   │   ├── CHANGELOG_LLM.md.template
+│   │   └── CONTEXT_SNIPPET.md.template
+│   └── lp-components/         # 7 Templates de componentes LP
 ├── install.sh                 # Instalador Linux/macOS
 ├── install.ps1                # Instalador Windows
-├── sync-skills.ps1            # Script de sincronização
+├── postinstall.js             # Instalação automática após npm install
+├── package.json               # Pacote npm (@pauloarthurrocha/agencia-ai-adaptavel)
+├── .npmrc                     # Registry GitHub Packages
 └── README.md                  # Este arquivo
 ```
 

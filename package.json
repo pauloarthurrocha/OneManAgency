@@ -1,5 +1,5 @@
 {
-  "name": "agencia-ai-adaptavel",
+  "name": "@pauloarthurrocha/agencia-ai-adaptavel",
   "version": "3.2.0",
   "description": "Sistema de execução de projetos via IA. Agência AI Adaptável - funciona em qualquer IDE e adapta-se a qualquer projeto.",
   "main": "index.js",
@@ -7,7 +7,11 @@
     "agencia-ai": "./bin/agencia-ai.js"
   },
   "scripts": {
-    "postinstall": "node scripts/postinstall.js"
+    "postinstall": "node scripts/postinstall.js",
+    "publish:github": "npm publish --registry=https://npm.pkg.github.com"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "keywords": [
     "ai",

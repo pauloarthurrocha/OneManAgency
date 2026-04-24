@@ -1,9 +1,10 @@
 ---
 name: agencia-init
-description: Inicializa um projeto de cliente da Agência AI Adaptável do zero. Detecta IDE ativa, instala skills externas e da agência, configura MCPs, cria estrutura Context Engineering e PIPELINE.md vazio. Neutro quanto ao tipo de projeto (não pressupõe LP/Next.js). Próximo passo após o init é sempre o `client-onboarding` para definir o PIPELINE. Funciona cross-IDE (Claude Code, OpenCode, Antigravity, Cursor, Codex).
+description: Inicializa um projeto de cliente da Agência AI Adaptável do zero. Detecta IDE ativa, instala skills da agência (priorizando ~/.agencia-ai/ instalado pelo CLI global), configura MCPs, cria estrutura Context Engineering e PIPELINE.md vazio. Neutro quanto ao tipo de projeto. Próximo passo após o init é sempre o `client-onboarding`. Funciona cross-IDE (Claude Code, OpenCode, Antigravity, Cursor, Codex).
 metadata:
-  version: 3.0.0
+  version: 3.1.0
   changelog:
+    - v3.1: Prioriza ~/.agencia-ai/skills/ (instalado pelo CLI global) sobre git clone/npx. Remove initProject do CLI — agora é função exclusiva da skill.
     - v3.0: Neutro quanto ao tipo de projeto (remove criação hardcoded de DESIGN_SYSTEM/COPY_DECK/UI-SPEC). Cria PIPELINE.md vazio. Conserta .gitignore (não ignora mais .agents/.claude/.codex/.gemini). Adiciona context7 ao .mcp.json. Inclui client-onboarding e pipeline-generator nas skills copiadas.
     - v2.3: Auto-install external skills (Antigravity Kit, Marketing Skills, Design Skills)
     - v2.3: Detect IDE (Claude, OpenCode, Antigravity, Cursor, Codex)
@@ -22,14 +23,15 @@ You are the project initializer for the Agencia AI Adaptavel. Your job is to pre
 
 ## O Que Este Init Faz (Automatico)
 
+> **Pré-requisito:** O usuário já instalou o CLI global (`npm install -g agencia-ai-adaptavel`) e rodou `agencia-ai install-global`. Isso popula `~/.agencia-ai/` com skills, agentes, presets e templates.
+
 ```
 1. Detect which IDE the user is using (Claude, OpenCode, Antigravity, Cursor, Codex)
 2. Check if folder is empty or has content
-3. Install external skills:
-   a. Antigravity Kit (npx @vudovn/ag-kit init)
-   b. Marketing Skills (skills add coreyhaines31/marketingskills)
-   c. Design Skills (UI-UX Pro Max, Anthropic Frontend, Taste, Vercel Guidelines)
-4. Copy AGENCY skills to .agents/skills/ (inside repo)
+3. Install skills (prioridade inteligente):
+   a. PRIORIDADE 1: Copiar de ~/.agencia-ai/skills/ (SSoT global, instalado pelo CLI)
+   b. PRIORIDADE 2: Fallback para npx/git clone (se global não existir)
+4. Copy AGENCY skills to .agents/skills/ (inside repo) — cross-IDE
 5. Create directory structure
 6. Init Git (if not exists)
 7. Configure .gitignore
@@ -38,6 +40,16 @@ You are the project initializer for the Agencia AI Adaptavel. Your job is to pre
 10. Configure MCPs in project (.mcp.json)
 11. Create .env.local template
 12. Initial commit with EVERYTHING (code + skills + context)
+```
+
+**Fluxo esperado:**
+```bash
+# Terminal (fora do IDE):
+npm install -g agencia-ai-adaptavel
+agencia-ai install-global
+
+# IDE (dentro do projeto):
+skill(name="agencia-init")  # Encontra tudo em ~/.agencia-ai/
 ```
 
 ---
@@ -181,53 +193,90 @@ ls -la
 - **Tem arquivos:** Perguntar se quer fazer init parcial ou apenas configurar o que falta
 - **Já tem .planning/:** Pular para Step 11 (apenas verificar integridade)
 
-### Step 2: Instalar Skills Externos (Auto-Install)
+### Step 2: Instalar Skills (Prioridade Inteligente)
 
-Instalar skills de repositórios externos. Priorizar cópia do SSoT local para maior velocidade, com fallback para git clone.
+> **Regra de Ouro:** O CLI global (`agencia-ai install-global`) já instalou tudo em `~/.agencia-ai/`. A skill deve usar isso como fonte primária. Só fazer fallback para internet se o global não existir.
 
-#### 2A: Antigravity Kit
+#### 2A: Verificar Instalação Global
 ```bash
-# Prioridade 1: Buscar versão mais recente online via NPX
-if npx -y @vudovn/ag-kit init 2>/dev/null; then
-  echo "Antigravity Kit instalado via NPX."
-elif [ -d "$HOME/.agencia-ai/skills" ]; then
-  # Fallback: Copiar do SSoT global (Modo Offline)
-  cp -r "$HOME/.agencia-ai/skills/"* .agents/skills/ 2>/dev/null
+AGENCIA_GLOBAL="$HOME/.agencia-ai"
+
+if [ -d "$AGENCIA_GLOBAL/skills" ]; then
+  echo "✓ Instalação global encontrada em $AGENCIA_GLOBAL"
+  USE_GLOBAL=true
+else
+  echo "⚠ Instalação global não encontrada."
+  echo "  Execute fora do IDE: agencia-ai install-global"
+  echo "  Ou use fallback online (mais lento)..."
+  USE_GLOBAL=false
 fi
 ```
 
-#### 2B: Marketing Skills
+#### 2B: Copiar Skills da Agência (Prioridade 1 — Global)
 ```bash
-# Prioridade 1: Online First (Buscar sempre a última versão do GitHub)
-rm -rf /tmp/marketingskills 2>/dev/null
-if git clone https://github.com/coreyhaines31/marketingskills.git /tmp/marketingskills 2>/dev/null; then
-  cp -r /tmp/marketingskills/* .agents/skills/ 2>/dev/null
-elif [ -d "$HOME/.agencia-ai/marketing-skills" ]; then
-  # Fallback: Usar cache local SSoT (Modo Offline)
-  cp -r "$HOME/.agencia-ai/marketing-skills/"* .agents/skills/ 2>/dev/null
-fi
-```
-
-#### 2C: Design Skills (5 essenciais)
-```bash
-# Para cada repo, prioriza buscar a última versão online. Se falhar, usa SSoT.
-for REPO in "nextlevelbuilder/ui-ux-pro-max-skill" "anthropics/skills/frontend-design" "Leonxlnx/taste-skill" "vercel-labs/agent-skills" "Dammyjay93/interface-design"; do
-  SKILL_NAME=$(basename $REPO)
-  rm -rf "/tmp/$SKILL_NAME" 2>/dev/null
+if [ "$USE_GLOBAL" = true ]; then
+  # Copiar skills core da agência
+  for SKILL in agencia-init agencia-executor client-onboarding pipeline-generator agencia-verify-work skill-creator; do
+    if [ -d "$AGENCIA_GLOBAL/skills/$SKILL" ]; then
+      cp -r "$AGENCIA_GLOBAL/skills/$SKILL" .agents/skills/
+      echo "  ✓ $SKILL (global)"
+    fi
+  done
   
-  if git clone "https://github.com/$REPO.git" "/tmp/$SKILL_NAME" 2>/dev/null; then
-    cp -r "/tmp/$SKILL_NAME" .agents/skills/ 2>/dev/null
-  elif [ -d "$HOME/.agencia-ai/$SKILL_NAME" ]; then
-    cp -r "$HOME/.agencia-ai/$SKILL_NAME" .agents/skills/ 2>/dev/null
+  # Copiar agentes especializados (referência, não obrigatório no projeto)
+  if [ -d "$AGENCIA_GLOBAL/agents" ]; then
+    mkdir -p .agents/agents
+    cp -r "$AGENCIA_GLOBAL/agents/"* .agents/agents/ 2>/dev/null
+    echo "  ✓ Agentes especializados (global)"
   fi
-done
+  
+  # Copiar presets (para uso no design-system-generator)
+  if [ -d "$AGENCIA_GLOBAL/presets" ]; then
+    mkdir -p .agents/presets
+    cp -r "$AGENCIA_GLOBAL/presets/"* .agents/presets/ 2>/dev/null
+    echo "  ✓ Presets estéticos (global)"
+  fi
+  
+  # Copiar templates
+  if [ -d "$AGENCIA_GLOBAL/templates" ]; then
+    mkdir -p .agents/templates
+    cp -r "$AGENCIA_GLOBAL/templates/"* .agents/templates/ 2>/dev/null
+    echo "  ✓ Templates de componentes (global)"
+  fi
+fi
+```
+
+#### 2C: Fallback Online (Prioridade 2 — Se Global Não Existir)
+
+Só execute se `USE_GLOBAL=false`:
+
+```bash
+if [ "$USE_GLOBAL" = false ]; then
+  echo "Instalando skills via fallback online..."
+  
+  # Antigravity Kit
+  npx -y @vudovn/ag-kit init 2>/dev/null || echo "  ✗ Antigravity Kit (npx falhou)"
+  
+  # Marketing Skills
+  rm -rf /tmp/marketingskills 2>/dev/null
+  git clone https://github.com/coreyhaines31/marketingskills.git /tmp/marketingskills 2>/dev/null && \
+    cp -r /tmp/marketingskills/* .agents/skills/ 2>/dev/null || echo "  ✗ Marketing Skills"
+  
+  # Design Skills
+  for REPO in "nextlevelbuilder/ui-ux-pro-max-skill" "anthropics/skills/frontend-design"; do
+    SKILL_NAME=$(basename $REPO)
+    rm -rf "/tmp/$SKILL_NAME" 2>/dev/null
+    git clone "https://github.com/$REPO.git" "/tmp/$SKILL_NAME" 2>/dev/null && \
+      cp -r "/tmp/$SKILL_NAME" .agents/skills/ 2>/dev/null || echo "  ✗ $SKILL_NAME"
+  done
+fi
 ```
 
 > ⚠️ **Importante:** Não importar TODAS as skills dos repos (token bloat). Apenas as listadas acima.
 
-### Step 3: Copiar Skills da Agência para o Repo
+### Step 3: Criar Estrutura Cross-IDE
 
-Copiar skills proprietárias da agência para `.agents/skills/` (cross-IDE):
+Criar symlinks/cópias para que qualquer IDE que abrir o projeto encontre as skills:
 
 ```bash
 # Criar estrutura cross-IDE
@@ -235,13 +284,6 @@ mkdir -p .agents/skills
 mkdir -p .claude/skills
 mkdir -p .codex/skills
 mkdir -p .gemini/antigravity/skills
-
-# Copiar skills da agência do SSoT local
-AGENCIA_SKILLS="$HOME/.agencia-ai/skills"
-
-if [ -d "$AGENCIA_SKILLS" ]; then
-  cp -r "$AGENCIA_SKILLS/"* .agents/skills/ 2>/dev/null
-fi
 
 # Criar symlinks/cópias para cada IDE
 # Claude Code
@@ -254,10 +296,10 @@ ln -sf ../../.agents/skills/* .codex/skills/ 2>/dev/null || cp -r .agents/skills
 ln -sf ../../../.agents/skills/* .gemini/antigravity/skills/ 2>/dev/null || cp -r .agents/skills/* .gemini/antigravity/skills/
 ```
 
-**Skills da agencia a copiar (núcleo — obrigatórias):**
+**Skills da agencia que devem estar em `.agents/skills/` (núcleo — obrigatórias):**
 - `agencia-init/` — Este init (auto-bootstrap)
-- `agencia-executor/` — Executor dinâmico v3.1
-- `client-onboarding/` — Arquiteto socrático v3.1 (gera PIPELINE.md)
+- `agencia-executor/` — Executor dinâmico v3.2
+- `client-onboarding/` — Arquiteto socrático v3.2 (gera PIPELINE.md)
 - `pipeline-generator/` — Playbooks por tipo de projeto (auxiliar do onboarding)
 - `agencia-verify-work/` — Quality Gate pós-fase
 - `skill-creator/` — Criação e otimização de novas skills (baseado no Anthropic skill-creator)
@@ -272,8 +314,6 @@ ln -sf ../../../.agents/skills/* .gemini/antigravity/skills/ 2>/dev/null || cp -
 - `deployment-procedures/`, `server-management/` — deploy
 - `seo-audit/`, `schema-markup/`, `ai-seo/` — SEO
 - `gsd-ui-phase/`, `gsd-ui-review/`, `gsd-code-review/` — QA
-- `docx/`, `pdf/`, `pptx/`, `xlsx/` — geração de documentos (Anthropic skills)
-- `brand-guidelines/`, `web-artifacts-builder/`, `doc-coauthoring/` — design e conteúdo (Anthropic skills)
 
 ### Step 4: Criar CLAUDE.md
 
@@ -423,31 +463,49 @@ WHATSAPP_MESSAGE=Olá! Vi o site e quero mais informações.
 
 ### Step 9: Arquivos de Contexto (Context Engineering v2.1)
 
-Copiar templates do `.agent/templates/context-engineering/` do repositório da agência:
+Copiar templates do SSoT Global (`~/.agencia-ai/templates/context-engineering/`):
 
 ```bash
 # Diretório de templates da agência (SSoT Global)
-AGENCIA_TEMPLATES="~/.agencia-ai/templates/context-engineering"
+AGENCIA_TEMPLATES="$HOME/.agencia-ai/templates/context-engineering"
 
-# 1. AGENTS.md — Protocolos universais (NÃO editar no projeto)
-cp "$AGENCIA_TEMPLATES/AGENTS.md.template" ./AGENTS.md
-
-# 2. .agent/rules/PROJECT.md — Fonte canônica (EDITAR no onboarding)
-mkdir -p .agent/rules
-cp "$AGENCIA_TEMPLATES/PROJECT.md.template" ./.agent/rules/PROJECT.md
-
-# 3. .planning/STATE.md — Estado do projeto
-mkdir -p .planning
-cp "$AGENCIA_TEMPLATES/STATE.md.template" ./.planning/STATE.md
-
-# 4. .planning/discovery-notes.md — Memória dinâmica
-cp "$AGENCIA_TEMPLATES/discovery-notes.md.template" ./.planning/discovery-notes.md
-
-# 5. .planning/CHANGELOG_LLM.md — Changelog para IAs
-cp "$AGENCIA_TEMPLATES/CHANGELOG_LLM.md.template" ./.planning/CHANGELOG_LLM.md
-
-# 6. .planning/CONTEXT_SNIPPET.md — Snippet para IAs externas
-cp "$AGENCIA_TEMPLATES/CONTEXT_SNIPPET.md.template" ./.planning/CONTEXT_SNIPPET.md
+# Verificar se templates globais existem
+if [ -d "$AGENCIA_TEMPLATES" ]; then
+  echo "✓ Templates globais encontrados"
+  
+  # 1. AGENTS.md — Protocolos universais (NÃO editar no projeto)
+  cp "$AGENCIA_TEMPLATES/AGENTS.md.template" ./AGENTS.md
+  
+  # 2. .agent/rules/PROJECT.md — Fonte canônica (EDITAR no onboarding)
+  mkdir -p .agent/rules
+  cp "$AGENCIA_TEMPLATES/PROJECT.md.template" ./.agent/rules/PROJECT.md
+  
+  # 3. .planning/STATE.md — Estado do projeto
+  mkdir -p .planning
+  cp "$AGENCIA_TEMPLATES/STATE.md.template" ./.planning/STATE.md
+  
+  # 4. .planning/discovery-notes.md — Memória dinâmica
+  cp "$AGENCIA_TEMPLATES/discovery-notes.md.template" ./.planning/discovery-notes.md
+  
+  # 5. .planning/CHANGELOG_LLM.md — Changelog para IAs
+  cp "$AGENCIA_TEMPLATES/CHANGELOG_LLM.md.template" ./.planning/CHANGELOG_LLM.md
+  
+  # 6. .planning/CONTEXT_SNIPPET.md — Snippet para IAs externas
+  cp "$AGENCIA_TEMPLATES/CONTEXT_SNIPPET.md.template" ./.planning/CONTEXT_SNIPPET.md
+else
+  echo "⚠ Templates globais não encontrados em $AGENCIA_TEMPLATES"
+  echo "  Execute fora do IDE: agencia-ai install-global"
+  echo "  Criando arquivos de contexto vazios..."
+  
+  # Criar estrutura mínima manualmente
+  mkdir -p .agent/rules .planning
+  touch ./AGENTS.md
+  touch ./.agent/rules/PROJECT.md
+  touch ./.planning/STATE.md
+  touch ./.planning/discovery-notes.md
+  touch ./.planning/CHANGELOG_LLM.md
+  touch ./.planning/CONTEXT_SNIPPET.md
+fi
 ```
 
 **Preencher placeholders:**
@@ -458,7 +516,7 @@ cp "$AGENCIA_TEMPLATES/CONTEXT_SNIPPET.md.template" ./.planning/CONTEXT_SNIPPET.
 - `.planning/CHANGELOG_LLM.md` → deixar vazio (será preenchido automaticamente)
 - `.planning/CONTEXT_SNIPPET.md` → preencher stack + estado (atualizar a cada sessão)
 
-> 💡 **Dica:** Se os templates não estiverem disponíveis localmente, usar `skill(name="agencia-init")` que contém os templates embutidos.
+> 💡 **Dica:** Se os templates não estiverem disponíveis localmente, execute `agencia-ai install-global` no terminal (fora do IDE) para popular `~/.agencia-ai/`.
 
 ### Step 10: Graphify Init
 
@@ -576,9 +634,10 @@ Confirmar que todos os arquivos de contexto foram criados:
 Após o init, o executor deve ser chamado automaticamente:
 
 ```
-✅ Projeto inicializado! (v3.0 — Neutro + Cross-IDE)
+✅ Projeto inicializado! (v3.1 — Neutro + Cross-IDE + Global-aware)
 
 Ferramenta detectada: [ACTIVE_TOOL]
+Fonte de skills: ~/.agencia-ai/ (instalado pelo CLI global)
 
 Estrutura criada:
   📄 AGENTS.md — Protocolos universais (Context Engineering)
@@ -592,6 +651,9 @@ Estrutura criada:
   📁 .planning/PIPELINE.md — Placeholder (será montado pelo client-onboarding)
   📁 .agents/skills/ — Skills da agencia (cross-IDE, COMMITADAS)
   📁 .claude/skills/, .codex/skills/, .gemini/antigravity/skills/ — Cópias por IDE
+  📁 .agents/agents/ — Agentes especializados (orchestrator, frontend, backend...)
+  📁 .agents/presets/ — Presets estéticos (tech-organico, luxo-noturno...)
+  📁 .agents/templates/ — Templates de componentes LP
   📁 .graphify/graph.json — Knowledge graph
   🔒 .env.local (template)
   🔒 .env.example — Variáveis de ambiente
@@ -599,9 +661,9 @@ Estrutura criada:
 
 Skills instalados:
   📦 Skills da agência (core): agencia-init, agencia-executor, client-onboarding, pipeline-generator, agencia-verify-work
-  📦 Antigravity Kit (opcional)
-  📦 Marketing Skills (opcional, sob demanda)
-  📦 Design Skills (opcional, sob demanda)
+  📦 Agentes especializados: 10 agentes (frontend, backend, security, test...)
+  📦 Presets estéticos: 4 presets
+  📦 Templates de componentes: 7 templates LP
 
 ⚠️ PROJETO AINDA NÃO TEM PIPELINE DEFINIDO.
 
@@ -624,7 +686,9 @@ Próximo passo: Iniciar onboarding socrático?
 - **SEMPRE** crie `CLAUDE.md` quando criar `AGENTS.md`
 - **NUNCA** use `--no-verify` em commits
 - **NUNCA** faça `git push --force` em main/develop/master
+- **SEMPRE** priorize `~/.agencia-ai/skills/` (global) sobre git clone/npx
+- **SEMPRE** avise o usuário se `~/.agencia-ai/` não existir (ele precisa rodar `agencia-ai install-global`)
 
 ---
 
-*Agencia Init v2.3 — Deep initialization cross-IDE com auto-install de skills e MCPs.*
+*Agencia Init v3.1 — Deep initialization cross-IDE com prioridade ao SSoT Global (`~/.agencia-ai/`).*
