@@ -1,6 +1,6 @@
 ---
 name: agencia-init
-description: Inicializa um projeto de cliente da Agência AI Adaptável do zero. Detecta IDE ativa, copia skills core de ~/.agencia-ai/, BAIXA skills externas atualizadas (Marketing Skills, UI/UX Pro Max, Anthropic, Antigravity Kit) via git clone, configura MCPs, cria estrutura Context Engineering e PIPELINE.md vazio. Neutro quanto ao tipo de projeto. Próximo passo após o init é sempre o `client-onboarding`. Funciona cross-IDE (Claude Code, OpenCode, Antigravity, Cursor, Codex).
+description: Inicializa um projeto de cliente da Agência AI Adaptável do zero. Detecta IDE ativa, copia skills core de ~/.agencia-ai/, BAIXA skills externas atualizadas (Marketing Skills, UI/UX Pro Max, Anthropic, Antigravity Kit) via git clone, configura MCPs, cria estrutura Context Engineering e PIPELINE.md vazio. Neutro quanto ao tipo de projeto. Próximo passo após o init é sempre o `client-onboarding`. Funciona cross-IDE (Claude Code, OpenCode, Antigravity, Cursor, Codex, Roo Code).
 metadata:
   version: 3.2.0
   changelog:
@@ -27,7 +27,7 @@ You are the project initializer for the Agencia AI Adaptavel. Your job is to pre
 > **Pré-requisito:** O usuário já instalou o CLI global (`npm install -g agencia-ai-adaptavel`) e rodou `agencia-ai install-global`. Isso popula `~/.agencia-ai/` com skills core, agentes, presets e templates.
 
 ```
-1. Detect which IDE the user is using (Claude, OpenCode, Antigravity, Cursor, Codex)
+1. Detect which IDE the user is using (Claude, OpenCode, Antigravity, Cursor, Codex, Roo Code)
 2. Check if folder is empty or has content
 3. Install skills core (prioridade inteligente):
    a. Copiar de ~/.agencia-ai/skills/ (SSoT global, instalado pelo CLI)
@@ -124,10 +124,11 @@ cliente-projeto/
 ### Skills Commitados no Repo (Cross-IDE)
 
 ```
-.agents/skills/       → Codex, Cursor, Antigravity leem
+.agents/skills/       → Codex, Cursor, Antigravity, Roo Code leem
 .claude/skills/       → Claude Code le
 .codex/skills/        → Codex le
 .gemini/antigravity/skills/ → Antigravity le
+.roo/skills/          → Roo Code le
 ```
 
 **Resultado:** Qualquer IDE que abrir este projeto encontra as skills automaticamente.
@@ -157,6 +158,7 @@ cliente-projeto/
 | Antigravity | `~/.gemini/antigravity/skills/` | `ls ~/.gemini/` |
 | Codex | `~/.codex/skills/` | `ls ~/.codex/` |
 | Cursor | `~/.cursor/skills/` | `ls ~/.cursor/` |
+| Roo Code | `~/.roo/skills/` | `ls ~/.roo/` |
 
 **Fallback:** Se nenhuma detectada, perguntar ao usuario.
 
@@ -173,9 +175,10 @@ ls ~/.claude/ 2>/dev/null && echo "CLAUDE"
 ls ~/.gemini/ 2>/dev/null && echo "ANTIGRAVITY"
 ls ~/.codex/ 2>/dev/null && echo "CODEX"
 ls ~/.cursor/ 2>/dev/null && echo "CURSOR"
+ls ~/.roo/ 2>/dev/null && echo "ROO"
 ```
 
-Guardar em variavel: `ACTIVE_TOOL` (ex: `opencode`, `claude`, `antigravity`, `codex`, `cursor`)
+Guardar em variavel: `ACTIVE_TOOL` (ex: `opencode`, `claude`, `antigravity`, `codex`, `cursor`, `roo`)
 
 Se nenhuma detectada:
 ```
@@ -185,6 +188,7 @@ Qual ferramenta voce esta usando?
 [3] Antigravity IDE
 [4] Codex (VS Code)
 [5] Cursor
+[6] Roo Code (VS Code)
 ```
 
 ### Step 1: Detectar Estado
@@ -356,6 +360,7 @@ Criar symlinks/cópias para que qualquer IDE que abrir o projeto encontre as ski
 mkdir -p .agents/skills
 mkdir -p .claude/skills
 mkdir -p .codex/skills
+mkdir -p .roo/skills
 mkdir -p .gemini/antigravity/skills
 
 # Criar symlinks/cópias para cada IDE
@@ -364,6 +369,9 @@ ln -sf ../../.agents/skills/* .claude/skills/ 2>/dev/null || cp -r .agents/skill
 
 # Codex
 ln -sf ../../.agents/skills/* .codex/skills/ 2>/dev/null || cp -r .agents/skills/* .codex/skills/
+
+# Roo Code
+ln -sf ../../.agents/skills/* .roo/skills/ 2>/dev/null || cp -r .agents/skills/* .roo/skills/
 
 # Antigravity
 ln -sf ../../../.agents/skills/* .gemini/antigravity/skills/ 2>/dev/null || cp -r .agents/skills/* .gemini/antigravity/skills/
@@ -520,7 +528,7 @@ next-env.d.ts
 .planning/HANDOFF.json
 .continue-here.md
 
-# IMPORTANTE: NÃO ignorar .agents/, .claude/, .codex/, .gemini/
+# IMPORTANTE: NÃO ignorar .agents/, .claude/, .codex/, .gemini/, .roo/
 # Essas pastas contêm as skills que precisam ser commitadas para
 # continuidade cross-IDE. Se ignorar, outra IDE/PC não acha as skills.
 
@@ -707,8 +715,8 @@ Confirmar que todos os arquivos de contexto foram criados:
 - ✅ `.planning/CHANGELOG_LLM.md` — Changelog para IAs
 - ✅ `.planning/CONTEXT_SNIPPET.md` — Snippet para IAs externas
 - ✅ `.planning/PIPELINE.md` — Placeholder (será preenchido pelo client-onboarding)
-- ✅ `.agents/skills/` — Skills da agencia (cross-IDE)
-- ✅ `.claude/skills/`, `.codex/skills/`, `.gemini/antigravity/skills/` — Cópias por IDE
+- ✅ `.agents/skills/` — Skills da agencia (cross-IDE, COMMITADAS)
+- ✅ `.claude/skills/`, `.codex/skills/`, `.roo/skills/`, `.gemini/antigravity/skills/` — Cópias por IDE
 - ✅ External skills instalados (Antigravity Kit + Marketing + Design)
 
 > 🎯 **Próximo passo OBRIGATÓRIO:** Executar `skill(name="client-onboarding")` para:
@@ -742,7 +750,7 @@ Estrutura criada:
   📁 .planning/CONTEXT_SNIPPET.md — Snippet para IAs externas
   📁 .planning/PIPELINE.md — Placeholder (será montado pelo client-onboarding)
   📁 .agents/skills/ — Skills da agencia + externas (cross-IDE, COMMITADAS)
-  📁 .claude/skills/, .codex/skills/, .gemini/antigravity/skills/ — Cópias por IDE
+  📁 .claude/skills/, .codex/skills/, .roo/skills/, .gemini/antigravity/skills/ — Cópias por IDE
   📁 .agents/agents/ — Agentes especializados (orchestrator, frontend, backend...)
   📁 .agents/presets/ — Presets estéticos (tech-organico, luxo-noturno...)
   📁 .agents/templates/ — Templates de componentes LP
