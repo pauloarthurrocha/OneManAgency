@@ -1,0 +1,45 @@
+{
+  "model": "opencode-go/deepseek-v4-pro",
+  "provider": "opencode-go",
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "reasoning_effort": "high",
+  "system_prompt": "You are an expert software engineering agent. You have access to the skill() tool to load specialized instructions. When given a complex task, break it down into steps, load relevant skills, and execute methodically. Always verify your work before declaring completion.",
+  "tools": {
+    "skill": true,
+    "read": true,
+    "edit": true,
+    "bash": true,
+    "write": true
+  },
+  "context": {
+    "max_tokens": 524288,
+    "compaction": "auto",
+    "compression_threshold": 0.8
+  },
+  "mcp": {
+    "servers": [
+      {
+        "name": "brave-search",
+        "command": "npx",
+        "args": ["-y", "@brave/brave-search-mcp-server"],
+        "env": {
+          "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+        }
+      },
+      {
+        "name": "context7",
+        "command": "npx",
+        "args": ["-y", "@upstash/context7-mcp"]
+      },
+      {
+        "name": "github",
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-github"],
+        "env": {
+          "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+        }
+      }
+    ]
+  }
+}
