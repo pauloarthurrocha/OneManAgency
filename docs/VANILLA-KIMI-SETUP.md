@@ -133,15 +133,18 @@ Resultado: 1x tokens, 1x tempo
 
 ## 🛠 MCPs configurados
 
-O `settings.json` já inclui:
+O `opencode.json` inclui 6 MCPs com uma regra de custo: ferramentas gratuitas primeiro, Firecrawl só quando necessário.
 
-| MCP | Função | Substituía no OMO |
+| MCP | Função | Custo |
 |---|---|---|
-| **brave-search** | Pesquisa web | Websearch do OMO |
-| **context7** | Documentação de libs | Context7 do OMO |
-| **github** | Busca código no GitHub | grep.app do OMO |
+| **web-search** (open-websearch) | Pesquisa web 9 motores + fetch conteúdo | **Grátis** |
+| **playwright** | Automação de browser, testes, screenshots | **Grátis** (local) |
+| **context7** | Documentação de bibliotecas | **Grátis** |
+| **sequential-thinking** | Raciocínio estruturado multi-step | **Grátis** |
+| **github** | PRs, issues, busca de código | **Grátis** |
+| **firecrawl** | Crawl, map, extract (avançado) | **Pago** (500 créditos one-time) |
 
-> 💡 **Dica:** Com 1M de contexto no DeepSeek V4 Pro, você pode manter mais código no contexto ao mesmo tempo, reduzindo a necessidade de buscas externas.
+> ⚠️ **Regra de custo:** Use `web-search` (grátis) para buscas/scrapes simples. Firecrawl **só** para crawl/map/extract. Preserva os 500 créditos gratuitos.
 
 ---
 

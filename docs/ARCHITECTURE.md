@@ -91,3 +91,43 @@ agencia-ai install-global [--only|--exclude|--dry-run]
 *   **Skill (`agencia-init`):** Responsável pela infraestrutura do projeto. É executada de dentro de uma IDE e cria a estrutura de pastas, arquivos de contexto e a Camada 3 de skills. **A skill nunca instala nada fora do repositório do projeto.**
 
 Esta separação garante que o sistema seja leve, seguro e não interfira com arquivos globais do usuário de forma inesperada.
+
+---
+
+## 🧰 Stack de MCPs (Model Context Protocol)
+
+A Agência AI Adaptável utiliza uma stack de 6 MCPs otimizada para custo zero no dia a dia, com Firecrawl reservado apenas para operações avançadas.
+
+### MCPs Gratuitos (uso diário)
+
+| MCP | Pacote | Função |
+|---|---|---|
+| **web-search** | `open-websearch@latest` | Pesquisa web multi-engine (9 motores: Bing, DuckDuckGo, Brave, Exa, etc.) + fetch de conteúdo. Sem API key. |
+| **playwright** | `@playwright/mcp` | Automação de browser local (Chromium). Testes, screenshots, páginas JS-renderizadas. Zero custo. |
+| **context7** | Remote `mcp.context7.com/mcp` | Documentação atualizada de bibliotecas e frameworks. Rate limit gratuito. |
+| **sequential-thinking** | `@modelcontextprotocol/server-sequential-thinking` | Raciocínio estruturado para problemas complexos (arquitetura, debug, algoritmos). |
+| **github** | `@modelcontextprotocol/server-github` | PRs, issues, busca de código. Usa token do `gh` CLI. |
+
+### MCP Pago (uso reservado)
+
+| MCP | Pacote | Função | Quando usar |
+|---|---|---|---|
+| **firecrawl** | `firecrawl-mcp` | Crawl multi-página, map de URLs, extração estruturada | Só quando `web-search` não cobre |
+
+### Regra de Prioridade
+
+```
+1. web-search (grátis) → busca web + fetch de páginas
+2. playwright (grátis) → páginas com JS pesado, screenshots
+3. context7 (grátis) → documentação de libs
+4. firecrawl (pago) → APENAS crawl/map/extract
+```
+
+### Arquivos de Configuração
+
+| Arquivo | Local | Propósito |
+|---|---|---|
+| `opencode.json` | `~/.config/opencode/` | Config oficial MCPs + modelo (OpenCode) |
+| `settings.json` | `~/.opencode/` | System prompt + instruções (OpenCode) |
+| `mcp.json` | `.roo/mcp.json` | MCPs para Roo Code |
+| `opencode-vanilla-config.json` | Projeto | Template de referência |

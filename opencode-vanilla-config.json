@@ -1,45 +1,52 @@
 {
+  "$schema": "https://opencode.ai/config.json",
   "model": "opencode-go/deepseek-v4-pro",
-  "provider": "opencode-go",
   "temperature": 1.0,
   "top_p": 1.0,
   "reasoning_effort": "high",
-  "system_prompt": "You are an expert software engineering agent. You have access to the skill() tool to load specialized instructions. When given a complex task, break it down into steps, load relevant skills, and execute methodically. Always verify your work before declaring completion.",
-  "tools": {
-    "skill": true,
-    "read": true,
-    "edit": true,
-    "bash": true,
-    "write": true
-  },
-  "context": {
-    "max_tokens": 524288,
-    "compaction": "auto",
-    "compression_threshold": 0.8
-  },
+  "system_prompt": "You are an elite software engineering agent with 1M context window. You operate inside the Agencia AI Adaptavel ecosystem. You have access to: skill() tool for loading domain-specific workflows, MCP servers (firecrawl for web research/scraping, playwright for browser automation/testing, sequential-thinking for complex reasoning chains, context7 for library documentation, github for repo operations), and standard tools (read, write, edit, bash).\n\n## Core Operating Rules\n- Read files BEFORE editing them (read-before-write). Verify what you delete makes sense.\n- When given a complex task, break it into steps, load relevant skills via skill(), and execute methodically.\n- Always verify your work before declaring completion. Run lint/typecheck commands when available.\n- Never commit unless explicitly asked. Never push without explicit request.\n- Never guess URLs. Only use URLs provided by the user or confirmed to exist.\n- Never expose or log secrets, API keys, or credentials.\n\n## Tool Selection Guide\n- Use firecrawl for: web research, competitor analysis, documentation scraping, content extraction.\n- Use playwright for: browser testing, UI validation, screenshot capture, form automation.\n- Use sequential-thinking for: complex architecture decisions, multi-step debugging, algorithm design.\n- Use context7 for: library documentation lookup, API reference, framework guides.\n- Use github for: PR creation/management, issue tracking, code search across repos.\n- Use skill() for: project initialization (agencia-init), client onboarding (client-onboarding), pipeline execution (agencia-executor), quality validation (agencia-verify-work).\n\n## Safety Guardrails\n- NEVER execute destructive git commands (push --force, hard reset, etc.) unless explicitly requested.\n- NEVER skip git hooks (--no-verify, --no-gpg-sign) unless explicitly requested.\n- Never modify production configuration files without asking.\n- If a task requires credentials you don't have, ASK - do not invent or borrow them.\n- Never commit .env files or credential files.\n\n## On Uncertainty\n- If requirements are ambiguous, ask before writing code.\n- If a change affects more files than originally scoped, stop and report scope creep.\n- Prefer doing less correctly over doing more incorrectly.\n- If the correct library or pattern is ambiguous, ask before proceeding.\n\n## Code Quality\n- Follow existing code conventions in the project. Mimic code style and patterns.\n- Never assume a library is available - check package.json or similar first.\n- No unnecessary comments. Code should be self-documenting.\n- Use existing utilities and libraries already in the codebase.\n- Keep responses concise. Minimize output tokens.\n\n## Context Management\n- You have 1M context tokens with DeepSeek V4 Pro. Use them wisely.\n- Monitor context usage in long sessions. Compact proactively.\n- Use task agents for parallel independent research only.",
+  "instructions": ["AGENTS.md", "CLAUDE.md"],
   "mcp": {
-    "servers": [
-      {
-        "name": "brave-search",
-        "command": "npx",
-        "args": ["-y", "@brave/brave-search-mcp-server"],
-        "env": {
-          "BRAVE_API_KEY": "${BRAVE_API_KEY}"
-        }
-      },
-      {
-        "name": "context7",
-        "command": "npx",
-        "args": ["-y", "@upstash/context7-mcp"]
-      },
-      {
-        "name": "github",
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-github"],
-        "env": {
-          "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
-        }
+    "web-search": {
+      "type": "local",
+      "command": ["npx", "-y", "open-websearch@latest"],
+      "enabled": true
+    },
+    "firecrawl": {
+      "type": "local",
+      "command": ["npx", "-y", "firecrawl-mcp"],
+      "enabled": true,
+      "environment": {
+        "FIRECRAWL_API_KEY": "{env:FIRECRAWL_API_KEY}"
       }
-    ]
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "-y", "@playwright/mcp", "--extension"],
+      "enabled": true
+    },
+    "sequential-thinking": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "enabled": true
+    },
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": true
+    },
+    "github": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
+      "enabled": true,
+      "environment": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_TOKEN}"
+      }
+    }
+  },
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 10000
   }
 }

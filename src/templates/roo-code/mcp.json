@@ -3,20 +3,21 @@
   // Copie este arquivo para .roo/mcp.json na raiz do seu projeto
   // Ou adicione estas configurações em ~/.roo/mcp_settings.json para uso global
   "mcpServers": {
-    "brave-search": {
+    "web-search": {
       "command": "npx",
-      "args": ["-y", "@brave/brave-search-mcp-server"],
-      "env": {
-        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
-      }
+      "args": ["-y", "open-websearch@latest"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp", "--extension"]
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
     },
     "context7": {
       "command": "npx",
       "args": ["-y", "@upstash/context7-mcp"]
-    },
-    "playwright": {
-      "command": "npx",
-      "args": ["-y", "@executeautomation/playwright-mcp-server"]
     },
     "firecrawl": {
       "command": "npx",
