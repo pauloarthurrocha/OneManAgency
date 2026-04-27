@@ -43,6 +43,9 @@ next-env.d.ts
 HANDOFF.md
 docs/internal/
 
+# IDE test artifacts (not part of distribution)
+.roo/
+
 # IMPORTANTE: NÃO ignorar .agents/, .claude/, .codex/, .gemini/
 # Essas pastas contêm as skills que precisam ser commitadas para
 # continuidade cross-IDE. Se ignorar, outra IDE/PC não acha as skills.

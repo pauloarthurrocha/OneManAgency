@@ -26,6 +26,7 @@ const IDE_TARGETS = [
   { name: 'codex', parent: '.codex', skills: '.codex/skills' },
   { name: 'cursor', parent: '.cursor', skills: '.cursor/skills' },
   { name: 'antigravity', parent: '.gemini/antigravity', skills: '.gemini/antigravity/skills' },
+  { name: 'roo', parent: '.roo', skills: '.roo/skills' },
   { name: 'gemini-cli', parent: '.gemini', skills: '.gemini/skills' },
 ];
 

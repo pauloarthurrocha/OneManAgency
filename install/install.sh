@@ -28,6 +28,7 @@ IDE=""
 [ -d "$HOME/.gemini" ] && IDE="$IDE antigravity"
 [ -d "$HOME/.codex" ] && IDE="$IDE codex"
 [ -d "$HOME/.cursor" ] && IDE="$IDE cursor"
+[ -d "$HOME/.roo" ] && IDE="$IDE roo"
 
 if [ -n "$IDE" ]; then
   echo "✅ IDE(s) detected:$IDE"

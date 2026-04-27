@@ -9,7 +9,7 @@
 
 ## 🎯 Propósito
 
-Sistema de **agent skills** para execução de projetos de software via IA. Funciona em qualquer IDE (Claude Code, OpenCode, Antigravity, Codex, Cursor) e suporta qualquer tipo de projeto (Landing Page, SaaS, Automação Python, Low-Ticket, etc.).
+Sistema de **agent skills** para execução de projetos de software via IA. Funciona em qualquer IDE (Claude Code, OpenCode, Antigravity, Codex, Cursor, Roo Code) e suporta qualquer tipo de projeto (Landing Page, SaaS, Automação Python, Low-Ticket, etc.).
 
 **Filosofia:** Não prescreve fases rígidas. O `client-onboarding` entrevista o cliente e gera um `PIPELINE.md` customizado. O `agencia-executor` executa fase a fase, carregando as skills corretas para cada contexto.
 
@@ -142,6 +142,7 @@ skill(name="agencia-executor")
 │   • ~/.cursor/skills/     (se Cursor detectado)                 │
 │   • ~/.codex/skills/      (se Codex detectado)                  │
 │   • ~/.opencode/skills/   (se OpenCode detectado)               │
+│   • ~/.roo/skills/        (se Roo Code detectado)               │
 │   • ~/.gemini/antigravity/skills/ (se Antigravity detectado)    │
 └─────────────────────────────────────────────────────────────────┘
                               ↓
@@ -183,10 +184,10 @@ skill(name="agencia-executor")
 └─────────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│  PASSO 5: Troca de IDE (ex: OpenCode → Codex)                   │
+│  PASSO 5: Troca de IDE (ex: OpenCode → Roo Code)               │
 │                                                                  │
-│  • Abre mesmo projeto no Codex                                  │
-│  • Lê .codex/skills/ (copiados do repo)                         │
+│  • Abre mesmo projeto no Roo Code                                │
+│  • Lê .roo/skills/ (copiados do repo)                            │
 │  • Lê .planning/STATE.md → continua de onde parou               │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -277,7 +278,7 @@ Sistema de memória distribuído entre arquivos:
 A primeira fase técnica do PIPELINE **sempre** configura deploy (wrangler.toml, vercel.json, Dockerfile). Isso evita descobrir incompatibilidades no final.
 
 ### Cross-IDE Continuity
-As pastas `.agents/skills/`, `.claude/skills/`, `.codex/skills/`, `.gemini/antigravity/skills/` são **commitadas no repo do projeto**. Qualquer IDE que abrir o projeto encontra as skills automaticamente.
+As pastas `.agents/skills/`, `.claude/skills/`, `.codex/skills/`, `.roo/skills/`, `.gemini/antigravity/skills/` são **commitadas no repo do projeto**. Qualquer IDE que abrir o projeto encontra as skills automaticamente.
 
 ---
 

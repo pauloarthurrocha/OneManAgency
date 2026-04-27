@@ -34,6 +34,7 @@ if (Test-Path "$env:USERPROFILE\.claude") { $IDE += "claude" }
 if (Test-Path "$env:USERPROFILE\.gemini") { $IDE += "antigravity" }
 if (Test-Path "$env:USERPROFILE\.codex") { $IDE += "codex" }
 if (Test-Path "$env:USERPROFILE\.cursor") { $IDE += "cursor" }
+if (Test-Path "$env:USERPROFILE\.roo") { $IDE += "roo" }
 
 if ($IDE.Count -gt 0) {
     Write-Host "✅ IDE(s) detected: $($IDE -join ', ')" -ForegroundColor Green
