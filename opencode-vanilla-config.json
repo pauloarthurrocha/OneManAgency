@@ -12,7 +12,7 @@
       "command": ["npx", "-y", "open-websearch@latest"],
       "enabled": true
     },
-    "firecrawl": {
+    "firecrawl-mcp": {
       "type": "local",
       "command": ["npx", "-y", "firecrawl-mcp"],
       "enabled": true,
