@@ -2,9 +2,9 @@
 name: client-onboarding
 description: Arquiteto Socrático da Agência AI Adaptável v3.2. Conduz entrevista adaptativa com perguntas específicas por tipo de projeto (SaaS, LP, Python, etc.), valida stack e deploy em tempo real via MCPs, e gera BRIEFING.md, PROJECT.md e PIPELINE.md customizados. Agora com questionários socráticos por playbook e presets estéticos integrados. Invocada pelo agencia-executor quando não existe PIPELINE.md, ou diretamente pelo usuário ao iniciar um novo projeto.
 metadata:
-  version: 3.2.0
+  version: 3.3.0
   changelog:
-    - v3.3: Adicionada Etapa 1.5 de Consultoria Proativa (Anti-Alucinação). IA faz benchmarking de mercado e sugere features/módulos ocultos antes de fechar o escopo, sempre validando com o cliente.
+    - v3.3: Adicionada Etapa 2.5 Consultoria de Design System (Âncora Visual). Integra biblioteca awesome-design-md (71+ templates) para recomendação inteligente de design baseada em tipo de projeto, público-alvo e nicho. Gera .planning/DESIGN.md como fonte da verdade visual.
     - v3.2: Perguntas socráticas específicas por playbook (SaaS, LP, Python, Low-ticket). Integração com presets estéticos e templates de componentes LP.
     - v3.1: 6 playbooks (LP pura, LP Next.js, SaaS, automação Python, low-ticket, script, híbrido). Entrevista adaptativa (sem contador fixo). Anti-patterns refinados com trade-offs. Check de MCPs disponíveis. Invocação documentada. Alinhamento com CHANGELOG_LLM.md e CONTEXT_SNIPPET.md.
     - v3.0: Refatoração para arquitetura socrática e dinâmica (sem fases fixas). Shift-Left Deploy. Consulta a MCPs.
@@ -233,6 +233,94 @@ Se o cliente insistir em uma stack incompatível, **aponte o risco explicitament
 
 **Shift-Left obrigatório:** a primeira fase técnica do PIPELINE **SEMPRE** configura deploy (wrangler.toml, vercel.json, Dockerfile, .github/workflows, etc.). Exceção justificada: se for script local que nunca vai pra produção, o PROJECT.md registra isso.
 
+---
+
+### Etapa 2.5 — Consultoria de Design System (Âncora Visual)
+
+> ⚡ **Só se aplica a projetos com UI** (LP, SaaS, Low-ticket, Mobile). Para automações Python ou scripts de dados, pular direto para Etapa 3.
+
+Neste ponto você já sabe:
+- ✅ Tipo de projeto (SaaS, LP, fintech, etc.)
+- ✅ Público-alvo (devs, consumidores, enterprise, luxo)
+- ✅ Objetivo de negócio
+- ✅ Stack técnica definida
+- ❌ Cores, tipografia, identidade visual → **ainda não definidas**
+
+É aqui que a **Design Library** entra. O `agencia-init` clonou 71+ templates de design em `.agents/design-library/` (baseados em marcas reais como Vercel, Stripe, Notion, Linear, Supabase, etc.).
+
+#### Protocolo de Recomendação Inteligente
+
+**1. Análise Silenciosa (sem output para o cliente):**
+
+Cruze os dados que já coletou para criar um perfil visual:
+
+| Dado Coletado | Implicação Visual |
+|---|---|
+| SaaS técnico para devs | Dark mode, monospace accents, tons neutros (ex: Vercel, Linear, Supabase) |
+| LP de produto digital (info-produto) | Cores quentes/urgentes, tipografia bold, alta energia (ex: Stripe checkout, Notion warm) |
+| Fintech / pagamentos | Azul institucional, trust signals, clean (ex: Stripe, Revolut, Mercury) |
+| E-commerce / varejo | Vibrante, imagens grandes, CTAs coloridos (ex: Shopify, Gumroad) |
+| Health / wellness | Tons verdes/suaves, espaço negativo, serenidade (ex: Calm, Headspace style) |
+| Luxo / premium | Preto e dourado, tipografia serif, minimalismo extremo |
+| Educação / cursos | Amigável, colorido mas organizado (ex: Notion, Linear) |
+| B2B Enterprise | Formal, azul-cinza, tipografia sans-serif limpa (ex: Datadog, PlanetScale) |
+
+**2. Verificar disponibilidade:**
+
+```bash
+ls .agents/design-library/ 2>/dev/null | head -20
+```
+
+Se a pasta não existe ou está vazia, avise:
+> *"A biblioteca de design não foi instalada. Vou criar o design system do zero na fase de Design do pipeline. Quer que eu rode o clone manualmente agora?"*
+
+**3. Apresentar recomendação (máx 3 opções):**
+
+> *"Analisando que seu projeto é um **[TIPO]** voltado para **[PÚBLICO]**, com foco em **[OBJETIVO]**, recomendo estes design systems como base:*
+>
+> *1. **[Template A]** — [1 frase descrevendo a estética e por que combina]*
+> *2. **[Template B]** — [1 frase descrevendo a estética e por que combina]*
+> *3. **[Template C]** — [1 frase alternativa com estilo diferente]*
+>
+> *Cada um deles define paleta de cores, tipografia, espaçamento e estilo de componentes. Qual mais se parece com a identidade que você imagina? Ou prefere ver mais opções?"*
+
+**Exemplos de mapeamento (para a IA):**
+
+| Perfil do Projeto | Templates Recomendados |
+|---|---|
+| SaaS dev-tools | `vercel`, `linear`, `supabase`, `planetscale` |
+| SaaS B2B genérico | `stripe`, `notion`, `datadog`, `clerk` |
+| Fintech / pagamentos | `stripe`, `revolut`, `mercury` |
+| LP info-produto (high-energy) | `gumroad`, `lemonsqueezy`, `cal` |
+| LP minimalista / premium | `vercel`, `linear`, `resend` |
+| E-commerce / marketplace | `shopify`, `gumroad` |
+| Dev-tools / API | `supabase`, `planetscale`, `resend` |
+| Educação / comunidade | `notion`, `cal`, `dub` |
+| Health / wellness | Templates com tons claros — adaptar de `cal` ou `notion` |
+
+**4. Copiar o template escolhido:**
+
+Após validação do cliente:
+
+```bash
+cp ".agents/design-library/[TEMPLATE_ESCOLHIDO]/DESIGN.md" ".planning/DESIGN.md"
+echo "✓ Design System base copiado para .planning/DESIGN.md"
+```
+
+**5. Registrar a escolha:**
+
+Adicionar em `.planning/discovery-notes.md`:
+```
+## Design System
+- Template base: [NOME] (awesome-design-md)
+- Motivo: [1 frase: por que esse template foi escolhido]
+- Adaptações previstas: [cores da marca, logo, tom específico]
+```
+
+> ⚠️ **Regra crítica para fases posteriores:** O `.planning/DESIGN.md` é a **âncora visual do projeto**. Na fase de Design System do PIPELINE, o agente/executor **DEVE consultar este arquivo** como ponto de partida, adaptando (não substituindo) para a identidade específica do cliente.
+
+---
+
 ### Etapa 3 — Geração dos Artefatos
 
 Com Propósito + Engenharia validados, gere **4 arquivos**:
@@ -324,9 +412,10 @@ Preencher os placeholders `{{...}}` do template já existente. Obrigatórios:
       Skills: copywriting, marketing-psychology
       Output: .planning/COPY_DECK.md
 
-- [ ] Fase 3: Design System (cores, tipografia, componentes)
+- [ ] Fase 3: Design System (baseado em .planning/DESIGN.md + adaptações)
       Skills: psychology-color-picker, frontend-design
       Output: .planning/DESIGN_SYSTEM.md
+      Âncora: .planning/DESIGN.md (template awesome-design-md escolhido na Etapa 2.5)
 
 - [ ] Fase 4: UI Spec (wireframe das seções)
       Skills: gsd-ui-phase, web-design-guidelines
@@ -360,9 +449,10 @@ Preencher os placeholders `{{...}}` do template já existente. Obrigatórios:
       Skills: copywriting, page-cro
       Output: .planning/COPY_DECK.md
 
-- [ ] Fase 4: Design System
+- [ ] Fase 4: Design System (baseado em .planning/DESIGN.md + adaptações)
       Skills: psychology-color-picker, design-system-generator, ui-ux-pro-max
       Output: .planning/DESIGN_SYSTEM.md + tokens.css
+      Âncora: .planning/DESIGN.md (template awesome-design-md escolhido na Etapa 2.5)
 
 - [ ] Fase 5: UI Spec detalhado
       Skills: gsd-ui-phase, frontend-design
@@ -388,9 +478,10 @@ Preencher os placeholders `{{...}}` do template já existente. Obrigatórios:
       Skills: architecture, database-design
       Output: .planning/ARCHITECTURE.md, prisma/schema.prisma (ou SQL)
 
-- [ ] Fase 3: UX/UI Spec e fluxos
+- [ ] Fase 3: UX/UI Spec e fluxos (referência visual: .planning/DESIGN.md)
       Skills: gsd-ui-phase, frontend-design
       Output: .planning/UI-SPEC.md com fluxos de auth, onboarding, core
+      Âncora: .planning/DESIGN.md (template awesome-design-md escolhido na Etapa 2.5)
 
 - [ ] Fase 4: Scaffold Next.js + Auth + tRPC/Route Handlers
       Skills: nextjs-react-expert, nodejs-best-practices
@@ -452,9 +543,10 @@ Preencher os placeholders `{{...}}` do template já existente. Obrigatórios:
       Skills: copywriting, marketing-psychology, page-cro
       Output: .planning/COPY_DECK.md
 
-- [ ] Fase 4: Design system rápido + UI
+- [ ] Fase 4: Design system rápido + UI (baseado em .planning/DESIGN.md)
       Skills: psychology-color-picker, frontend-design
       Output: .planning/DESIGN_SYSTEM.md + .planning/UI-SPEC.md
+      Âncora: .planning/DESIGN.md (template awesome-design-md escolhido na Etapa 2.5)
 
 - [ ] Fase 5: LP HTML/CSS responsiva
       Skills: frontend-design, tailwind-patterns

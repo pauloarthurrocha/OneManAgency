@@ -101,10 +101,11 @@ Um único arquivo: `.planning/PIPELINE.md`
         - Mínimo 5 seções (problema, solução, benefícios, prova, CTA)
         - Objeções tratadas em FAQ ou seção dedicada
 
-- [ ] Fase 4: Design system (cores, tipografia, tokens)
+- [ ] Fase 4: Design system (baseado em .planning/DESIGN.md + adaptações)
       Skills: psychology-color-picker, frontend-design
       Output: .planning/DESIGN_SYSTEM.md + landing/tokens.css
       Shift-Left: não
+      Âncora: .planning/DESIGN.md (template awesome-design-md escolhido na Etapa 2.5)
       Critérios de aceite:
         - Paleta coerente com psicologia do público-alvo
         - Tipografia par definida (display + body)
@@ -183,11 +184,12 @@ Um único arquivo: `.planning/PIPELINE.md`
         - Mínimo 5 seções (problema, solução, benefícios, prova, CTA)
         - Objeções tratadas em FAQ ou seção dedicada
 
-- [ ] Fase 4: Design system (cores, tipografia, tokens)
+- [ ] Fase 4: Design system (baseado em .planning/DESIGN.md + adaptações)
       Agent: design-specialist
       Skills: psychology-color-picker, frontend-design
       Output: .planning/DESIGN_SYSTEM.md + app/tokens.css ou tailwind.config.js
       Shift-Left: não
+      Âncora: .planning/DESIGN.md (template awesome-design-md escolhido na Etapa 2.5)
       Validation: none
       Critérios de aceite:
         - Paleta coerente com psicologia do público-alvo
@@ -276,10 +278,11 @@ Um único arquivo: `.planning/PIPELINE.md`
         - Índices críticos identificados
         - RLS policies definidas (se Supabase)
 
-- [ ] Fase 4: UX/UI dos fluxos principais
+- [ ] Fase 4: UX/UI dos fluxos principais (referência visual: .planning/DESIGN.md)
       Agent: design-specialist
       Skills: gsd-ui-phase, frontend-design
       Output: .planning/UI-SPEC.md com fluxos de auth, onboarding, core
+      Âncora: .planning/DESIGN.md (template awesome-design-md escolhido na Etapa 2.5)
       Critérios de aceite:
         - Fluxo de signup → onboarding → core feature mapeado
         - Empty states definidos
@@ -402,9 +405,10 @@ Um único arquivo: `.planning/PIPELINE.md`
       Skills: copywriting, marketing-psychology, page-cro
       Output: .planning/COPY_DECK.md
 
-- [ ] Fase 4: Design system rápido
+- [ ] Fase 4: Design system rápido (baseado em .planning/DESIGN.md)
       Skills: psychology-color-picker, frontend-design
       Output: .planning/DESIGN_SYSTEM.md
+      Âncora: .planning/DESIGN.md (template awesome-design-md escolhido na Etapa 2.5)
 
 - [ ] Fase 5: LP HTML/CSS + integração de checkout
       Skills: frontend-design, tailwind-patterns
@@ -451,9 +455,10 @@ Um único arquivo: `.planning/PIPELINE.md`
       Output: app.json/pubspec.yaml, CI configurada
       Shift-Left: sim
 
-- [ ] Fase 2: UX/UI + design system mobile-first
+- [ ] Fase 2: UX/UI + design system mobile-first (referência: .planning/DESIGN.md)
       Skills: mobile-design, frontend-design
       Output: .planning/UI-SPEC.md + tokens
+      Âncora: .planning/DESIGN.md (template awesome-design-md escolhido na Etapa 2.5)
 
 - [ ] Fase 3: Navegação e telas principais
       Skills: mobile-design

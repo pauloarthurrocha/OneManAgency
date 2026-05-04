@@ -347,6 +347,18 @@ if git clone --depth 1 https://github.com/vudovn/antigravity-kit.git /tmp/antigr
 else
   echo "  ⚠ Antigravity Kit indisponível (offline?)"
 fi
+
+# Awesome Design MD — 71+ templates de design systems (Vercel, Stripe, Notion, Linear, etc.)
+rm -rf /tmp/awesome-design-md 2>/dev/null
+if git clone --depth 1 https://github.com/VoltAgent/awesome-design-md.git /tmp/awesome-design-md 2>/dev/null; then
+  if [ -d "/tmp/awesome-design-md/design-systems" ]; then
+    mkdir -p ".agents/design-library"
+    cp -r /tmp/awesome-design-md/design-systems/* ".agents/design-library/"
+    echo "  ✓ Awesome Design MD ($(ls -d .agents/design-library/*/ 2>/dev/null | wc -l) templates)"
+  fi
+else
+  echo "  ⚠ Awesome Design MD indisponível (offline?)"
+fi
 ```
 
 > ⚠️ **Importante:** Se algum git clone falhar (offline), o init continua usando o que está em `~/.agencia-ai/` ou já foi copiado. Nunca travar por falta de internet.

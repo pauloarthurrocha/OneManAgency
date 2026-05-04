@@ -1,7 +1,7 @@
-# Agencia AI Adaptável — Skills v3.2
+# Agencia AI Adaptável — Skills v3.3
 
 > **Repo:** github.com/pauloarthurrocha/agencia-ai-adaptavel-skills
-> **Versão:** 3.2.0 (Agentes Especializados + Orquestração Multi-Agent + Validação Automatizada)
+> **Versão:** 3.3.0 (Design System Intelligence + Awesome Design MD + Âncora Visual)
 > **Formato:** Agent Skills (SKILL.md)
 > **NPM (GitHub Packages):** `npm install -g @pauloarthurrocha/agencia-ai-adaptavel --registry=https://npm.pkg.github.com`
 
@@ -20,7 +20,7 @@ Sistema de **agent skills** para execução de projetos de software via IA. Func
 | Skill | Versão | Descrição |
 |---|---|---|
 | `agencia-init` | v3.0 | Inicialização de projetos. Detecta IDE, configura MCPs, cria estrutura Context Engineering. **Próximo passo sempre: `client-onboarding`** |
-| `client-onboarding` | v3.2 | Arquiteto Socrático. Entrevista adaptativa com **questionários por playbook** (SaaS, LP, Python, Low-ticket). Valida stack/deploy via MCPs |
+| `client-onboarding` | v3.3 | Arquiteto Socrático. Entrevista adaptativa com **questionários por playbook** + **Etapa 2.5: Consultoria de Design System** (71+ templates awesome-design-md). Gera `.planning/DESIGN.md` como âncora visual |
 | `pipeline-generator` | v1.0 | Gera PIPELINE.md a partir do briefing. Contém 9 playbooks. **Novo:** Fase "Arquitetura Técnica" com PRDs para SaaS/Full-stack |
 | `agencia-executor` | v3.2 | Orquestrador dinâmico. **Novo:** Suporte a **agentes especializados por fase** e **orquestração multi-agent** (execução paralela) |
 | `agencia-verify-work` | v2.0 | Quality Gate pós-fase. **Novo:** Integração automática com **scripts Python** (`checklist.py`, `verify_all.py`) |
@@ -161,6 +161,7 @@ skill(name="agencia-executor")
 │  • Cria estrutura cross-IDE (.agents/skills/, .claude/, etc.)   │
 │  • Configura MCPs (.mcp.json)                                   │
 │  • Cria arquivos de contexto (AGENTS.md, PROJECT.md, STATE.md) │
+│  • Clona design-library (71+ templates awesome-design-md)      │
 │  • Cria PIPELINE.md vazio (placeholder)                        │
 └─────────────────────────────────────────────────────────────────┘
                               ↓
@@ -169,7 +170,8 @@ skill(name="agencia-executor")
 │                                                                  │
 │  • Entrevista socrática adaptativa                              │
 │  • Valida stack e hospedagem via MCPs (brave-search, context7) │
-│  • Gera BRIEFING.md + preenche PROJECT.md                       │
+│  • Etapa 2.5: Consultoria de Design (awesome-design-md)        │
+│  • Gera BRIEFING.md + .planning/DESIGN.md + PROJECT.md          │
 │  • Invoca pipeline-generator para criar PIPELINE.md             │
 └─────────────────────────────────────────────────────────────────┘
                               ↓
@@ -271,6 +273,7 @@ Sistema de memória distribuído entre arquivos:
 - **AGENTS.md** — Protocolos universais (não editar no projeto)
 - **PROJECT.md** — Fonte canônica do projeto (stack, guardrails)
 - **STATE.md** — Estado atual (progresso, bloqueios)
+- **DESIGN.md** — Âncora visual do projeto (template awesome-design-md escolhido)
 - **discovery-notes.md** — Memória dinâmica (regras aprendidas)
 - **CHANGELOG_LLM.md** — Histórico para IAs
 
@@ -301,6 +304,12 @@ O instalador da Agência AI Adaptável foi projetado para ser **não-destrutivo*
 ---
 
 ## 📝 Changelog
+
+### v3.3.0 — Design System Intelligence (Awesome Design MD)
+- **Etapa 2.5: Consultoria de Design** no `client-onboarding` — IA analisa perfil do projeto e recomenda templates de design
+- **71+ Design Templates** (Vercel, Stripe, Notion, Linear, Supabase, etc.) clonados automaticamente pelo `agencia-init`
+- **Âncora Visual** (`.planning/DESIGN.md`) — fonte da verdade para eliminar alucinações de design
+- **Playbooks atualizados** — todas as fases de Design System agora referenciam `.planning/DESIGN.md` como base
 
 ### v3.2.0 — Agentes Especializados + Validação Automatizada
 - **10 Agentes Especializados** em `src/agents/` (frontend, backend, security, etc.)
