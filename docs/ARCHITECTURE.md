@@ -27,7 +27,7 @@ Esta é a fonte única de verdade do sistema. É populada automaticamente pelo s
 O instalador detecta quais IDEs estão presentes no sistema e propaga as skills da Camada 1 para as pastas de skills específicas de cada ferramenta.
 
 *   **Idempotência:** Pode ser executado múltiplas vezes sem efeitos colaterais.
-*   **Não-Destrutivo:** O sistema **NUNCA** sobrescreve skills existentes nestas pastas. Se uma skill com o mesmo nome já existir, ela é preservada para respeitar customizações do usuário.
+*   **Não-Destrutivo para skills de terceiros:** O sistema **NUNCA** sobrescreve skills existentes nestas pastas que não pertençam à Agência AI. Skills core da agência são atualizadas (substituídas) para garantir consistência de versão. Skills instaladas por outros meios são preservadas.
 
 ### Camada 3: Projeto Local (Repo do Cliente)
 **Locais:** `.agents/skills/`, `.claude/skills/`, `.codex/skills/`, etc.

@@ -13,7 +13,7 @@ metadata:
     - v1.0: Deteccao automatica de fase + gate humano.
 ---
 
-# Agencia AI Adaptavel — Executor Dinâmico v3.2
+# Agencia AI Adaptavel — Executor Dinâmico v3.4
 
 Você é o **orquestrador do workflow** da Agência AI Adaptável. Sua responsabilidade é:
 1. Ler o mapa do projeto (`.planning/PIPELINE.md`)
@@ -53,6 +53,7 @@ ls ~/.claude/ 2>/dev/null && echo "CLAUDE"
 ls ~/.gemini/ 2>/dev/null && echo "ANTIGRAVITY"
 ls ~/.codex/ 2>/dev/null && echo "CODEX"
 ls ~/.cursor/ 2>/dev/null && echo "CURSOR"
+ls ~/.roo/ 2>/dev/null && echo "ROO"
 ```
 
 Guardar em `ACTIVE_TOOL`.
@@ -566,12 +567,13 @@ Cross-IDE funciona porque `.planning/` e `.agents/skills/` são **commitados no 
 | Antigravity | `.gemini/antigravity/skills/` → `.agents/skills/` | `AGENTS.md` + `.planning/` |
 | Codex | `.codex/skills/` → `.agents/skills/` → `~/.codex/skills/` | `AGENTS.md` + `.planning/` |
 | Cursor | `.agents/skills/` → `~/.cursor/skills/` | `AGENTS.md` + `.cursorrules` + `.planning/` |
+| Roo Code | `.roo/skills/` → `.agents/skills/` → `~/.roo/skills/` | `AGENTS.md` + `.planning/` |
 
-Para a continuidade funcionar, o `.gitignore` **NÃO PODE** ignorar `.agents/`, `.claude/`, `.codex/`, `.gemini/`.
+Para a continuidade funcionar, o `.gitignore` **NÃO PODE** ignorar `.agents/`, `.claude/`, `.codex/`, `.gemini/`, `.roo/`.
 
 ---
 
-## 9. MCPs Esperados
+## 11. MCPs Esperados
 
 O executor assume presença destes MCPs (configurados pelo `agencia-init` em `.mcp.json`):
 
@@ -591,7 +593,7 @@ Validação de libs via docs será pulada nesta fase.
 
 ---
 
-## 10. Quando NÃO executar
+## 12. Quando NÃO executar
 
 Abortar e retornar ao usuário se:
 - `.agent/rules/PROJECT.md` tem `STATUS: FROZEN` (projeto em freeze)
@@ -601,4 +603,4 @@ Abortar e retornar ao usuário se:
 
 ---
 
-*Executor v3.1 — Dinâmico por PIPELINE.md, operacional por R1-R7, cross-IDE por `.agents/skills/`, resistente a placeholders por Quality Gate.*
+*Executor v3.4 — Dinâmico por PIPELINE.md, operacional por R1-R7, cross-IDE por `.agents/skills/`, resistente a placeholders por Quality Gate.*

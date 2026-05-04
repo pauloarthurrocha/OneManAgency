@@ -1,9 +1,9 @@
 # SKILL-REGISTRY.md — Índice de Skills Agência AI Adaptável
 
-> **Atualizado em:** 2026-04-24
-> **Versão do Sistema:** 3.2.0
+> **Atualizado em:** 2026-05-04
+> **Versão do Sistema:** 3.3.0
 > **Total de Skills:** 160+
-> **Novidades v3.2:** Agentes especializados, orquestração multi-agent, scripts de validação Python, presets estéticos, templates de componentes LP
+> **Novidades v3.3:** Design System Intelligence, Awesome Design MD, detecção inteligente de SO, propagação cross-IDE de skills externas
 
 ---
 
@@ -26,11 +26,11 @@ skill(name="nome-da-skill")
 
 | Skill | Versão | Descrição | Trigger |
 |---|---|---|---|
-| `agencia-init` | v3.0 | Inicializa projetos. Detecta IDE, configura MCPs, cria estrutura Context Engineering | `init`, `novo projeto`, `criar projeto` |
-| `agencia-executor` | v3.2 | Orquestrador dinâmico. Lê PIPELINE.md, executa fases. **Novo:** Suporte a agentes especializados por fase, orquestração multi-agent paralela | `executor`, `executar fase`, `próximo passo` |
-| `client-onboarding` | v3.2 | Arquiteto Socrático. Entrevista, valida stack, gera BRIEFING/PROJECT/PIPELINE. **Novo:** Questionários socráticos por playbook (SaaS, LP, Python, Low-ticket) | `onboarding`, `briefing`, `entrevista cliente` |
-| `pipeline-generator` | v1.0 | Gera PIPELINE.md com 9 playbooks por tipo de projeto. **Novo:** Fase "Arquitetura Técnica" com PRDs para SaaS/Full-stack | `pipeline`, `playbook`, `fases do projeto` |
-| `agencia-verify-work` | v2.0 | Quality Gate pós-fase. Valida outputs, gera VERIFICATION_REPORT. **Novo:** Integração automática com scripts Python (checklist.py, verify_all.py) | `verify`, `verificar`, `quality gate` |
+| `agencia-init` | v3.3 | Inicializa projetos. Detecta IDE, SO, configura MCPs, cria estrutura Context Engineering | `init`, `novo projeto`, `criar projeto` |
+| `agencia-executor` | v3.4 | Orquestrador dinâmico. Lê PIPELINE.md, executa fases. **Novo:** Suporte a agentes especializados por fase, orquestração multi-agent paralela, Risk Assessment proativo | `executor`, `executar fase`, `próximo passo` |
+| `client-onboarding` | v3.3 | Arquiteto Socrático. Entrevista, valida stack, gera BRIEFING/PROJECT/PIPELINE. **Novo:** Design consulting (71+ templates awesome-design-md), questionários socráticos por playbook | `onboarding`, `briefing`, `entrevista cliente` |
+| `pipeline-generator` | v1.1 | Gera PIPELINE.md com 9 playbooks por tipo de projeto. **Novo:** Validação Estratégica e Anti-Alucinação pré-escrita | `pipeline`, `playbook`, `fases do projeto` |
+| `agencia-verify-work` | v2.2 | Quality Gate pós-fase. Valida outputs, gera VERIFICATION_REPORT. **Novo:** Anti-Scope Creep, API Deprecation validation, integração com scripts Python | `verify`, `verificar`, `quality gate` |
 | `skill-creator` | v1.0 | Criação/otimização de skills. Wizard + A/B testing + evals | `criar skill`, `nova skill`, `otimizar skill` |
 
 **Fonte:** `~/.agencia-ai/skills/` (repo principal)
@@ -270,41 +270,22 @@ Validation: none     → pula validação automática
 
 ## 📋 Status de Instalação
 
-### ✅ Instalado Globalmente (`~/.agencia-ai/skills/`)
-- [x] agencia-init
-- [x] agencia-executor
-- [x] client-onboarding
-- [x] pipeline-generator
-- [x] agencia-verify-work
-- [x] skill-creator
-- [x] brand-guidelines
-- [x] doc-coauthoring
-- [x] docx
-- [x] pdf
-- [x] pptx
-- [x] web-artifacts-builder
-- [x] xlsx
-- [x] templates (Context Engineering)
-- [x] 38 skills de marketing (coreyhaines31/marketingskills)
-- [x] 37 skills de dev/design (claude/shared)
+Após rodar o instalador (`agencia-ai install-global`), as seguintes skills estarão disponíveis globalmente:
 
-### ✅ Antigravity Kit Instalado (`~/.agencia-ai/antigravity-kit/`)
-- [x] 20 agentes especializados
-- [x] 11 workflows (slash commands)
-- [x] UI/UX Pro Max completo (dados CSV + scripts Python)
-- [x] 4 scripts Python de validação
+### ✅ Skills Core (sempre incluídas)
+- agencia-init, agencia-executor, client-onboarding, pipeline-generator, agencia-verify-work, skill-creator
 
-### ✅ Instalado em IDEs (82+ skills cada)
-- [x] Claude Code (`~/.agencia-ai/skills/`)
-- [x] OpenCode (`~/.opencode/skills/`)
-- [x] Antigravity (`~/.gemini/antigravity/skills/`)
-- [ ] Codex (`~/.codex/skills/`) — não detectado
-- [ ] Cursor (`~/.cursor/skills/`) — não detectado
+### ✅ Skills Externas (baixadas automaticamente pelo `agencia-init` em cada projeto)
+- 38 skills de marketing (via coreyhaines31/marketingskills)
+- Skills de design (via nextlevelbuilder/ui-ux-pro-max-skill)
+- 7 skills Anthropic (via anthropics/skills)
+- 20 agentes + 11 workflows (via vudovn/antigravity-kit)
+- 71+ design systems (via VoltAgent/awesome-design-md)
 
-### ✅ Configurado no PATH
-- [x] `agencia-ai` comando global
-- [x] PowerShell profile
-- [x] `%LOCALAPPDATA%\AgenciaAI\bin`
+Para verificar o que está instalado na sua máquina:
+```bash
+agencia-ai doctor
+```
 
 ---
 
@@ -397,7 +378,7 @@ agencia-ai version
 **Para adicionar novas skills:**
 1. Criar diretório `nome-da-skill/SKILL.md`
 2. Seguir formato SKILL.md (YAML frontmatter + markdown)
-3. Rodar `sync-skills.ps1` ou reinstalar
+3. Rodar `agencia-ai install-global` para propagar
 
 ---
 

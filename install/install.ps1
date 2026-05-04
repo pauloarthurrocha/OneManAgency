@@ -85,6 +85,10 @@ $PROFILE_DIR = Split-Path $PROFILE -Parent
 if (!(Test-Path $PROFILE_DIR)) {
     New-Item -ItemType Directory -Force -Path $PROFILE_DIR | Out-Null
 }
+# Ensure $PROFILE file exists before attempting to read/write
+if (!(Test-Path $PROFILE)) {
+    New-Item -ItemType File -Force -Path $PROFILE | Out-Null
+}
 
 $agenciaFunction = @'
 # Agencia AI Adaptável — Global function (auto-generated)

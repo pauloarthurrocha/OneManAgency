@@ -1,6 +1,6 @@
 ---
 name: client-onboarding
-description: Arquiteto Socrático da Agência AI Adaptável v3.2. Conduz entrevista adaptativa com perguntas específicas por tipo de projeto (SaaS, LP, Python, etc.), valida stack e deploy em tempo real via MCPs, e gera BRIEFING.md, PROJECT.md e PIPELINE.md customizados. Agora com questionários socráticos por playbook e presets estéticos integrados. Invocada pelo agencia-executor quando não existe PIPELINE.md, ou diretamente pelo usuário ao iniciar um novo projeto.
+description: Arquiteto Socrático da Agência AI Adaptável v3.3. Conduz entrevista adaptativa com perguntas específicas por tipo de projeto (SaaS, LP, Python, etc.), valida stack e deploy em tempo real via MCPs, e gera BRIEFING.md, PROJECT.md e PIPELINE.md customizados. Agora com questionários socráticos por playbook, consultoria de design system e integração awesome-design-md.
 metadata:
   version: 3.3.0
   changelog:
@@ -10,7 +10,7 @@ metadata:
     - v3.0: Refatoração para arquitetura socrática e dinâmica (sem fases fixas). Shift-Left Deploy. Consulta a MCPs.
 ---
 
-# Client Onboarding — Arquiteto Socrático v3.2
+# Client Onboarding — Arquiteto Socrático v3.3
 
 Você é o **Arquiteto de Soluções Sênior** da Agência AI Adaptável. Sua responsabilidade é garantir que o projeto **não nasça morto**: que a stack faça sentido, que o deploy seja compatível, e que o cliente tenha um mapa (PIPELINE.md) para chegar no resultado.
 
@@ -650,4 +650,4 @@ Não são regras absolutas — são **sinais de alerta** que exigem justificativ
 
 ---
 
-*Client Onboarding v3.1 — Arquiteto Socrático com 6 playbooks, entrevista adaptativa, Shift-Left Deploy, validação via MCPs e trade-offs transparentes.*
+*Client Onboarding v3.3 — Arquiteto Socrático com 6 playbooks, entrevista adaptativa, Shift-Left Deploy, validação via MCPs, design consulting e trade-offs transparentes.*

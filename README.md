@@ -19,41 +19,18 @@ Sistema de **agent skills** para execução de projetos de software via IA. Func
 
 | Skill | Versão | Descrição |
 |---|---|---|
-| `agencia-init` | v3.0 | Inicialização de projetos. Detecta IDE, configura MCPs, cria estrutura Context Engineering. **Próximo passo sempre: `client-onboarding`** |
+| `agencia-init` | v3.3 | Inicialização de projetos. Detecta IDE, SO, configura MCPs, cria estrutura Context Engineering. **Próximo passo sempre: `client-onboarding`** |
 | `client-onboarding` | v3.3 | Arquiteto Socrático. Entrevista adaptativa com **questionários por playbook** + **Etapa 2.5: Consultoria de Design System** (71+ templates awesome-design-md). Gera `.planning/DESIGN.md` como âncora visual |
-| `pipeline-generator` | v1.0 | Gera PIPELINE.md a partir do briefing. Contém 9 playbooks. **Novo:** Fase "Arquitetura Técnica" com PRDs para SaaS/Full-stack |
-| `agencia-executor` | v3.2 | Orquestrador dinâmico. **Novo:** Suporte a **agentes especializados por fase** e **orquestração multi-agent** (execução paralela) |
-| `agencia-verify-work` | v2.0 | Quality Gate pós-fase. **Novo:** Integração automática com **scripts Python** (`checklist.py`, `verify_all.py`) |
+| `pipeline-generator` | v1.1 | Gera PIPELINE.md a partir do briefing. Contém 9 playbooks. **Novo:** Fase "Arquitetura Técnica" com PRDs para SaaS/Full-stack |
+| `agencia-executor` | v3.4 | Orquestrador dinâmico. **Novo:** Suporte a **agentes especializados por fase**, **orquestração multi-agent** (execução paralela), e **Risk Assessment** proativo no gate humano |
+| `agencia-verify-work` | v2.2 | Quality Gate pós-fase. **Novo:** Integração automática com **scripts Python** (`checklist.py`, `verify_all.py`) e Validação Anti-Alucinação (Scope Creep, API Deprecation) |
 | `skill-creator` | v1.0 | Criação e otimização de skills. Wizard interativo, A/B testing, evals, description optimizer. Baseado no Anthropic skill-creator |
 
 ---
 
 ## 🚀 Instalação
 
-> **⚠️ Este pacote é privado.** É publicado no **GitHub Packages** (não no npm público).
-
-### Opção 1 — GitHub Packages (Privado, Recomendado)
-
-1. **Autenticar no GitHub Packages** (uma vez por máquina):
-```bash
-# Crie um token em: Settings > Developer settings > Personal access tokens > Tokens (classic)
-# Permissões necessárias: read:packages, write:packages (se for publicar)
-npm login --registry=https://npm.pkg.github.com
-# Username: seu-usuario-github
-# Password: o token gerado
-```
-
-2. **Instalar globalmente:**
-```bash
-npm install -g @pauloarthurrocha/agencia-ai-adaptavel --registry=https://npm.pkg.github.com
-```
-
-3. **Ou use npx (sem instalar global):**
-```bash
-npx @pauloarthurrocha/agencia-ai-adaptavel init --registry=https://npm.pkg.github.com
-```
-
-### Opção 2 — One-liner (Sem NPM Registry)
+### Opção 1 — One-liner (Recomendado)
 
 **Linux/macOS:**
 ```bash
@@ -63,6 +40,17 @@ curl -fsSL https://raw.githubusercontent.com/pauloarthurrocha/agencia-ai-adaptav
 **Windows (PowerShell admin):**
 ```powershell
 irm https://raw.githubusercontent.com/pauloarthurrocha/agencia-ai-adaptavel-skills/main/install/install.ps1 | iex
+```
+
+### Opção 2 — npm (GitHub Packages)
+
+```bash
+# Autenticar no GitHub Packages (uma vez por máquina)
+npm login --registry=https://npm.pkg.github.com
+# Username: seu-usuario-github
+# Password: token com permissão read:packages
+
+npm install -g @pauloarthurrocha/agencia-ai-adaptavel --registry=https://npm.pkg.github.com
 ```
 
 ### Opção 3 — Git Clone + npm link
@@ -78,17 +66,17 @@ cd ~/.agencia-ai && npm link
 
 ```bash
 # === TERMINAL (fora do IDE) ===
-# 1. Autenticar no GitHub Packages (uma vez por maquina)
-#    Gerar token em: github.com > Settings > Developer settings > Tokens (classic)
-#    Permissoes: read:packages
-npm login --registry=https://npm.pkg.github.com
+# 1. Instalar CLI globalmente (one-liner)
+#    Linux/macOS:
+curl -fsSL https://raw.githubusercontent.com/pauloarthurrocha/agencia-ai-adaptavel-skills/main/install/install.sh | bash
 
-# 2. Instalar CLI globalmente (pacote privado no GitHub Packages)
-npm install -g @pauloarthurrocha/agencia-ai-adaptavel --registry=https://npm.pkg.github.com
+#    Windows (PowerShell):
+irm https://raw.githubusercontent.com/pauloarthurrocha/agencia-ai-adaptavel-skills/main/install/install.ps1 | iex
+
+# 2. Verificar instalação
+agencia-ai doctor
 
 # 3. (Opcional) Re-propagar skills para IDEs instaladas depois
-#    O postinstall ja faz isso automaticamente. Rode manualmente se
-#    instalar uma IDE nova (Cursor, Codex...) DEPOIS do npm install.
 agencia-ai install-global
 
 # === IDE (dentro do projeto) ===
@@ -260,8 +248,10 @@ agencia-ai-adaptavel-skills/
 │   └── postinstall.js
 ├── docs/
 │   ├── SKILL-REGISTRY.md
-│   └── ARCHITECTURE.md
-└── examples/                           # (opcional)
+│   ├── ARCHITECTURE.md
+│   ├── ROO-CODE-SETUP.md
+│   └── VANILLA-KIMI-SETUP.md
+└── LICENSE
 ```
 
 ---
@@ -287,7 +277,7 @@ As pastas `.agents/skills/`, `.claude/skills/`, `.codex/skills/`, `.roo/skills/`
 
 ## 🔒 Privacidade
 
-Este repositório é **privado**. Skills externas são instaladas sob demanda pelo `agencia-init` e **não são commitadas** (ficam em `.gitignore` via `.env.local`, `.mcp.json`).
+O instalador da Agência AI Adaptável é **não-destrutivo** e opera apenas dentro do escopo de `~/.agencia-ai/` e das pastas de skills das IDEs detectadas.
 
 ---
 

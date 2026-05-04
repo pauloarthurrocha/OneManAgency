@@ -1,8 +1,6 @@
-# Guia: OpenCode Vanilla + DeepSeek V4 Pro (Sem OMO)
+# Guia: OpenCode Vanilla + Kimi K2.6 (Sem OMO)
 
-> Este guia mostra como usar o OpenCode "puro" com **DeepSeek V4 Pro** como modelo principal, aproveitando o swarm nativo do modelo em vez de depender do OMO (OhMyOpenCode).
->
-> **Atualização:** O Kimi K2.6 no plano OpenCode Go possui limite de uso 3x (trial) que encerra rapidamente. O DeepSeek V4 Pro oferece **mais requisições disponíveis**, **1M de contexto** e **custo menor** — tornando-o a escolha principal para uso contínuo.
+> Este guia mostra como usar o OpenCode "puro" com **Kimi K2.6** (recomendado para uso diário) e **DeepSeek V4 Pro** como fallback para repositórios enormes, aproveitando o swarm nativo dos modelos em vez de depender do OMO (OhMyOpenCode).
 
 ---
 
@@ -32,13 +30,13 @@ A diferença prática é que o Kimi K2.6 foi **especificamente otimizado** para 
 
 ## ✅ O que você ganhou
 
-| Antes (OMO) | Agora (Vanilla + DeepSeek V4 Pro) |
+| Antes (OMO) | Agora (Vanilla + Kimi K2.6) |
 |---|---|
 | Sisyphus orquestrador em software | Kimi K2.6 orquestra nativamente |
 | 10+ agentes com overhead de tokens | 1 agente com swarm interno |
 | Configuração complexa (`oh-my-opencode.json`) | Config simples (`settings.json`) |
 | 30-50% mais tokens por tarefa | Consumo normal |
-| Fallback manual entre modelos | Kimi K2.6 faz tudo sozinho |
+| Fallback manual entre modelos | Kimi K2.6 faz tudo sozinho (DeepSeek V4 Pro como fallback para >256K tokens) |
 
 ---
 
@@ -52,7 +50,7 @@ skill(name="agencia-init")
 ```
 
 **O que acontece:**
-- DeepSeek V4 Pro carrega a skill `agencia-init`
+- Kimi K2.6 carrega a skill `agencia-init`
 - Detecta que está no OpenCode
 - Cria estrutura completa do projeto
 - Baixa skills externas se necessário
@@ -65,7 +63,7 @@ skill(name="client-onboarding")
 ```
 
 **O que acontece:**
-- DeepSeek V4 Pro atua como arquiteto socrático
+- Kimi K2.6 atua como arquiteto socrático
 - Faz perguntas adaptativas
 - Gera BRIEFING.md + PROJECT.md
 - Cria PIPELINE.md com playbooks
@@ -78,7 +76,7 @@ skill(name="agencia-executor")
 ```
 
 **O que acontece:**
-- DeepSeek V4 Pro lê PIPELINE.md
+- Kimi K2.6 lê PIPELINE.md
 - Identifica próxima fase pendente
 - Executa com **long-horizon nativo** (até 12h se necessário)
 - Auto-compressão de contexto mantém sessão estável
@@ -118,6 +116,16 @@ Resultado: 1x tokens, 1x tempo
 ```json
 {
   "model": "opencode-go/kimi-k2.6",
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "reasoning_effort": "high"
+}
+```
+
+**Fallback para repos >256K tokens:**
+```json
+{
+  "model": "opencode-go/deepseek-v4-pro",
   "temperature": 1.0,
   "top_p": 1.0,
   "reasoning_effort": "high"

@@ -1,6 +1,9 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "opencode-go/deepseek-v4-pro",
+  "_model_primary": "opencode-go/kimi-k2.6",
+  "_model_fallback": "opencode-go/deepseek-v4-pro",
+  "_comment_model": "Kimi K2.6 (256K, swarm nativo) é o recomendado para uso diário. DeepSeek V4 Pro (1M) é fallback para repos >200K tokens. Altere 'model' abaixo conforme sua preferência.",
+  "model": "opencode-go/kimi-k2.6",
   "temperature": 1.0,
   "top_p": 1.0,
   "reasoning_effort": "high",

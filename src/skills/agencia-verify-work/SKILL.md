@@ -251,4 +251,4 @@ Também pode ser chamada manualmente:
 
 ---
 
-*Agencia Verify Work v1.0 — Gatekeeper de qualidade entre execução e memória.*
+*Agencia Verify Work v2.2 — Gatekeeper de qualidade entre execução e memória.*

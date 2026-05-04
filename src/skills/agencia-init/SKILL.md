@@ -1,9 +1,10 @@
 ---
 name: agencia-init
-description: Inicializa um projeto de cliente da Agência AI Adaptável do zero. Detecta IDE ativa, copia skills core de ~/.agencia-ai/, BAIXA skills externas atualizadas (Marketing Skills, UI/UX Pro Max, Anthropic, Antigravity Kit) via git clone, configura MCPs, cria estrutura Context Engineering e PIPELINE.md vazio. Neutro quanto ao tipo de projeto. Próximo passo após o init é sempre o `client-onboarding`. Funciona cross-IDE (Claude Code, OpenCode, Antigravity, Cursor, Codex, Roo Code).
+description: Inicializa um projeto de cliente da Agência AI Adaptável do zero. Detecta IDE ativa, SO, copia skills core de ~/.agencia-ai/, BAIXA skills externas atualizadas (Marketing Skills, UI/UX Pro Max, Anthropic, Antigravity Kit) via git clone, configura MCPs, cria estrutura Context Engineering e PIPELINE.md vazio. Neutro quanto ao tipo de projeto. Próximo passo após o init é sempre o `client-onboarding`. Funciona cross-IDE (Claude Code, OpenCode, Antigravity, Cursor, Codex, Roo Code). Adapta comandos ao sistema operacional detectado.
 metadata:
-  version: 3.2.0
+  version: 3.3.0
   changelog:
+    - v3.3: Detecção inteligente de SO (Windows/Linux/macOS) em todos os comandos. Propagação de skills externas cross-IDE. Suporte a Roo Code nos paths de contexto.
     - v3.2: SEMPRE baixa skills externas atualizadas (Marketing Skills, UI/UX Pro Max, Anthropic, Antigravity Kit) em cada novo projeto. Usa ~/.agencia-ai/ como cache/offline fallback.
     - v3.1: Prioriza ~/.agencia-ai/skills/ (instalado pelo CLI global) sobre git clone/npx. Remove initProject do CLI — agora é função exclusiva da skill.
     - v3.0: Neutro quanto ao tipo de projeto (remove criação hardcoded de DESIGN_SYSTEM/COPY_DECK/UI-SPEC). Cria PIPELINE.md vazio. Conserta .gitignore (não ignora mais .agents/.claude/.codex/.gemini). Adiciona context7 ao .mcp.json. Inclui client-onboarding e pipeline-generator nas skills copiadas.
@@ -18,7 +19,7 @@ metadata:
     - v2.0: Separate universal protocols (AGENTS.md) from project rules (PROJECT.md)
 ---
 
-# Agencia Init v3.0 — Deep Project Initialization (Neutral)
+# Agencia Init v3.3 — Deep Project Initialization (Neutral)
 
 You are the project initializer for the Agencia AI Adaptavel. Your job is to prepare a pristine workspace that supports the full 7-phase workflow, installs skills from external repositories, configures MCPs, and works across ANY IDE.
 
@@ -165,6 +166,43 @@ cliente-projeto/
 ---
 
 ## Processo Detalhado
+
+### Step -1: Detectar Sistema Operacional (ANTES de qualquer comando)
+
+> ⚠️ **REGRA CRÍTICA:** ANTES de executar QUALQUER comando, detecte o sistema operacional e adapte TODOS os comandos subsequentes.
+
+```bash
+# Detectar SO e guardar na variável OS_TYPE
+uname -s 2>/dev/null && echo "os=linux|mac" || echo "os=windows"
+```
+
+No PowerShell:
+```powershell
+$env:OS # retorna "Windows_NT"
+```
+
+**Guia rápido de adaptação de comandos:**
+
+| Unix | Windows (PowerShell) |
+|---|---|
+| `export VAR=value` | `$env:VAR = "value"` |
+| `$HOME` | `$env:USERPROFILE` ou `$HOME` (PowerShell 7+) |
+| `mkdir -p dir/subdir` | `New-Item -ItemType Directory -Force -Path "dir/subdir"` |
+| `cp -r src/ dest/` | `Copy-Item -Recurse -Force "src" "dest"` |
+| `rm -rf dir` | `Remove-Item -Recurse -Force "dir" -ErrorAction SilentlyContinue` |
+| `ln -sf target link` | `New-Item -ItemType SymbolicLink -Path "link" -Target "target" -Force` (admin) ou `Copy-Item` (fallback) |
+| `sed -i "s/a/b/g" file` | `(Get-Content file) -replace 'a', 'b' | Set-Content file` |
+| `cat > file << 'EOF'` | `@" content "@ | Set-Content file` ou `Write-Output "content" | Out-File file` |
+| `ls dir/` | `Get-ChildItem dir/` |
+| `grep pattern` | `Select-String pattern` |
+| `command -v git` | `Get-Command git -ErrorAction SilentlyContinue` |
+| `[ -d path ]` | `Test-Path path` |
+| `[ -f path ]` | `Test-Path path -PathType Leaf` |
+| `VAR=value` (inline) | `$env:VAR = "value"; command` |
+| `2>/dev/null` | `2>$null` |
+| `/tmp/` | `$env:TEMP\` |
+
+> 💡 **Regra prática:** Se `uname` existe → use comandos bash. Se `$env:OS` é "Windows_NT" → use comandos PowerShell. Todos os steps abaixo mostram a versão bash. Você DEVE traduzir para PowerShell se estiver no Windows.
 
 ### Step 0: Detectar Ferramenta
 
@@ -375,19 +413,29 @@ mkdir -p .codex/skills
 mkdir -p .roo/skills
 mkdir -p .gemini/antigravity/skills
 
-# Criar symlinks/cópias para cada IDE
+# Copiar TODAS as skills de .agents/skills/ para cada IDE
+# Isso inclui skills da agência + as skills externas baixadas no Step 2D
+
 # Claude Code
-ln -sf ../../.agents/skills/* .claude/skills/ 2>/dev/null || cp -r .agents/skills/* .claude/skills/
+rm -rf .claude/skills/*
+cp -r .agents/skills/* .claude/skills/ 2>/dev/null
 
 # Codex
-ln -sf ../../.agents/skills/* .codex/skills/ 2>/dev/null || cp -r .agents/skills/* .codex/skills/
+rm -rf .codex/skills/*
+cp -r .agents/skills/* .codex/skills/ 2>/dev/null
 
 # Roo Code
-ln -sf ../../.agents/skills/* .roo/skills/ 2>/dev/null || cp -r .agents/skills/* .roo/skills/
+rm -rf .roo/skills/*
+cp -r .agents/skills/* .roo/skills/ 2>/dev/null
 
 # Antigravity
-ln -sf ../../../.agents/skills/* .gemini/antigravity/skills/ 2>/dev/null || cp -r .agents/skills/* .gemini/antigravity/skills/
+rm -rf .gemini/antigravity/skills/*
+cp -r .agents/skills/* .gemini/antigravity/skills/ 2>/dev/null
 ```
+
+> 💡 **Nota:** Usamos `cp -r` em vez de `ln -sf` aqui para garantir compatibilidade cross-platform (symlinks no Windows exigem permissões de admin e podem falhar em alguns filesystems). O custo de espaço é mínimo — skills são arquivos markdown pequenos.
+
+> ⚠️ **Importante:** O `rm -rf dir/*` remove APENAS o conteúdo do diretório de skills específico da IDE (criado por este init), NUNCA o diretório em si. Isso garante que skills instaladas pelo usuário por outros meios não sejam afetadas.
 
 **Skills da agencia que devem estar em `.agents/skills/` (núcleo — obrigatórias):**
 - `agencia-init/` — Este init (auto-bootstrap)
@@ -809,4 +857,4 @@ Próximo passo: Iniciar onboarding socrático?
 
 ---
 
-*Agencia Init v3.2 — Deep initialization cross-IDE com SSoT Global (`~/.agencia-ai/`) + skills externas sempre atualizadas.*
+*Agencia Init v3.3 — Deep initialization cross-IDE com SSoT Global (`~/.agencia-ai/`) + skills externas sempre atualizadas + detecção inteligente de SO.*

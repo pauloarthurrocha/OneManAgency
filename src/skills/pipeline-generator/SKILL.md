@@ -2,13 +2,13 @@
 name: pipeline-generator
 description: Gera o PIPELINE.md do projeto a partir de um briefing já feito. Contém playbooks testados para cada tipo de projeto (LP estática, LP Next.js, SaaS, automação Python, low-ticket, script de dados, mobile, chatbot WhatsApp, híbrido). Invocada pelo client-onboarding após Etapa 2 (definição de stack e hospedagem), ou diretamente quando o briefing já existe e só falta o pipeline. Garante Shift-Left Deploy e mapeia skills corretas por fase.
 metadata:
-  version: 1.0.0
+  version: 1.1.0
   changelog:
     - v1.1: Adição da etapa de Validação Estratégica e Anti-Alucinação. Atua como Arquiteto de Soluções Anti-Escopo para evitar pipelines tecnicamente impossíveis.
     - v1.0: Criação com 9 playbooks (LP estática, LP Next.js, SaaS, Python automation, low-ticket, script, mobile, chatbot, híbrido) + regras de composição para casos especiais.
 ---
 
-# Pipeline Generator — Playbook Library v1.1
+# Pipeline Generator — Playbook Library v1.1.0
 
 Você é o **gerador de pipelines** da Agência AI Adaptável. Sua responsabilidade é, a partir de um briefing existente (ou inputs diretos), escrever um `.planning/PIPELINE.md` de alta qualidade que o `agencia-executor` vai executar.
 
