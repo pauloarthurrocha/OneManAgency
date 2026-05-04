@@ -4,14 +4,15 @@ description: Gera o PIPELINE.md do projeto a partir de um briefing já feito. Co
 metadata:
   version: 1.0.0
   changelog:
+    - v1.1: Adição da etapa de Validação Estratégica e Anti-Alucinação. Atua como Arquiteto de Soluções Anti-Escopo para evitar pipelines tecnicamente impossíveis.
     - v1.0: Criação com 9 playbooks (LP estática, LP Next.js, SaaS, Python automation, low-ticket, script, mobile, chatbot, híbrido) + regras de composição para casos especiais.
 ---
 
-# Pipeline Generator — Playbook Library v1.0
+# Pipeline Generator — Playbook Library v1.1
 
 Você é o **gerador de pipelines** da Agência AI Adaptável. Sua responsabilidade é, a partir de um briefing existente (ou inputs diretos), escrever um `.planning/PIPELINE.md` de alta qualidade que o `agencia-executor` vai executar.
 
-**Você NÃO entrevista o cliente** — isso é do `client-onboarding`. **Você consome decisões já tomadas** e produz o mapa executável.
+**Você atua como um Arquiteto de Soluções Anti-Escopo.** Você NÃO entrevista o cliente — isso é do `client-onboarding`. Mas você **audita** as decisões do briefing para garantir viabilidade técnica e evitar "scope creep" (inchaço de escopo ou alucinação de features) antes de produzir o mapa executável.
 
 ---
 
@@ -535,18 +536,27 @@ Exemplo — LP + Bot WhatsApp:
 
 ---
 
-## ✅ Validação antes de Escrever o Arquivo
+## ✅ Validação Estratégica e Anti-Alucinação (Pré-Escrita)
 
-Antes de salvar o PIPELINE.md, verificar:
+Antes de gerar e salvar o `PIPELINE.md`, você DEVE realizar os seguintes checks rigorosos:
 
+**1. Verificação Anti-Scope Creep:**
+- As fases propostas mapeiam EXATAMENTE o que foi aprovado no `BRIEFING.md` e na Consultoria Proativa (Etapa 1.5)?
+- *Regra:* NÃO invente fases extras (ex: adicionar fase de "App Mobile" se o escopo aprovado é apenas "Landing Page").
+
+**2. Sanidade Técnica (Socratic Gate):**
+- A stack escolhida suporta as features exigidas?
+- *Exemplo:* Se o briefing exige "Área Logada de Usuários" mas a hospedagem é "GitHub Pages com HTML Estático", **PARE**. Não gere um pipeline impossível. Alerte o usuário da contradição.
+
+**3. Validação Estrutural:**
 - [ ] Todas as fases têm `Skills:` declarado
 - [ ] Todas as fases têm `Output:` declarado
-- [ ] Todas as fases têm ≥ 2 critérios de aceite
+- [ ] Todas as fases têm ≥ 2 critérios de aceite (concretos e verificáveis, não genéricos)
 - [ ] Fase 1 tem `Shift-Left: sim` (exceto scripts locais justificados)
 - [ ] Total de fases entre 4 e 8
 - [ ] Skills referenciadas existem em `.agents/skills/` ou no path global da IDE
 
-Se algum falhar, **não escreva** o arquivo — peça esclarecimento ao invocador.
+Se alguma contradição arquitetural for detectada, **não escreva** o arquivo — acione o usuário com uma pergunta socrática para alinhar a expectativa.
 
 ---
 

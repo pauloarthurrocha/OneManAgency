@@ -52,3 +52,17 @@ docs/internal/
 
 # MCP config (pode conter secrets — usar .mcp.json.example se precisar compartilhar)
 .mcp.json
+
+# Generated locally by running 'agencia-ai init' inside the CLI repo
+.agent/
+.agents/
+.claude/
+.gemini/
+.codex/
+.roo/
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+.planning/
+.mcp.json
+.graphify/

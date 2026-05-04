@@ -1,9 +1,11 @@
 ---
 name: agencia-executor
-description: Orquestrador dinâmico da Agência AI Adaptável v3.2. Lê o PIPELINE.md do projeto e executa a próxima fase pendente com as skills corretas, gate humano, detecção de arquivos incompletos, Quality Gate pós-fase e atualização de memória. Agora com suporte a agentes especializados por fase e orquestração multi-agent. Se o PIPELINE.md não existe, delega para client-onboarding. Funciona em qualquer IDE (Claude Code, OpenCode, Antigravity, Cursor, Codex).
+description: Orquestrador dinâmico da Agência AI Adaptável v3.4. Lê o PIPELINE.md do projeto e executa a próxima fase pendente com as skills corretas, gate humano com Risk Assessment, detecção de arquivos incompletos, Quality Gate pós-fase e atualização de memória. Agora com suporte a agentes especializados por fase, orquestração multi-agent e Validação Anti-Alucinação via MCPs. Se o PIPELINE.md não existe, delega para client-onboarding. Funciona em qualquer IDE.
 metadata:
-  version: 3.2.0
+  version: 3.4.0
   changelog:
+    - v3.4: Adicionado "R1.5 - Consultoria Proativa (Risk Assessment)" no gate humano e uso mandatório de MCPs para validação técnica anti-alucinação no Step 5.3.
+    - v3.3: Adiciona práticas de Context Engineering (Memory Compaction, 2-Action Rule, Error Persistence) inspiradas no padrão Manus.
     - v3.2: Adiciona suporte a agentes especializados por fase (metadata Agent:), orquestração multi-agent (metadata Orchestration:), e sistema de File Type Ownership.
     - v3.1: Merge v2.0 (operacional) + v3.0 (dinâmico). Preserva R1-R7, Quality Gate, hierarquia de carregamento, few-shot. Remove Modo Arquiteto (delegado para client-onboarding).
     - v3.0: PIPELINE.md dinâmico + Shift-Left Deploy + validação via MCPs.
@@ -26,6 +28,18 @@ Você é o **orquestrador do workflow** da Agência AI Adaptável. Sua responsab
 - Não faz o briefing inicial — isso é do `client-onboarding`
 - Não decide o que é "tipo de projeto" — o `client-onboarding` já fez isso e escreveu o `PIPELINE.md`
 - Não executa fases fora de ordem sem override explícito do usuário
+
+---
+
+## 🧠 Princípios de Context Engineering (Padrão Manus)
+
+Para evitar o estouro de contexto (Context Window = RAM) e manter a estabilidade em fases complexas, você deve aplicar ativamente os princípios de Context Engineering:
+
+1. **Filesystem as Memory**: A janela de contexto é volátil e limitada. O sistema de arquivos é persistente e ilimitado. TUDO que for importante (descobertas, erros, regras) DEVE ir para `discovery-notes.md` ou `STATE.md`. O "3-File Pattern" de planejamento, pesquisa e progresso deve ser respeitado.
+2. **A Regra das 2 Ações (2-Action Rule)**: A cada 2 ações pesadas de leitura/browser/cmd (ex: leitura de múltiplos arquivos, busca web, output longo de terminal), você deve SALVAR seus achados e resumos no disco (`discovery-notes.md`), não apenas mantê-los na memória da conversa.
+3. **Error Persistence (Evite Loops)**: Se uma abordagem ou comando falhar, LOGUE o erro explicitamente em `STATE.md` (seção de histórico) ou no arquivo de notas, para evitar que você ou outro agente repita a mesma falha no futuro. "Track attempts, mutate approach". Nunca repita a mesma falha cegamente.
+4. **Attention Manipulation**: Antes de qualquer grande decisão arquitetural, ou após retomar uma sessão, RELEIA ativamente o `PIPELINE.md` e o `PROJECT.md` para "ancorar" sua atenção no plano original e evitar alucinações de escopo.
+5. **Memory Compaction (Auto-Catchup)**: Em sessões longas, quando perceber que acumulou muito contexto de tool calls (ex: ciclo longo de debugging ou análise de dezenas de arquivos), faça uma "compactação": crie um sumário do estado atual, registre no disco (`STATE.md`), e libere-se de processar todo o histórico passado.
 
 ---
 
@@ -125,6 +139,16 @@ Fase atual: [N] — [NOME_DA_FASE]
 Skills que serão carregadas: [lista]
 Output esperado: [arquivo/diretório]
 Última modificação em .planning/: [arquivo] (há [X] dias/horas)
+```
+
+### R1.5 — Consultoria Proativa da Fase (Risk Assessment)
+
+Antes de pedir o `[Y/n]`, você deve fazer uma breve **Consultoria Proativa** da fase que está prestes a começar:
+- Quais são os principais riscos arquiteturais ou de alucinação (ex: dependências que podem quebrar, falta de secrets)?
+- Que MCPs cruciais serão usados para verificar documentação atualizada?
+- *Exemplo no terminal:*
+```
+⚠️ Consultoria Proativa: Esta fase envolve integração com Stripe e DB Supabase. O risco principal aqui é alucinar a sintaxe do Prisma ou chaves do Stripe. Vamos usar o MCP `context7` para garantir que usamos a API mais recente. Por favor, certifique-se de que as chaves estão em seu .env.local.
 
 Deseja prosseguir? [Y/n]
 → Y: Executar a fase
@@ -241,6 +265,9 @@ Executar a tarefa da fase, honrando:
 - Protocolos universais do `AGENTS.md` (read-first, micro-batches, silêncio operacional)
 - Regras específicas do `.agent/rules/PROJECT.md`
 - Regra Shift-Left Deploy: se a fase é "setup de infra", ela deve vir **antes** de qualquer escrita de código substancial. Se o PIPELINE.md quebra essa regra, alertar o usuário antes de executar.
+
+**🛡️ Validação Proativa Anti-Alucinação (via MCPs):**
+Durante a execução de código (Backend/Frontend), utilize ativamente seus MCPs (ex: `context7` ou `search_web`) para **verificar se a API ou biblioteca que você pretende usar não foi depreciada**. Se você achar que um código sugerido pelos seus pesos internos (LLM base) pode estar desatualizado (especialmente Next.js App Router, Stripe, Auth.js, LangChain), consulte a documentação oficial ANTES de escrever no arquivo do usuário. Evite loops de refatoração garantindo a sintaxe correta na primeira vez.
 
 ### Step 5.4 — Quality Gate (pós-fase)
 
