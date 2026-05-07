@@ -1,5 +1,5 @@
 {
-  "name": "@pauloarthurrocha/onemanagency",
+  "name": "onemanagency",
   "version": "3.3.0",
   "description": "Sistema de execução de projetos via IA. OneManAgency - funciona em qualquer IDE e adapta-se a qualquer projeto.",
   "main": "bin/oma.js",
