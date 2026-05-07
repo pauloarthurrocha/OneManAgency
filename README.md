@@ -29,7 +29,7 @@ A complexidade inteira está no sistema, não no seu fluxo de trabalho. Você co
 2. **O PIV Loop (Plan, Implement, Validate):** O OMA proíbe a IA de planejar e codar no mesmo fôlego. O agente faz o plano, gera o Handoff e avisa: *"Limpe o chat para não alucinar"*. Você limpa, dá o play, e a IA coda com contexto vazio e foco a laser.
 3. **Tríade de Revisão:** Antes de codar, o seu briefing não vira código imediatamente. Ele é barrado por 3 "agentes" (CEO, Tech Lead, Design Lead) que cortam features inúteis, cravam o banco de dados e proíbem o "AI Slop".
 4. **TDD é Lei:** O agente de Backend é proibido de escrever código de produção sem antes escrever um teste que falhe. Sério.
-5. **Batteries Included (MCPs Automáticos):** O `oma-init` injeta na raiz do seu projeto um arquivo `.mcp.json` hiper-otimizado. Sem você configurar NENHUMA chave de API, a sua IA ganha o poder de **Puppeteer** (navegar na web), **Context7** (ler docs oficiais atualizadas) e **Memory** (graph de memória persistente).
+5. **Batteries Included (MCPs Embutidos):** Ferramentas de IA são burras sem ferramentas externas. O `/oma-init` injeta na raiz do seu projeto um arquivo `.mcp.json` hiper-otimizado. Sem você configurar NENHUMA chave de API, a sua IA ganha o poder de **Puppeteer** (para navegar e raspar sites de graça), **Context7** (para ler docs oficiais e não usar código depreciado), **Sequential Thinking** (força a IA a raciocinar antes de gerar código bugado) e **Memory**.
 
 ---
 

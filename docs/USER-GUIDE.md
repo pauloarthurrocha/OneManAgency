@@ -61,8 +61,14 @@ Quando você limpa o chat e diz "resume", a IA nasce de novo. Mas como ela é co
 O Especialista Backend vai rodar TDD e não vai aceitar commitar sem teste.
 
 ### Passo 6: QA e Lançamento
-O `oma-verify-work` age como seu testador e te enche o saco se algo quebrar.
-Quando acabar, o `oma-release-manager` limpa a casa, escreve um README pro usuário e diz: *Pode lançar.*
+O `/oma-verify-work` age como seu testador e te enche o saco se algo quebrar.
+Quando acabar, o `/oma-release-manager` limpa a casa, escreve um README pro usuário e diz: *Pode lançar.*
+
+### O Segredo Invisível: Baterias Inclusas (MCPs)
+Quando você rodou o `/oma-init` lá no Passo 1, a ferramenta gerou silenciosamente um arquivo `.mcp.json` que deu superpoderes para o seu Agente na IDE. Durante qualquer passo acima, a IA tem a capacidade de:
+- **Puppeteer:** Entrar em um site concorrente (ex: stripe.com) e analisar o layout e as cores deles, de graça.
+- **Context7:** Ler documentação atualizada de bibliotecas, para não gerar código baseado em sintaxe de 2021.
+- **Sequential Thinking:** Forçar o LLM a pensar em 5, 6, 7 passos lógicos quando se deparar com um bug complexo, antes de começar a adivinhar código.
 
 ---
 
