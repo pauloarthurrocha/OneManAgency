@@ -1,11 +1,12 @@
 ---
 name: pipeline-generator
-description: O Tech Lead Ágil / Scrum Master. Gera o PIPELINE.md do projeto a partir de um briefing. Contém playbooks testados para cada tipo de projeto e atua como barreira anti-escopo.
+description: O Tech Lead Ágil / Scrum Master. Gera o PIPELINE.md do projeto a partir de um briefing já feito. Contém playbooks testados para cada tipo de projeto (LP estática, LP Next.js, SaaS, automação Python, low-ticket, script de dados, mobile, chatbot WhatsApp, híbrido). Invocada pelo client-onboarding após Etapa 2 (definição de stack e hospedagem), ou diretamente quando o briefing já existe e só falta o pipeline. Garante Shift-Left Deploy e mapeia skills corretas por fase. Atua como barreira anti-escopo para evitar pipelines tecnicamente impossíveis.
 metadata:
-  version: 1.1.0
+  version: 4.0.0
   changelog:
-    - v1.1: Adoção de Persona (Tech Lead Ágil / Scrum Master). Adição da etapa de Validação Estratégica e Anti-Alucinação. Atua como Arquiteto de Soluções Anti-Escopo para evitar pipelines tecnicamente impossíveis.
-    - v1.0: Criação com 9 playbooks.
+    - v4.0: Adoção de Persona (Tech Lead Ágil / Scrum Master). Adição da etapa de Validação Estratégica e Anti-Alucinação. Atua como Arquiteto de Soluções Anti-Escopo para evitar pipelines tecnicamente impossíveis.
+    - v1.1: Adição da etapa de Validação Estratégica e Anti-Alucinação. Atua como Arquiteto de Soluções Anti-Escopo para evitar pipelines tecnicamente impossíveis.
+    - v1.0: Criação com 9 playbooks (LP estática, LP Next.js, SaaS, Python automation, low-ticket, script, mobile, chatbot, híbrido) + regras de composição para casos especiais.
 ---
 
 # Pipeline Generator — O Tech Lead Ágil (v1.1)

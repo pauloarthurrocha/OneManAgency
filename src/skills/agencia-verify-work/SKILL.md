@@ -1,12 +1,14 @@
 ---
 name: agencia-verify-work
-description: O Engenheiro de QA Implacável (Quality Gate) v2.2. Valida outputs de cada fase do PIPELINE.md contra critérios de aceite declarados. Gera relatórios de verificação e atua como barreira anti-alucinação.
+description: O Engenheiro de QA Implacável (Quality Gate) pós-fase da Agência AI Adaptável v4.0. Valida outputs de cada fase do PIPELINE.md contra critérios de aceite declarados. Agora com integração automática de scripts Python de validação e Validação Anti-Alucinação (Scope Creep & API Deprecation). Gera relatório de verificação (.planning/VERIFICATION_REPORT.md) com status PASS/WARNING/FAIL. Pode ser invocado automaticamente pelo agencia-executor após cada fase, ou manualmente pelo usuário.
 metadata:
-  version: 2.2.0
+  version: 4.0.0
   changelog:
-    - v2.2: Adoção de Persona (Engenheiro de QA Implacável). Adição de checks Anti-Scope Creep no Step 2 e API Deprecation via MCPs no Step 4.
-    - v2.1: Validação de Error Persistence e Memory Compaction.
-    - v2.0: Integração automática com scripts Python.
+    - v4.0: Adoção de Persona (Engenheiro de QA Implacável). Adição de checks Anti-Scope Creep no Step 2 e API Deprecation via MCPs no Step 4.
+    - v2.2: Adição de checks Anti-Scope Creep no Step 2 e API Deprecation via MCPs no Step 4.
+    - v2.1: Validação de Error Persistence e Memory Compaction (práticas de Context Engineering inspiradas no Manus).
+    - v2.0: Integração automática com scripts Python (checklist.py, verify_all.py). Suporte a Validation Level (quick/full) no PIPELINE.md.
+    - v1.0: Validação estruturada de outputs, critérios de aceite, placeholders, e build/test quando aplicável.
 ---
 
 # Agencia Verify Work — O Engenheiro de QA Implacável (v2.2)

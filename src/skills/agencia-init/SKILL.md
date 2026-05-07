@@ -1,11 +1,23 @@
 ---
 name: agencia-init
-description: O Engenheiro de Setup da Agência AI Adaptável v4.0. Detecta IDE ativa, SO, copia skills core, baixa skills externas atualizadas, configura MCPs e cria a estrutura de Context Engineering. Assume a persona de um Engenheiro de Infraestrutura Sênior garantindo fundações perfeitas.
+description: O Engenheiro de Setup da Agência AI Adaptável v4.0. Inicializa um projeto de cliente da Agência AI Adaptável do zero. Detecta IDE ativa, SO, copia skills core de ~/.agencia-ai/, BAIXA skills externas atualizadas (Marketing Skills, UI/UX Pro Max, Anthropic, Antigravity Kit) via git clone, configura MCPs, cria estrutura Context Engineering e PIPELINE.md vazio. Neutro quanto ao tipo de projeto. Próximo passo após o init é sempre o `client-onboarding`. Funciona cross-IDE (Claude Code, OpenCode, Antigravity, Cursor, Codex, Roo Code). Adapta comandos ao sistema operacional detectado. Assume a persona de um Engenheiro de Infraestrutura Sênior garantindo fundações perfeitas.
 metadata:
   version: 4.0.0
   changelog:
     - v4.0: Adoção de Persona (Engenheiro de Infraestrutura Core). Melhoria no handoff inteligente para o Arquiteto Socrático (client-onboarding), garantindo que o usuário seja ativamente guiado e impedido de pular etapas fundamentais.
-    - v3.3: Detecção inteligente de SO.
+    - v3.3: Detecção inteligente de SO (Windows/Linux/macOS) em todos os comandos. Propagação de skills externas cross-IDE. Suporte a Roo Code nos paths de contexto.
+    - v3.2: SEMPRE baixa skills externas atualizadas (Marketing Skills, UI/UX Pro Max, Anthropic, Antigravity Kit) em cada novo projeto. Usa ~/.agencia-ai/ como cache/offline fallback.
+    - v3.1: Prioriza ~/.agencia-ai/skills/ (instalado pelo CLI global) sobre git clone/npx. Remove initProject do CLI — agora é função exclusiva da skill.
+    - v3.0: Neutro quanto ao tipo de projeto (remove criação hardcoded de DESIGN_SYSTEM/COPY_DECK/UI-SPEC). Cria PIPELINE.md vazio. Conserta .gitignore (não ignora mais .agents/.claude/.codex/.gemini). Adiciona context7 ao .mcp.json. Inclui client-onboarding e pipeline-generator nas skills copiadas.
+    - v2.3: Auto-install external skills (Antigravity Kit, Marketing Skills, Design Skills)
+    - v2.3: Detect IDE (Claude, OpenCode, Antigravity, Cursor, Codex)
+    - v2.3: Copy agency skills to .agents/skills/ inside repo
+    - v2.3: Create CLAUDE.md as copy of AGENTS.md
+    - v2.3: Smart fallback (skills CLI -> gh -> npx -> git clone)
+    - v2.3: MCP config (Brave Search, Playwright, Firecrawl, GitHub)
+    - v2.2: Repo-scoped skills for cross-IDE continuity
+    - v2.1: Context Engineering (AGENTS.md, PROJECT.md, STATE.md, discovery-notes.md)
+    - v2.0: Separate universal protocols (AGENTS.md) from project rules (PROJECT.md)
 ---
 
 # Agencia Init v4.0 — O Engenheiro de Infraestrutura Core

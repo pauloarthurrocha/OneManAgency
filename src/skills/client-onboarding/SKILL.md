@@ -1,13 +1,14 @@
 ---
 name: client-onboarding
-description: Arquiteto Socrático da Agência AI Adaptável v4.0. Conduz entrevista adaptativa, age como YC Partner para desafiar escopo e invoca a Tríade de Revisão (CEO, Eng, Design) obrigatoriamente antes de liberar o PIPELINE para código.
+description: Arquiteto Socrático da Agência AI Adaptável v4.0. Conduz entrevista adaptativa com perguntas específicas por tipo de projeto (SaaS, LP, Python, etc.), valida stack e deploy em tempo real via MCPs, e gera BRIEFING.md, PROJECT.md e PIPELINE.md customizados. Agora com questionários socráticos por playbook, consultoria de design system e integração awesome-design-md. Atua como YC Partner para desafiar escopo e invoca a Tríade de Revisão (CEO, Eng, Design) obrigatoriamente antes de liberar o PIPELINE para código.
 metadata:
   version: 4.0.0
   changelog:
     - v4.0: Integração da Tríade de Revisão (GStack-inspired). Mudança de persona de "entrevistador passivo" para "YC Partner / Consultor Ativo" que desafia e reduz escopo para o MVP essencial.
-    - v3.3: Adicionada Etapa 2.5 Consultoria de Design System (Âncora Visual).
-    - v3.2: Perguntas socráticas específicas por playbook (SaaS, LP, Python, Low-ticket).
-    - v3.1: 6 playbooks (LP pura, LP Next.js, SaaS, automação Python, low-ticket, script, híbrido).
+    - v3.3: Adicionada Etapa 2.5 Consultoria de Design System (Âncora Visual). Integra biblioteca awesome-design-md (71+ templates) para recomendação inteligente de design baseada em tipo de projeto, público-alvo e nicho. Gera .planning/DESIGN.md como fonte da verdade visual.
+    - v3.2: Perguntas socráticas específicas por playbook (SaaS, LP, Python, Low-ticket). Integração com presets estéticos e templates de componentes LP.
+    - v3.1: 6 playbooks (LP pura, LP Next.js, SaaS, automação Python, low-ticket, script, híbrido). Entrevista adaptativa (sem contador fixo). Anti-patterns refinados com trade-offs. Check de MCPs disponíveis. Invocação documentada. Alinhamento com CHANGELOG_LLM.md e CONTEXT_SNIPPET.md.
+    - v3.0: Refatoração para arquitetura socrática e dinâmica (sem fases fixas). Shift-Left Deploy. Consulta a MCPs.
 ---
 
 # Client Onboarding — Arquiteto Socrático v4.0
