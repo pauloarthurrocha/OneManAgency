@@ -399,6 +399,20 @@ Preencher os placeholders `{{...}}` do template já existente. Obrigatórios:
 
 ---
 
+### Etapa 4 — A Tríade de Revisão (GStack Inspired)
+
+Antes de passar o bastão para a execução, o projeto deve passar por um refinamento arquitetural. Isso evita que a Agência escreva código baseado na primeira ideia (que geralmente é super-complexa).
+
+**Você deve informar o cliente:**
+> *"Briefing e Pipeline gerados! Antes de começarmos a codar, pelas melhores práticas da Engenharia Agêntica (PIV Loop), precisamos passar esse plano pela nossa Tríade de Revisão. Eu vou acionar:*
+> *1. **CEO Review (`/plan-ceo-review`)**: Para desafiar o escopo e garantir que estamos focados num MVP de 10 estrelas que gera receita.*
+> *2. **Tech Lead Review (`/plan-eng-review`)**: Para travar a arquitetura e fluxos de dados.*
+> *3. **Design Review (`/plan-design-review`)**: Para garantir que o design system evite o 'AI slop' genérico.*
+
+O Output dessa etapa será um PRD finalizado e blindado. Somente após a Tríade dar o OK, você chama o `agencia-executor`.
+
+---
+
 ## 📚 Playbooks por Tipo de Projeto
 
 ### Playbook A — Landing Page Estática Pura (HTML/CSS/JS, Cloudflare Pages / GitHub Pages)
@@ -616,10 +630,10 @@ Stack: [STACK]
   - .planning/CHANGELOG_LLM.md (entrada adicionada)
   - .planning/CONTEXT_SNIPPET.md (preenchido)
 
-🚀 Próxima ação:
-A Fase 1 do PIPELINE é: **[NOME_DA_FASE_1]**
+🚀 Próxima ação recomendada: A Tríade de Revisão.
+Invocar os subagentes de revisão (/plan-ceo-review, /plan-eng-review, /plan-design-review) para desafiar e solidificar o escopo antes da execução.
 
-Posso [1] Passar o bastão para o agencia-executor iniciar a Fase 1 / [2] Aguardar comando manual?
+Posso [1] Iniciar a Tríade de Revisão / [2] Pular direto para o agencia-executor iniciar a Fase 1 / [3] Aguardar comando manual?
 ```
 
 ---

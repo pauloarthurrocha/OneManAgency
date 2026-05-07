@@ -1,7 +1,7 @@
-# Agencia AI Adaptável — Skills v3.3
+# Agencia AI Adaptável — Skills v4.0 (Padrão Vale do Silício)
 
 > **Repo:** github.com/pauloarthurrocha/agencia-ai-adaptavel-skills
-> **Versão:** 3.3.0 (Design System Intelligence + Awesome Design MD + Âncora Visual)
+> **Versão:** 4.0.0 (PIV Loop, TDD Raiz, Tríade de Revisão e System Evolution)
 > **Formato:** Agent Skills (SKILL.md)
 > **NPM (GitHub Packages):** `npm install -g @pauloarthurrocha/agencia-ai-adaptavel --registry=https://npm.pkg.github.com`
 
@@ -20,11 +20,11 @@ Sistema de **agent skills** para execução de projetos de software via IA. Func
 | Skill | Versão | Descrição |
 |---|---|---|
 | `agencia-init` | v3.3 | Inicialização de projetos. Detecta IDE, SO, configura MCPs, cria estrutura Context Engineering. **Próximo passo sempre: `client-onboarding`** |
-| `client-onboarding` | v3.3 | Arquiteto Socrático. Entrevista adaptativa com **questionários por playbook** + **Etapa 2.5: Consultoria de Design System** (71+ templates awesome-design-md). Gera `.planning/DESIGN.md` como âncora visual |
-| `pipeline-generator` | v1.1 | Gera PIPELINE.md a partir do briefing. Contém 9 playbooks. **Novo:** Fase "Arquitetura Técnica" com PRDs para SaaS/Full-stack |
-| `agencia-executor` | v3.4 | Orquestrador dinâmico. **Novo:** Suporte a **agentes especializados por fase**, **orquestração multi-agent** (execução paralela), e **Risk Assessment** proativo no gate humano |
-| `agencia-verify-work` | v2.2 | Quality Gate pós-fase. **Novo:** Integração automática com **scripts Python** (`checklist.py`, `verify_all.py`) e Validação Anti-Alucinação (Scope Creep, API Deprecation) |
-| `skill-creator` | v1.0 | Criação e otimização de skills. Wizard interativo, A/B testing, evals, description optimizer. Baseado no Anthropic skill-creator |
+| `client-onboarding` | v4.0 | Arquiteto Socrático. Entrevista adaptativa. Agora com a **Tríade de Revisão (CEO, Eng, Design)** obrigatória antes da execução de código. |
+| `pipeline-generator` | v1.1 | Gera PIPELINE.md a partir do briefing. Contém 9 playbooks. |
+| `agencia-executor` | v4.0 | Orquestrador dinâmico. Agora com suporte nativo ao **Ciclo PIV** (Isolamento de Contexto), **TDD Raiz**, e execução isolada em **Git Worktrees**. Integra o ciclo de aprendizado contínuo (System Evolution). |
+| `agencia-verify-work` | v2.2 | Quality Gate pós-fase. |
+| `skill-creator` | v1.0 | Criação e otimização de skills. |
 
 ---
 
@@ -294,6 +294,13 @@ O instalador da Agência AI Adaptável foi projetado para ser **não-destrutivo*
 ---
 
 ## 📝 Changelog
+
+### v4.0.0 — PIV Loop, TDD e Tríade de Revisão
+- **Integração PIV Loop:** Isolamento obrigatório de contexto (Limpar janela após Planejar, antes de Implementar) para evitar alucinações (LiTM).
+- **TDD Raiz (Red-Green-Refactor):** Execução lógica e de Backend requer a criação de testes que falham antes do código final.
+- **Tríade de Revisão Socrática:** Introduzidos 3 "Tech Leads" virtuais (`/plan-ceo-review`, `/plan-eng-review`, `/plan-design-review`) para validar o escopo da Agência após o Briefing e antes da Codificação.
+- **Git Worktrees:** Paralelismo com isolamento real de pastas para subagentes em grandes refatorações.
+- **System Evolution:** Aprendizado contínuo da IA, gravando erros superados em `discovery-notes.md` de forma escalável.
 
 ### v3.3.0 — Design System Intelligence (Awesome Design MD)
 - **Etapa 2.5: Consultoria de Design** no `client-onboarding` — IA analisa perfil do projeto e recomenda templates de design

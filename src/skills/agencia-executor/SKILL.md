@@ -31,15 +31,16 @@ Você é o **orquestrador do workflow** da Agência AI Adaptável. Sua responsab
 
 ---
 
-## 🧠 Princípios de Context Engineering (Padrão Manus)
+## 🧠 Princípios de Context Engineering e PIV Loop (Padrão Manus & Cole Medin)
 
-Para evitar o estouro de contexto (Context Window = RAM) e manter a estabilidade em fases complexas, você deve aplicar ativamente os princípios de Context Engineering:
+Para evitar o estouro de contexto (Context Window = RAM) e manter a estabilidade em fases complexas, você deve aplicar ativamente os princípios de Context Engineering e a metodologia PIV:
 
-1. **Filesystem as Memory**: A janela de contexto é volátil e limitada. O sistema de arquivos é persistente e ilimitado. TUDO que for importante (descobertas, erros, regras) DEVE ir para `discovery-notes.md` ou `STATE.md`. O "3-File Pattern" de planejamento, pesquisa e progresso deve ser respeitado.
-2. **A Regra das 2 Ações (2-Action Rule)**: A cada 2 ações pesadas de leitura/browser/cmd (ex: leitura de múltiplos arquivos, busca web, output longo de terminal), você deve SALVAR seus achados e resumos no disco (`discovery-notes.md`), não apenas mantê-los na memória da conversa.
-3. **Error Persistence (Evite Loops)**: Se uma abordagem ou comando falhar, LOGUE o erro explicitamente em `STATE.md` (seção de histórico) ou no arquivo de notas, para evitar que você ou outro agente repita a mesma falha no futuro. "Track attempts, mutate approach". Nunca repita a mesma falha cegamente.
-4. **Attention Manipulation**: Antes de qualquer grande decisão arquitetural, ou após retomar uma sessão, RELEIA ativamente o `PIPELINE.md` e o `PROJECT.md` para "ancorar" sua atenção no plano original e evitar alucinações de escopo.
-5. **Memory Compaction (Auto-Catchup)**: Em sessões longas, quando perceber que acumulou muito contexto de tool calls (ex: ciclo longo de debugging ou análise de dezenas de arquivos), faça uma "compactação": crie um sumário do estado atual, registre no disco (`STATE.md`), e libere-se de processar todo o histórico passado.
+1. **O Loop PIV (Plan, Implement, Validate)**: Planejar e codar na mesma janela de contexto causa alucinações graves (LiTM - Lost in the Middle). O planejamento (Plan) gera o plano de ataque. A implementação (Implement) DEVE acontecer num contexto isolado. Se o plano for longo, instrua o usuário a limpar o chat (`/clear`) ou abrir uma nova sessão, passando apenas o plano e o contexto estrito.
+2. **Filesystem as Memory**: A janela de contexto é volátil e limitada. O sistema de arquivos é persistente e ilimitado. TUDO que for importante (descobertas, erros, regras) DEVE ir para `discovery-notes.md` ou `STATE.md`. O "3-File Pattern" de planejamento, pesquisa e progresso deve ser respeitado.
+3. **A Regra das 2 Ações (2-Action Rule)**: A cada 2 ações pesadas de leitura/browser/cmd (ex: leitura de múltiplos arquivos, busca web, output longo de terminal), você deve SALVAR seus achados e resumos no disco (`discovery-notes.md`), não apenas mantê-los na memória da conversa.
+4. **Error Persistence (Evite Loops)**: Se uma abordagem ou comando falhar, LOGUE o erro explicitamente em `STATE.md` (seção de histórico) ou no arquivo de notas, para evitar que você ou outro agente repita a mesma falha no futuro. "Track attempts, mutate approach". Nunca repita a mesma falha cegamente.
+5. **Attention Manipulation**: Antes de qualquer grande decisão arquitetural, ou após retomar uma sessão, RELEIA ativamente o `PIPELINE.md` e o `PROJECT.md` para "ancorar" sua atenção no plano original e evitar alucinações de escopo.
+6. **Memory Compaction (Auto-Catchup)**: Em sessões longas, quando perceber que acumulou muito contexto de tool calls (ex: ciclo longo de debugging ou análise de dezenas de arquivos), faça uma "compactação": crie um sumário do estado atual, registre no disco (`STATE.md`), e libere-se de processar todo o histórico passado.
 
 ---
 
@@ -260,11 +261,13 @@ Para cada skill identificada:
 3. Se falhar, tentar path global
 4. Se nenhum encontrar, **avisar** o usuário e perguntar se quer prosseguir sem a skill
 
-### Step 5.3 — Executar a tarefa
+### Step 5.3 — Executar a tarefa (Implementação)
 
 Executar a tarefa da fase, honrando:
-- Protocolos universais do `AGENTS.md` (read-first, micro-batches, silêncio operacional)
-- Regras específicas do `.agent/rules/PROJECT.md`
+- **Isolamento de Contexto (O PIV Loop):** Você não deve executar pesquisas extensas e logo depois vomitar código na mesma janela. O "Plan" gerou as instruções, o "Implement" age. Se a janela de contexto estiver muito poluída após a pesquisa, pause e instrua o usuário a aplicar um `/clear` e começar a execução limpa.
+- **TDD Raiz (RED-GREEN-REFACTOR):** Para tarefas lógicas e de Backend, o TDD é **MANDATÓRIO**. Você não implementa código funcional sem antes escrever o teste que descreve o comportamento desejado. Escreva o teste -> Execute (deve falhar) -> Escreva o código mínimo para passar -> Execute novamente -> Refatore (DRY).
+- Protocolos universais do `AGENTS.md` (read-first, micro-batches, silêncio operacional).
+- Regras específicas do `.agent/rules/PROJECT.md`.
 - Regra Shift-Left Deploy: se a fase é "setup de infra", ela deve vir **antes** de qualquer escrita de código substancial. Se o PIPELINE.md quebra essa regra, alertar o usuário antes de executar.
 
 **🛡️ Validação Proativa Anti-Alucinação (via MCPs):**
@@ -292,9 +295,9 @@ Decisão:
 - **WARNING** → mostrar avisos, perguntar se prossegue
 - **FAIL** → não marcar fase, mostrar erros, manter fase em progresso
 
-### Step 5.5 — Atualização de Memória (R6)
+### Step 5.5 — Atualização de Memória e System Evolution (Learn)
 
-Após PASS, atualizar 3 arquivos em ordem:
+Após PASS, o sistema não pode apenas seguir em frente. Ele deve **aprender** com a execução (System Evolution):
 
 **1. `.planning/PIPELINE.md`** → trocar `- [ ]` por `- [X]` na fase concluída
 
@@ -307,7 +310,7 @@ Após PASS, atualizar 3 arquivos em ordem:
 - Próxima: Fase [N+1] — [Nome]
 ```
 
-**3. `.planning/discovery-notes.md`** → se houve aprendizado, adicionar no topo da seção "Regras Aprendidas":
+**3. `.planning/discovery-notes.md` (O Brain/Memória Dinâmica)** → Se houve aprendizado, erro superado ou alucinação do modelo durante essa fase (ex: você tentou importar do lucide-react e deu erro, ou o teste TDD falhou 3x na mesma coisa), **você deve abstrair isso em uma regra universal**:
 ```markdown
 [YYYY-MM-DD] [Categoria]: SEMPRE/NUNCA fazer X porque Y.
 Contexto: [quando a regra se aplica]
@@ -519,13 +522,17 @@ O executor (como orchestrator) divide a fase em subtarefas:
 - Dependências: nenhuma
 ```
 
-#### Step 2 — Execução em Waves
+#### Step 2 — Execução em Waves e Git Worktrees (Execução Paralela Segura)
+
+Inspirado na arquitetura Superpowers, quando lidamos com grandes refatorações ou multi-agentes simultâneos, evite poluir a branch principal. O executor deve isolar a execução:
+- Se a complexidade for média/alta, o executor spawnará uma nova **Git Worktree** (uma branch isolada em uma pasta separada) para o agente trabalhar.
+- Cada subagente trabalha no seu Worktree, previnindo conflitos de arquivo.
 
 ```
 Wave 1 (paralelo):
-  → frontend-specialist: Scaffold + Components
-  → backend-specialist: API routes + Services
-  → database-architect: Schema + Migrations
+  → frontend-specialist (Worktree A): Scaffold + Components
+  → backend-specialist (Worktree B): API routes + Services
+  → database-architect (Branch Principal): Schema + Migrations
 
 Wave 2 (paralelo, depende da Wave 1):
   → frontend-specialist: Integração com API
