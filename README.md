@@ -98,6 +98,21 @@ oma-adaptavel/
 
 ---
 
+## 🌟 Prior Art & Acknowledgements (Inspirações)
+
+O **OneManAgency (OMA)** não tenta reinventar a roda. Ele é a **síntese e orquestração** dos melhores conceitos de Engenharia Agêntica do mercado open-source. Nosso objetivo foi unir a inteligência desses projetos incríveis em um único framework *Plug-and-Play* que roda invisível dentro da sua IDE:
+
+*   **[GStack](https://github.com/garrytan/gstack) (by Garry Tan / Y Combinator):** Inspirou nossa *Tríade de Revisão* (CEO, Eng, Design). A OMA adotou a mentalidade de que código não deve ser escrito sem antes focar no MVP de negócios ("The Wedge") e cortar escopo impiedosamente.
+*   **[Superpowers](https://github.com/obra/superpowers) (by Obra):** A base do nosso *Backend Specialist*. Nós importamos a "TDD Iron Law" (Red-Green-Refactor) e o conceito de usar Git Worktrees para grandes refatorações paralelas sem poluir a branch principal.
+*   **[Get-Shit-Done (GSD)](https://github.com/gsd-build/get-shit-done):** Inspirou nossa leveza e o *Context Engineering* focado em persistência de arquivos. Onde o GSD usa CLI commands pesados, a OMA injeta a mesma persistência passivamente na IDE (com nosso `.planning/STATE.md`).
+*   **[Agency-Agents](https://github.com/msitarzewski/agency-agents):** Ensinou-nos que "Roleplay Raso" não funciona. A OMA usa *Agent Definition Files* rígidos em `src/agents/` contendo filosofias operacionais claras em vez de prompts genéricos.
+*   **[Spec-Kit](https://github.com/github/spec-kit) (by GitHub):** Validou a nossa tese do *Spec-Driven Development*. A OMA exige `PRD.md` e `ARCHITECTURE.md` antes do `agencia-executor` ter permissão para escrever código de produção.
+*   **[Impeccable](https://github.com/pbakaus/impeccable) & [Emil Kowalski](https://emilkowal.ski/):** A espinha dorsal do nosso *Design Specialist*. Adotamos as regras Anti-"AI Slop" para rejeitar o design genérico de IA, focando em tipografia madura, *spring easing*, e componentes com estado.
+
+Se você gosta da OMA, por favor considere dar um Star nos repositórios acima. Nós estamos nos ombros de gigantes.
+
+---
+
 <div align="center">
 <i>"Você não sobe o nível do seu código pedindo por favor. Você sobe o nível construindo sistemas que proíbem código ruim."</i><br><br>
 <b>Licença MIT | Feito para builders.</b>
