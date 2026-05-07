@@ -203,7 +203,7 @@ function cmdHelp() {
   log('  NAO cria projetos. Projetos sao criados pela skill oma-init no IDE.\n');
 
   log('COMANDOS:', 'bold');
-  log('  install-global [flags]   Popula ~/.oma + propaga para IDEs detectadas');
+  log('  install [flags]          Popula ~/.oma + propaga para IDEs detectadas');
   log('    --only=k1,k2           so estas IDEs (claude,cursor,codex,opencode,antigravity,gemini-cli)');
   log('    --exclude=k1,k2        pular estas IDEs');
   log('    --dry-run              mostrar sem alterar');
@@ -224,6 +224,7 @@ function cmdHelp() {
 const [, , command, ...rest] = process.argv;
 
 switch (command) {
+  case 'install':
   case 'install-global': cmdInstallGlobal(rest); break;
   case 'init':           cmdInit(rest[0]); break;
   case 'update':         cmdUpdate(); break;
