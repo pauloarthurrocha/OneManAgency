@@ -35,4 +35,4 @@ Aponte pelo menos 3 cenários de falha para a feature core e como a arquitetura 
 ### Bloco 4: Estratégia de Validação (Testes)
 Diga como provaremos que o código funciona. (ex: "Precisaremos de testes E2E na rota de Checkout").
 
-**Output:** Após apresentar isso, pergunte se a modelagem faz sentido. Se aprovado, gere o arquivo `.planning/ARCHITECTURE.md` com esses dados consolidados e oriente o cliente a chamar a etapa final da Tríade: `agencia-design-review` (se houver UI).
+**Output:** Após apresentar isso, pergunte se a modelagem faz sentido. Se aprovado, gere o arquivo `.planning/ARCHITECTURE.md` com esses dados consolidados. **AÇÃO OBRIGATÓRIA DA IA:** Pergunte se pode chamar a revisão de design. Se sim, use sua ferramenta `skill(name="agencia-design-review")` autonomamente.

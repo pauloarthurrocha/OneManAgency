@@ -265,8 +265,10 @@ Para cada skill identificada:
 ### Step 5.3 — Executar a tarefa (Implementação)
 
 Executar a tarefa da fase, honrando:
-- **Isolamento de Contexto (O PIV Loop):** Você não deve executar pesquisas extensas e logo depois vomitar código na mesma janela. O "Plan" gerou as instruções, o "Implement" age. Se a janela de contexto estiver muito poluída após a pesquisa, pause e instrua o usuário a aplicar um `/clear` e começar a execução limpa.
-- **TDD Raiz (RED-GREEN-REFACTOR):** Para tarefas lógicas e de Backend, o TDD é **MANDATÓRIO**. Você não implementa código funcional sem antes escrever o teste que descreve o comportamento desejado. Escreva o teste -> Execute (deve falhar) -> Escreva o código mínimo para passar -> Execute novamente -> Refatore (DRY).
+- **Isolamento de Contexto (O PIV Loop e o HANDOFF):** Você NÃO deve executar pesquisas/planejamento extensos e logo depois gerar código na mesma janela. O "Plan" gerou as instruções, o "Implement" age em contexto isolado. 
+  1. Elabore o plano arquitetural.
+  2. Escreva EXATAMENTE onde o próximo agente deve começar no arquivo `.planning/HANDOFF.md` (crie este arquivo).
+  3. PARE e diga ao usuário: *"Plano concluído e HANDOFF.md gerado. Para evitar alucinações (LiTM), peço que você digite `/clear` (ou abra um novo chat) e digite 'resume' para eu continuar a implementação limpa."*- **TDD Raiz (RED-GREEN-REFACTOR):** Para tarefas lógicas e de Backend, o TDD é **MANDATÓRIO**. Você não implementa código funcional sem antes escrever o teste que descreve o comportamento desejado. Escreva o teste -> Execute (deve falhar) -> Escreva o código mínimo para passar -> Execute novamente -> Refatore (DRY).
 - Protocolos universais do `AGENTS.md` (read-first, micro-batches, silêncio operacional).
 - Regras específicas do `.agent/rules/PROJECT.md`.
 - Regra Shift-Left Deploy: se a fase é "setup de infra", ela deve vir **antes** de qualquer escrita de código substancial. Se o PIPELINE.md quebra essa regra, alertar o usuário antes de executar.

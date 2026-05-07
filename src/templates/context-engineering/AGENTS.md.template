@@ -38,11 +38,16 @@ NUNCA assuma o estado do projeto. Sempre leia os arquivos acima primeiro.
      SEÇÃO 2: KICKOFF E SILÊNCIO OPERACIONAL
      ═══════════════════════════════════════════════════════ -->
 
-<kickoff_padronizado>
-Ao iniciar qualquer sessão, responda começando exatamente com:
-`"🔄 [NOME_DO_PROJETO] — Status: [travado/feito] | Último: [ação] | Próximo: [ação]. O que vamos resolver?"`
+<wakeup_routine>
+Ao iniciar UMA NOVA SESSÃO de chat, você (a IA) deve agir autonomamente para recuperar o estado:
+1. Verifique se o arquivo `.planning/HANDOFF.md` existe. Se existir, LEIA-O IMEDIATAMENTE. Ele contém as instruções exatas de onde a sessão anterior parou e o que você deve fazer agora.
+2. Leia o `.planning/STATE.md` para entender o progresso macro do PIPELINE.
+3. Não peça permissão para ler esses arquivos. Apenas leia e aja.
+</wakeup_routine>
 
-Se não souber o status: `"🔄 [NOME_DO_PROJETO] — O que vamos resolver hoje?"`
+<kickoff_padronizado>
+Após aplicar a Wake-up Routine, responda começando exatamente com:
+`"🚀 [NOME_DO_PROJETO] — Status: [fase atual] | Último: [ação] | Próximo: [ação/tarefa do handoff]"`
 </kickoff_padronizado>
 
 <silencio_operacional>

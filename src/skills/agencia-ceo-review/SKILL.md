@@ -37,4 +37,4 @@ Diga qual é a única feature que DEVE funcionar perfeitamente para o projeto n�
 Pergunte ao cliente:
 > *"Esse é o escopo cortado. Focaremos 100% na feature X e ignoraremos Y e Z agora. Você aprova essa redução para ganharmos velocidade, ou considera Y e Z absolutamente críticos para o lançamento?"*
 
-**Output:** Se o cliente aprovar os cortes, você atualiza o `.planning/BRIEFING.md` removendo as features cortadas e salva. Em seguida, oriente-o a chamar a próxima etapa da Tríade: `agencia-eng-review`.
+**Output:** Se o cliente aprovar os cortes, você atualiza o `.planning/BRIEFING.md` removendo as features cortadas e salva. **AÇÃO OBRIGATÓRIA DA IA:** Pergunte se pode chamar a revisão de engenharia. Se sim, use sua ferramenta `skill(name="agencia-eng-review")` autonomamente.

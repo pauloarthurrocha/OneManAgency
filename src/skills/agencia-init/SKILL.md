@@ -271,7 +271,7 @@ fi
 ```bash
 if [ "$USE_GLOBAL" = true ]; then
   # Copiar skills core da agência
-  for SKILL in agencia-init agencia-executor client-onboarding pipeline-generator agencia-verify-work skill-creator; do
+  for SKILL in agencia-init agencia-executor client-onboarding pipeline-generator agencia-verify-work skill-creator agencia-ceo-review agencia-eng-review agencia-design-review; do
     if [ -d "$AGENCIA_GLOBAL/skills/$SKILL" ]; then
       cp -r "$AGENCIA_GLOBAL/skills/$SKILL" .agents/skills/
       echo "  ✓ $SKILL (global)"
@@ -446,11 +446,14 @@ cp -r .agents/skills/* .gemini/antigravity/skills/ 2>/dev/null
 
 **Skills da agencia que devem estar em `.agents/skills/` (núcleo — obrigatórias):**
 - `agencia-init/` — Este init (auto-bootstrap)
-- `agencia-executor/` — Executor dinâmico v3.2
-- `client-onboarding/` — Arquiteto socrático v3.2 (gera PIPELINE.md)
-- `pipeline-generator/` — Playbooks por tipo de projeto (auxiliar do onboarding)
+- `agencia-executor/` — Executor dinâmico v4.0
+- `client-onboarding/` — Arquiteto socrático v4.0
+- `agencia-ceo-review/` — Tríade: Validação de Negócios/Escopo
+- `agencia-eng-review/` — Tríade: Validação Arquitetural
+- `agencia-design-review/` — Tríade: Validação de UX/UI
+- `pipeline-generator/` — Gera PIPELINE.md (auxiliar do onboarding)
 - `agencia-verify-work/` — Quality Gate pós-fase
-- `skill-creator/` — Criação e otimização de novas skills (baseado no Anthropic skill-creator)
+- `skill-creator/` — Criação e otimização de novas skills
 
 **Skills auxiliares (opcionais — adicionar conforme domínio do projeto):**
 - `niche-research/`, `competitor-intel/`, `web-scraper-intel/` — research
@@ -817,11 +820,11 @@ Estrutura criada:
 Este repositório está pronto, mas está VAZIO de propósito. O PIPELINE.md precisa ser montado antes de qualquer código ser escrito.
 
 🚀 PRÓXIMO PASSO OBRIGATÓRIO:
-Você precisa conversar com o nosso **Arquiteto Socrático** para definir o escopo de negócios, a stack e as dores reais do seu cliente. Só depois disso a Tríade de Revisão e o Executor entram em ação.
+Você precisa conversar com o nosso **Arquiteto Socrático** para definir o escopo de negócios.
 
-Posso invocar o Arquiteto Socrático agora para você?
-[Y] → Executa `skill(name="client-onboarding")`
-[n] → Aguardar comando manual (Não recomendado)
+**AÇÃO OBRIGATÓRIA DA IA:**
+Pergunte ao cliente: "Posso invocar o Arquiteto Socrático agora para você?"
+Se ele disser SIM, **VOCÊ DEVE EXECUTAR A FERRAMENTA** `skill(name="client-onboarding")` autonomamente. NÃO diga ao cliente para digitar o comando. Assuma a orquestração.
 ```
 
 ---

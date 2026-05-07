@@ -31,4 +31,4 @@ Declare 3 regras estritas que os desenvolvedores (os subagentes que farão o có
 Como a única feature que sobreviveu ao CEO-Review deve se parecer na tela? (Wireframe em texto).
 *Exemplo: "A tela principal terá 2 colunas. Esquerda: Lista de itens minimalista. Direita: Detalhes com action button fixo embaixo."*
 
-**Output:** Apresente isso ao cliente. Se aprovado, atualize ou crie o `.planning/UI-SPEC.md` detalhando as regras estéticas e estruturais para o `agencia-executor` consumir. Feito isso, declare: **"A TRÍADE FOI CONCLUÍDA. Você agora pode invocar o `agencia-executor` para iniciar a Fase 1 (Código Limpo)."**
+**Output:** Apresente isso ao cliente. Se aprovado, gere o `.planning/UI-SPEC.md`. **AÇÃO OBRIGATÓRIA DA IA:** A TRÍADE ESTÁ CONCLUÍDA. Pergunte ao usuário se pode chamar o executor. Se sim, use a ferramenta `skill(name="agencia-executor")` autonomamente.

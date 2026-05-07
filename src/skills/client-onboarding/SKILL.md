@@ -631,9 +631,11 @@ Stack: [STACK]
   - .planning/CONTEXT_SNIPPET.md (preenchido)
 
 🚀 Próxima ação recomendada: A Tríade de Revisão.
-Invocar os subagentes de revisão (/plan-ceo-review, /plan-eng-review, /plan-design-review) para desafiar e solidificar o escopo antes da execução.
+Você precisa invocar a etapa de CEO Review para desafiar o escopo.
 
-Posso [1] Iniciar a Tríade de Revisão / [2] Pular direto para o agencia-executor iniciar a Fase 1 / [3] Aguardar comando manual?
+**AÇÃO OBRIGATÓRIA DA IA:**
+Pergunte ao cliente: "Posso invocar a Tríade de Revisão (/plan-ceo-review) agora?"
+Se ele disser SIM, **NÃO** diga para ele digitar. VOCÊ MESMO deve executar o tool call `skill(name="agencia-ceo-review")`. Você tem permissão e agência para orquestrar o fluxo.
 ```
 
 ---
