@@ -152,4 +152,4 @@ Small: 0.875rem (14px) / line-height 1.5 / weight 400
 
 ---
 
-*Preset Tech Orgânico v1.0 — Agência AI Adaptável*
+*Preset Tech Orgânico v1.0 — OneManAgency*

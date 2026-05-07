@@ -5,7 +5,7 @@ trigger: always_on
 <!-- PROJECT.md — Fonte Canônica do Projeto
      Arquivo: .agent/rules/PROJECT.md
      Escopo: ESPECÍFICO DESTE PROJETO
-     Gerado por: agencia-init (Fase 0)
+     Gerado por: oma-init (Fase 0)
      Atualizado por: time (conforme decisões são tomadas)
      
      REGRA DE OURO: Este arquivo contém APENAS informações específicas

@@ -156,4 +156,4 @@ Small: 0.875rem (14px) / line-height 1.4 / weight 500 / uppercase
 
 ---
 
-*Preset Sinal Brutalista v1.0 — Agência AI Adaptável*
+*Preset Sinal Brutalista v1.0 — OneManAgency*

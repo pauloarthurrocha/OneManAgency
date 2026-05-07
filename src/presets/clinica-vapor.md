@@ -174,4 +174,4 @@ Mono: 0.875rem (14px) / line-height 1.5 / weight 400
 
 ---
 
-*Preset Clínica Vapor v1.0 — Agência AI Adaptável*
+*Preset Clínica Vapor v1.0 — OneManAgency*

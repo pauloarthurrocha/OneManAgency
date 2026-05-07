@@ -4,7 +4,7 @@ const { execSync } = require('child_process');
 const os = require('os');
 
 // ─── Constants ─────────────────────────────────────────────────────
-const GLOBAL_DIR = path.join(os.homedir(), '.agencia-ai');
+const GLOBAL_DIR = path.join(os.homedir(), '.oma');
 const SKILLS_DIR = path.join(GLOBAL_DIR, 'skills');
 const AGENTS_DIR = path.join(GLOBAL_DIR, 'agents');
 const PRESETS_DIR = path.join(GLOBAL_DIR, 'presets');
@@ -12,16 +12,16 @@ const TEMPLATES_DIR = path.join(GLOBAL_DIR, 'templates');
 const SCRIPTS_DIR = path.join(GLOBAL_DIR, 'scripts');
 
 const CORE_SKILLS = [
-  'agencia-init',
-  'agencia-executor',
+  'oma-init',
+  'oma-executor',
   'client-onboarding',
   'pipeline-generator',
-  'agencia-verify-work',
+  'oma-verify-work',
   'skill-creator',
-  'agencia-ceo-review',
-  'agencia-eng-review',
-  'agencia-design-review',
-  'agencia-release-manager',
+  'oma-ceo-review',
+  'oma-eng-review',
+  'oma-design-review',
+  'oma-release-manager',
 ];
 
 const IDE_TARGETS = [
@@ -94,7 +94,7 @@ function installAll({ packageDir, only, exclude, dryRun } = {}) {
   const version = readVersion(packageDir);
 
   if (dryRun) {
-    console.log(`[dry-run] Installing Agencia AI Adaptavel v${version}`);
+    console.log(`[dry-run] Installing OneManAgency v${version}`);
     console.log(`[dry-run] Global dir: ${GLOBAL_DIR}`);
   }
 

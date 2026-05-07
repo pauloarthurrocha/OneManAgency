@@ -155,4 +155,4 @@ Caption: 0.75rem (12px) / line-height 1.4 / weight 400 / uppercase / tracking 0.
 
 ---
 
-*Preset Luxo Noturno v1.0 — Agência AI Adaptável*
+*Preset Luxo Noturno v1.0 — OneManAgency*

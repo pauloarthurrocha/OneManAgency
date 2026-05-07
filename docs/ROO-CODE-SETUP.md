@@ -1,6 +1,6 @@
-# Guia de Setup: Roo Code + Agência AI Adaptável
+# Guia de Setup: Roo Code + OneManAgency
 
-Este guia explica como integrar o **Roo Code** (extensão para VS Code) com o ecossistema da Agência AI Adaptável.
+Este guia explica como integrar o **Roo Code** (extensão para VS Code) com o ecossistema da OneManAgency.
 
 ---
 
@@ -23,10 +23,10 @@ O instalador da Agência (`install.sh` ou `install.ps1`) já tenta detectar o Ro
 2. Copie as skills da pasta global para a pasta do Roo Code:
    ```bash
    # Linux/macOS
-   cp -r ~/.agencia-ai/skills/* ~/.roo/skills/
+   cp -r ~/.oma/skills/* ~/.roo/skills/
    
    # Windows (PowerShell)
-   xcopy /E /I $HOME\.agencia-ai\skills\* $HOME\.roo\skills\
+   xcopy /E /I $HOME\.oma\skills\* $HOME\.roo\skills\
    ```
 3. Reinicie o VS Code ou recarregue a janela.
 
@@ -36,12 +36,12 @@ O instalador da Agência (`install.sh` ou `install.ps1`) já tenta detectar o Ro
 
 O Roo Code utiliza arquivos de configuração específicos para MCPs (Model Context Protocol).
 
-1. No seu projeto, a skill `agencia-init` criará um arquivo `.roo/mcp.json`.
+1. No seu projeto, a skill `oma-init` criará um arquivo `.roo/mcp.json`.
 2. Se você precisar configurar MCPs globais para o Roo Code, edite o arquivo:
    - **Windows:** `%APPDATA%\Code\User\globalStorage\roovscode.roo-ignore\settings\mcp_settings.json`
    - **macOS/Linux:** `~/.roo/mcp_settings.json` (ou similar dependendo da versão)
 
-> 💡 **Dica:** O `agencia-init` automatiza essa configuração para você dentro do escopo do projeto.
+> 💡 **Dica:** O `oma-init` automatiza essa configuração para você dentro do escopo do projeto.
 
 ---
 
@@ -50,7 +50,7 @@ O Roo Code utiliza arquivos de configuração específicos para MCPs (Model Cont
 O Roo Code suporta "Custom Modes", que permitem definir comportamentos específicos para o agente.
 
 1. A Agência fornece um arquivo `.roomodes` otimizado.
-2. Ao rodar `skill(name="agencia-init")`, este arquivo será copiado para a raiz do seu projeto.
+2. Ao rodar `skill(name="oma-init")`, este arquivo será copiado para a raiz do seu projeto.
 3. Isso habilitará modos como **Orchestrator**, **Frontend Specialist**, etc., diretamente no dropdown de modos do Roo Code.
 
 ---
@@ -61,15 +61,15 @@ O Roo Code suporta "Custom Modes", que permitem definir comportamentos específi
 No chat do Roo Code, você pode invocar nossas skills da mesma forma que em outras IDEs:
 
 ```text
-skill(name="agencia-init")
+skill(name="oma-init")
 ```
 
 Isso iniciará o processo de configuração do projeto, detectando que você está no VS Code/Roo Code e aplicando as configurações pertinentes.
 
 ### Fluxo Recomendado
-1. **Init:** `skill(name="agencia-init")`
+1. **Init:** `skill(name="oma-init")`
 2. **Onboarding:** `skill(name="client-onboarding")`
-3. **Execução:** `skill(name="agencia-executor")`
+3. **Execução:** `skill(name="oma-executor")`
 
 ---
 
@@ -88,4 +88,4 @@ Isso iniciará o processo de configuração do projeto, detectando que você est
 
 ---
 
-*Agência AI Adaptável — Potencializando seu desenvolvimento no VS Code com Roo Code.*
+*OneManAgency — Potencializando seu desenvolvimento no VS Code com Roo Code.*

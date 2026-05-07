@@ -156,4 +156,4 @@
 
 ---
 
-*Template Protocolo/Como Funciona v1.0 — Agência AI Adaptável*
+*Template Protocolo/Como Funciona v1.0 — OneManAgency*

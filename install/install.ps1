@@ -1,20 +1,20 @@
 #Requires -Version 5.1
 # ═══════════════════════════════════════════════════════
-# Agencia AI Adaptável — Bootstrap Installer (Windows)
+# OneManAgency — Bootstrap Installer (Windows)
 # ═══════════════════════════════════════════════════════
 #
 # This bootstrap clones the repository and delegates installation
 # to build/postinstall.js. It also sets up the PowerShell function
-# and PATH wrapper so `agencia-ai` works from any terminal.
+# and PATH wrapper so `oma` works from any terminal.
 #
-# irm https://raw.githubusercontent.com/pauloarthurrocha/agencia-ai-adaptavel-skills/main/install/install.ps1 | iex
+# irm https://raw.githubusercontent.com/pauloarthurrocha/OneManAgency/main/install/install.ps1 | iex
 
 $ErrorActionPreference = "Stop"
 
-$REPO_URL = "https://github.com/pauloarthurrocha/agencia-ai-adaptavel-skills.git"
-$INSTALL_DIR = "$env:USERPROFILE\.agencia-ai"
+$REPO_URL = "https://github.com/pauloarthurrocha/OneManAgency.git"
+$INSTALL_DIR = "$env:USERPROFILE\.oma"
 
-Write-Host "🚀 Agencia AI Adaptável — Bootstrap Installer" -ForegroundColor Cyan
+Write-Host "🚀 OneManAgency — Bootstrap Installer" -ForegroundColor Cyan
 Write-Host ""
 
 # ── Check dependencies ──
@@ -91,17 +91,17 @@ if (!(Test-Path $PROFILE)) {
 }
 
 $agenciaFunction = @'
-# Agencia AI Adaptável — Global function (auto-generated)
-function agencia-ai {
+# OneManAgency — Global function (auto-generated)
+function oma {
     param([Parameter(ValueFromRemainingArguments=$true)] $args)
     $AGENCIA_HOME = if ($env:AGENCIA_HOME) { $env:AGENCIA_HOME } else { "' + $INSTALL_DIR + '" }
-    & node "$AGENCIA_HOME\bin\agencia-ai.js" @args
+    & node "$AGENCIA_HOME\bin\oma.js" @args
 }
 '@
 
-if (!(Select-String -Path $PROFILE -Pattern "function agencia-ai" -ErrorAction SilentlyContinue)) {
+if (!(Select-String -Path $PROFILE -Pattern "function oma" -ErrorAction SilentlyContinue)) {
     Add-Content -Path $PROFILE -Value "`n$agenciaFunction`n"
-    Write-Host "✅ PowerShell function 'agencia-ai' added to profile" -ForegroundColor Green
+    Write-Host "✅ PowerShell function 'oma' added to profile" -ForegroundColor Green
 }
 
 # ── Create .cmd wrapper in PATH ──
@@ -110,9 +110,9 @@ New-Item -ItemType Directory -Force -Path $BIN_DIR | Out-Null
 
 $wrapperCmd = @"
 @echo off
-node "$INSTALL_DIR\bin\agencia-ai.js" %*
+node "$INSTALL_DIR\bin\oma.js" %*
 "@
-Set-Content -Path "$BIN_DIR\agencia-ai.cmd" -Value $wrapperCmd
+Set-Content -Path "$BIN_DIR\oma.cmd" -Value $wrapperCmd
 
 $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
 if ($userPath -notlike "*$BIN_DIR*") {
@@ -125,7 +125,7 @@ Write-Host "✅ Installation complete!" -ForegroundColor Green
 Write-Host ""
 Write-Host "Next steps:" -ForegroundColor Cyan
 Write-Host "  1. Restart PowerShell (or run: . `$PROFILE)" -ForegroundColor White
-Write-Host "  2. Verify: agencia-ai doctor" -ForegroundColor White
+Write-Host "  2. Verify: oma doctor" -ForegroundColor White
 Write-Host "  3. Create project: mkdir my-project && cd my-project" -ForegroundColor White
-Write-Host "  4. In your IDE: skill(name='agencia-init')" -ForegroundColor Gray
+Write-Host "  4. In your IDE: skill(name='oma-init')" -ForegroundColor Gray
 Write-Host ""

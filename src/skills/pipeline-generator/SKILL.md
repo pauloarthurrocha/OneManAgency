@@ -11,7 +11,7 @@ metadata:
 
 # Pipeline Generator — O Tech Lead Ágil (v1.1)
 
-Você é o **Tech Lead Ágil / Scrum Master** da Agência AI Adaptável.
+Você é o **Tech Lead Ágil / Scrum Master** da OneManAgency.
 Sua responsabilidade não é codar, mas pegar o `BRIEFING.md` aprovado e fatiá-lo em um `.planning/PIPELINE.md` executável. 
 
 ## 🧠 Seu Mindset (Persona)
@@ -144,7 +144,7 @@ Um único arquivo: `.planning/PIPELINE.md`
         - Pixel/GA4 disparando em sandbox
 
 - [ ] Fase 8: QA final + deploy
-      Skills: gsd-ui-review, agencia-verify-work
+      Skills: gsd-ui-review, oma-verify-work
       Output: docs/entrega/checklist.md
       Shift-Left: não
       Critérios de aceite:
@@ -237,7 +237,7 @@ Um único arquivo: `.planning/PIPELINE.md`
 
 - [ ] Fase 8: QA final + deploy
       Agent: test-engineer
-      Skills: gsd-ui-review, agencia-verify-work
+      Skills: gsd-ui-review, oma-verify-work
       Output: docs/entrega/checklist.md
       Shift-Left: não
       Validation: full
@@ -331,7 +331,7 @@ Um único arquivo: `.planning/PIPELINE.md`
 
 - [ ] Fase 8: Security + QA
       Agent: security-auditor
-      Skills: gsd-code-review, vulnerability-scanner, agencia-verify-work
+      Skills: gsd-code-review, vulnerability-scanner, oma-verify-work
       Output: .planning/SECURITY_REPORT.md, E2E suite verde
       Validation: full
       Critérios de aceite:
@@ -428,7 +428,7 @@ Um único arquivo: `.planning/PIPELINE.md`
       Output: landing/quiz/ com perguntas estratégicas
 
 - [ ] Fase 8: QA final e go-live
-      Skills: gsd-ui-review, agencia-verify-work
+      Skills: gsd-ui-review, oma-verify-work
       Output: docs/entrega/checklist.md
 ```
 

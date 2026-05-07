@@ -137,4 +137,4 @@
 
 ---
 
-*Template Features v1.0 — Agência AI Adaptável*
+*Template Features v1.0 — OneManAgency*

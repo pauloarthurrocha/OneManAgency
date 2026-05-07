@@ -126,4 +126,4 @@
 
 ---
 
-*Template Navbar v1.0 — Agência AI Adaptável*
+*Template Navbar v1.0 — OneManAgency*

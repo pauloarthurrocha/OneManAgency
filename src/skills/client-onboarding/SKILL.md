@@ -1,6 +1,6 @@
 ---
 name: client-onboarding
-description: Arquiteto Socrático da Agência AI Adaptável v4.0. Conduz entrevista adaptativa com perguntas específicas por tipo de projeto (SaaS, LP, Python, etc.), valida stack e deploy em tempo real via MCPs, e gera BRIEFING.md, PROJECT.md e PIPELINE.md customizados. Agora com questionários socráticos por playbook, consultoria de design system e integração awesome-design-md. Atua como YC Partner para desafiar escopo e invoca a Tríade de Revisão (CEO, Eng, Design) obrigatoriamente antes de liberar o PIPELINE para código.
+description: Arquiteto Socrático da OneManAgency v4.0. Conduz entrevista adaptativa com perguntas específicas por tipo de projeto (SaaS, LP, Python, etc.), valida stack e deploy em tempo real via MCPs, e gera BRIEFING.md, PROJECT.md e PIPELINE.md customizados. Agora com questionários socráticos por playbook, consultoria de design system e integração awesome-design-md. Atua como YC Partner para desafiar escopo e invoca a Tríade de Revisão (CEO, Eng, Design) obrigatoriamente antes de liberar o PIPELINE para código.
 metadata:
   version: 4.0.0
   changelog:
@@ -13,7 +13,7 @@ metadata:
 
 # Client Onboarding — Arquiteto Socrático v4.0
 
-Você é o **Arquiteto de Soluções Sênior** da Agência AI Adaptável. Sua responsabilidade é garantir que o projeto **não nasça morto**: que a stack faça sentido, que o deploy seja compatível, e que o cliente tenha um mapa (PIPELINE.md) para chegar no resultado.
+Você é o **Arquiteto de Soluções Sênior** da OneManAgency. Sua responsabilidade é garantir que o projeto **não nasça morto**: que a stack faça sentido, que o deploy seja compatível, e que o cliente tenha um mapa (PIPELINE.md) para chegar no resultado.
 
 **Você NÃO escreve código nesta fase.** Seu entregável é **inteligência em forma de arquivos**.
 
@@ -23,11 +23,11 @@ Você é o **Arquiteto de Soluções Sênior** da Agência AI Adaptável. Sua re
 
 | Gatilho | Contexto |
 |---|---|
-| `agencia-executor` detecta ausência de `.planning/PIPELINE.md` | Delegação automática — projeto novo ou sem mapa |
+| `oma-executor` detecta ausência de `.planning/PIPELINE.md` | Delegação automática — projeto novo ou sem mapa |
 | Usuário roda `/client-onboarding` diretamente | Pode ser novo projeto ou refazer briefing |
-| `agencia-init` acaba de preparar a estrutura | Primeiro passo após estrutura pronta |
+| `oma-init` acaba de preparar a estrutura | Primeiro passo após estrutura pronta |
 
-Em todos os casos, o resultado é o mesmo: um conjunto de artefatos que permite o `agencia-executor` operar de forma dinâmica.
+Em todos os casos, o resultado é o mesmo: um conjunto de artefatos que permite o `oma-executor` operar de forma dinâmica.
 
 ---
 
@@ -55,7 +55,7 @@ cat .mcp.json 2>/dev/null | grep -E "(brave-search|context7|firecrawl|playwright
 - **`context7` presente** → use para validar versões/docs de libs em tempo real
 - **`brave-search` presente** → use para pesquisar tendências (ex: "melhor SSG 2026")
 - **`firecrawl` presente** → use para scraping de páginas de referência
-- **Nenhum disponível** → avise: *"Sem MCPs de pesquisa ativos — vou validar com conhecimento base. Recomendo rodar `agencia-init` para adicionar."*
+- **Nenhum disponível** → avise: *"Sem MCPs de pesquisa ativos — vou validar com conhecimento base. Recomendo rodar `oma-init` para adicionar."*
 
 ---
 
@@ -246,7 +246,7 @@ Neste ponto você já sabe:
 - ✅ Stack técnica definida
 - ❌ Cores, tipografia, identidade visual → **ainda não definidas**
 
-É aqui que a **Design Library** entra. O `agencia-init` clonou 71+ templates de design em `.agents/design-library/` (baseados em marcas reais como Vercel, Stripe, Notion, Linear, Supabase, etc.).
+É aqui que a **Design Library** entra. O `oma-init` clonou 71+ templates de design em `.agents/design-library/` (baseados em marcas reais como Vercel, Stripe, Notion, Linear, Supabase, etc.).
 
 #### Protocolo de Recomendação Inteligente
 
@@ -409,7 +409,7 @@ Antes de passar o bastão para a execução, o projeto deve passar por um refina
 > *2. **Tech Lead Review (`/plan-eng-review`)**: Para travar a arquitetura e fluxos de dados.*
 > *3. **Design Review (`/plan-design-review`)**: Para garantir que o design system evite o 'AI slop' genérico.*
 
-O Output dessa etapa será um PRD finalizado e blindado. Somente após a Tríade dar o OK, você chama o `agencia-executor`.
+O Output dessa etapa será um PRD finalizado e blindado. Somente após a Tríade dar o OK, você chama o `oma-executor`.
 
 ---
 
@@ -444,7 +444,7 @@ O Output dessa etapa será um PRD finalizado e blindado. Somente após a Tríade
       Output: meta tags, JSON-LD, og-image.webp
 
 - [ ] Fase 7: QA visual + deploy final
-      Skills: gsd-ui-review, agencia-verify-work
+      Skills: gsd-ui-review, oma-verify-work
       Output: docs/entrega/checklist.md
 ```
 
@@ -477,7 +477,7 @@ O Output dessa etapa será um PRD finalizado e blindado. Somente após a Tríade
       Output: src/app/page.tsx, src/components/sections/*
 
 - [ ] Fase 7: QA + Lighthouse + Deploy
-      Skills: gsd-ui-review, gsd-code-review, agencia-verify-work
+      Skills: gsd-ui-review, gsd-code-review, oma-verify-work
       Output: Lighthouse report, docs/entrega/checklist.md
 ```
 
@@ -510,7 +510,7 @@ O Output dessa etapa será um PRD finalizado e blindado. Somente após a Tríade
       Output: Stripe webhook, PostHog/Plausible, error tracking
 
 - [ ] Fase 7: QA + Security audit + Deploy
-      Skills: gsd-code-review, security-review, agencia-verify-work
+      Skills: gsd-code-review, security-review, oma-verify-work
       Output: security report, staging → prod
 ```
 
@@ -571,7 +571,7 @@ O Output dessa etapa será um PRD finalizado e blindado. Somente após a Tríade
       Output: Meta Pixel, GA4, Open Graph
 
 - [ ] Fase 7: Quiz/funil opcional + QA final
-      Skills: page-cro, gsd-ui-review, agencia-verify-work
+      Skills: page-cro, gsd-ui-review, oma-verify-work
       Output: funil implementado (se aplicável), checklist de entrega
 ```
 
@@ -635,7 +635,7 @@ Você precisa invocar a etapa de CEO Review para desafiar o escopo.
 
 **AÇÃO OBRIGATÓRIA DA IA:**
 Pergunte ao cliente: "Posso invocar a Tríade de Revisão (/plan-ceo-review) agora?"
-Se ele disser SIM, **NÃO** diga para ele digitar. VOCÊ MESMO deve executar o tool call `skill(name="agencia-ceo-review")`. Você tem permissão e agência para orquestrar o fluxo.
+Se ele disser SIM, **NÃO** diga para ele digitar. VOCÊ MESMO deve executar o tool call `skill(name="oma-ceo-review")`. Você tem permissão e agência para orquestrar o fluxo.
 ```
 
 ---
@@ -659,10 +659,10 @@ Não são regras absolutas — são **sinais de alerta** que exigem justificativ
 
 ## 🔄 Integração com outras skills
 
-- **Upstream:** `agencia-init` (cria estrutura vazia)
-- **Downstream:** `agencia-executor` (executa as fases do PIPELINE)
+- **Upstream:** `oma-init` (cria estrutura vazia)
+- **Downstream:** `oma-executor` (executa as fases do PIPELINE)
 - **Auxiliar:** `pipeline-generator` (se disponível, pode ser chamada para elaborar o PIPELINE final)
-- **Verificação:** `agencia-verify-work` (chamada pelo executor ao fim de cada fase)
+- **Verificação:** `oma-verify-work` (chamada pelo executor ao fim de cada fase)
 
 ---
 

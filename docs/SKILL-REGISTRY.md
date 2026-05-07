@@ -1,4 +1,4 @@
-# SKILL-REGISTRY.md — Índice de Skills Agência AI Adaptável
+# SKILL-REGISTRY.md — Índice de Skills OneManAgency
 
 > **Atualizado em:** 2026-05-04
 > **Versão do Sistema:** 3.3.0
@@ -26,14 +26,14 @@ skill(name="nome-da-skill")
 
 | Skill | Versão | Descrição | Trigger |
 |---|---|---|---|
-| `agencia-init` | v3.3 | Inicializa projetos. Detecta IDE, SO, configura MCPs, cria estrutura Context Engineering | `init`, `novo projeto`, `criar projeto` |
-| `agencia-executor` | v3.4 | Orquestrador dinâmico. Lê PIPELINE.md, executa fases. **Novo:** Suporte a agentes especializados por fase, orquestração multi-agent paralela, Risk Assessment proativo | `executor`, `executar fase`, `próximo passo` |
+| `oma-init` | v3.3 | Inicializa projetos. Detecta IDE, SO, configura MCPs, cria estrutura Context Engineering | `init`, `novo projeto`, `criar projeto` |
+| `oma-executor` | v3.4 | Orquestrador dinâmico. Lê PIPELINE.md, executa fases. **Novo:** Suporte a agentes especializados por fase, orquestração multi-agent paralela, Risk Assessment proativo | `executor`, `executar fase`, `próximo passo` |
 | `client-onboarding` | v3.3 | Arquiteto Socrático. Entrevista, valida stack, gera BRIEFING/PROJECT/PIPELINE. **Novo:** Design consulting (71+ templates awesome-design-md), questionários socráticos por playbook | `onboarding`, `briefing`, `entrevista cliente` |
 | `pipeline-generator` | v1.1 | Gera PIPELINE.md com 9 playbooks por tipo de projeto. **Novo:** Validação Estratégica e Anti-Alucinação pré-escrita | `pipeline`, `playbook`, `fases do projeto` |
-| `agencia-verify-work` | v2.2 | Quality Gate pós-fase. Valida outputs, gera VERIFICATION_REPORT. **Novo:** Anti-Scope Creep, API Deprecation validation, integração com scripts Python | `verify`, `verificar`, `quality gate` |
+| `oma-verify-work` | v2.2 | Quality Gate pós-fase. Valida outputs, gera VERIFICATION_REPORT. **Novo:** Anti-Scope Creep, API Deprecation validation, integração com scripts Python | `verify`, `verificar`, `quality gate` |
 | `skill-creator` | v1.0 | Criação/otimização de skills. Wizard + A/B testing + evals | `criar skill`, `nova skill`, `otimizar skill` |
 
-**Fonte:** `~/.agencia-ai/skills/` (repo principal)
+**Fonte:** `~/.oma/skills/` (repo principal)
 
 ---
 
@@ -49,7 +49,7 @@ skill(name="nome-da-skill")
 | `web-artifacts-builder` | v1.0 | Componentes web interativos | `web artifact`, `componente interativo` |
 | `brand-guidelines` | v1.0 | Criação de guias de marca | `brand guidelines`, `guia de marca`, `brand book` |
 
-**Fonte:** `~/.agencia-ai/skills/` (Anthropic skills)
+**Fonte:** `~/.oma/skills/` (Anthropic skills)
 
 ---
 
@@ -64,7 +64,7 @@ skill(name="nome-da-skill")
 | `landing-page-scaffold` | v1.0 | Scaffold de landing pages Next.js | `landing page`, `scaffold`, `next.js lp` |
 | `tailwind-patterns` | v1.0 | Padrões Tailwind CSS | `tailwind`, `css`, `estilos` |
 
-**Fonte:** `~/.agencia-ai/skills/` (instaladas globalmente)
+**Fonte:** `~/.oma/skills/` (instaladas globalmente)
 
 ---
 
@@ -100,7 +100,7 @@ skill(name="nome-da-skill")
 | `sales-enablement` | v1.0 | Material de vendas | `sales deck`, `pitch deck`, `one-pager` |
 | `revops` | v1.0 | Revenue Operations | `revops`, `lead scoring`, `crm automation` |
 
-**Fonte:** `~/.agencia-ai/skills/` (instaladas globalmente)
+**Fonte:** `~/.oma/skills/` (instaladas globalmente)
 
 ---
 
@@ -137,7 +137,7 @@ skill(name="nome-da-skill")
 | `website-cloner` | v1.0 | Clonagem de websites | `clone site`, `replicate`, `reverse engineer` |
 | `web-scraper-intel` | v1.0 | Web scraping para inteligência | `scrape`, `extract`, `crawl` |
 
-**Fonte:** `~/.agencia-ai/skills/` (instaladas globalmente)
+**Fonte:** `~/.oma/skills/` (instaladas globalmente)
 
 ---
 
@@ -157,14 +157,14 @@ skill(name="nome-da-skill")
 | `game-art` | v1.0 | Arte de jogos | `game art`, `assets`, `sprites` |
 | `game-audio` | v1.0 | Áudio de jogos | `game audio`, `sound design`, `music` |
 
-**Fonte:** `~/.agencia-ai/skills/` (instaladas globalmente)
+**Fonte:** `~/.oma/skills/` (instaladas globalmente)
 
 ---
 
-## 🤖 Agentes Especializados (Agência AI Adaptável v3.2)
+## 🤖 Agentes Especializados (OneManAgency v3.2)
 
 > Local: `src/agents/` (no repo da agência, commitado)
-> Uso: O `agencia-executor` v3.2 invoca agentes por fase via metadata `Agent:`
+> Uso: O `oma-executor` v3.2 invoca agentes por fase via metadata `Agent:`
 > File Type Ownership: Cada agente tem prioridade de edição sobre seus tipos de arquivo
 
 | Agente | Domínio | File Types | Uso |
@@ -201,7 +201,7 @@ skill(name="nome-da-skill")
 
 ## 🔄 Workflows (Antigravity Kit)
 
-> Instalado em: `~/.agencia-ai/antigravity-kit/workflows/`
+> Instalado em: `~/.oma/antigravity-kit/workflows/`
 > Uso: Slash commands disponíveis no projeto
 
 | Workflow | Descrição | Quando Usar |
@@ -218,14 +218,14 @@ skill(name="nome-da-skill")
 | `/test` | Gere e execute testes | Antes de deploy |
 | `/ui-ux-pro-max` | Design com 50 estilos | Fase de design |
 
-**Fonte:** `~/.agencia-ai/antigravity-kit/workflows/` (v2.0.1)
+**Fonte:** `~/.oma/antigravity-kit/workflows/` (v2.0.1)
 
 ---
 
 ## 🧪 Scripts de Validação (v3.2)
 
 > Local: `scripts/` (no repo da agência)
-> Uso: Integrados no `agencia-verify-work` v2.0
+> Uso: Integrados no `oma-verify-work` v2.0
 
 | Script | Descrição | Tempo | Saída |
 |---|---|---|---|
@@ -264,18 +264,18 @@ Validation: none     → pula validação automática
 | `gsd-do` | v1.0 | Roteia comando para skill GSD | `gsd do`, `route command` |
 | ... (60+ comandos) | | | |
 
-**Fonte:** `~/.agencia-ai/skills/` (instaladas globalmente)
+**Fonte:** `~/.oma/skills/` (instaladas globalmente)
 
 ---
 
 ## 📋 Status de Instalação
 
-Após rodar o instalador (`agencia-ai install-global`), as seguintes skills estarão disponíveis globalmente:
+Após rodar o instalador (`oma install`), as seguintes skills estarão disponíveis globalmente:
 
 ### ✅ Skills Core (sempre incluídas)
-- agencia-init, agencia-executor, client-onboarding, pipeline-generator, agencia-verify-work, skill-creator
+- oma-init, oma-executor, client-onboarding, pipeline-generator, oma-verify-work, skill-creator
 
-### ✅ Skills Externas (baixadas automaticamente pelo `agencia-init` em cada projeto)
+### ✅ Skills Externas (baixadas automaticamente pelo `oma-init` em cada projeto)
 - 38 skills de marketing (via coreyhaines31/marketingskills)
 - Skills de design (via nextlevelbuilder/ui-ux-pro-max-skill)
 - 7 skills Anthropic (via anthropics/skills)
@@ -284,7 +284,7 @@ Após rodar o instalador (`agencia-ai install-global`), as seguintes skills esta
 
 Para verificar o que está instalado na sua máquina:
 ```bash
-agencia-ai doctor
+oma doctor
 ```
 
 ---
@@ -293,16 +293,16 @@ agencia-ai doctor
 
 ```powershell
 # Diagnóstico completo
-agencia-ai doctor
+oma doctor
 
 # Inicializar novo projeto
-agencia-ai init [pasta]
+oma init [pasta]
 
 # Atualizar skills
-agencia-ai update
+oma update
 
 # Versão
-agencia-ai version
+oma version
 ```
 
 ## 🎨 Presets Estéticos (v3.2)
@@ -360,7 +360,7 @@ agencia-ai version
 - **Skills marketing:** 38 (coreyhaines31)
 - **Skills dev/design:** 37+ (claude/shared)
 - **Skills GSD:** 60+
-- **Agentes:** 10 (Agência AI Adaptável v3.2)
+- **Agentes:** 10 (OneManAgency v3.2)
 - **Workflows:** 11 (Antigravity Kit)
 - **Scripts de validação:** 2 (checklist.py, verify_all.py)
 - **Presets estéticos:** 4
@@ -378,8 +378,8 @@ agencia-ai version
 **Para adicionar novas skills:**
 1. Criar diretório `nome-da-skill/SKILL.md`
 2. Seguir formato SKILL.md (YAML frontmatter + markdown)
-3. Rodar `agencia-ai install-global` para propagar
+3. Rodar `oma install` para propagar
 
 ---
 
-*Agencia AI Adaptável — SKILL-REGISTRY v3.2*
+*OneManAgency — SKILL-REGISTRY v3.2*

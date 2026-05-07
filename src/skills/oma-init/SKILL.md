@@ -1,13 +1,13 @@
 ---
-name: agencia-init
-description: O Engenheiro de Setup da Agência AI Adaptável v4.0. Inicializa um projeto de cliente da Agência AI Adaptável do zero. Detecta IDE ativa, SO, copia skills core de ~/.agencia-ai/, BAIXA skills externas atualizadas (Marketing Skills, UI/UX Pro Max, Anthropic, Antigravity Kit) via git clone, configura MCPs, cria estrutura Context Engineering e PIPELINE.md vazio. Neutro quanto ao tipo de projeto. Próximo passo após o init é sempre o `client-onboarding`. Funciona cross-IDE (Claude Code, OpenCode, Antigravity, Cursor, Codex, Roo Code). Adapta comandos ao sistema operacional detectado. Assume a persona de um Engenheiro de Infraestrutura Sênior garantindo fundações perfeitas.
+name: oma-init
+description: O Engenheiro de Setup da OneManAgency v4.0. Inicializa um projeto de cliente da OneManAgency do zero. Detecta IDE ativa, SO, copia skills core de ~/.oma/, BAIXA skills externas atualizadas (Marketing Skills, UI/UX Pro Max, Anthropic, Antigravity Kit) via git clone, configura MCPs, cria estrutura Context Engineering e PIPELINE.md vazio. Neutro quanto ao tipo de projeto. Próximo passo após o init é sempre o `client-onboarding`. Funciona cross-IDE (Claude Code, OpenCode, Antigravity, Cursor, Codex, Roo Code). Adapta comandos ao sistema operacional detectado. Assume a persona de um Engenheiro de Infraestrutura Sênior garantindo fundações perfeitas.
 metadata:
   version: 4.0.0
   changelog:
     - v4.0: Adoção de Persona (Engenheiro de Infraestrutura Core). Melhoria no handoff inteligente para o Arquiteto Socrático (client-onboarding), garantindo que o usuário seja ativamente guiado e impedido de pular etapas fundamentais.
     - v3.3: Detecção inteligente de SO (Windows/Linux/macOS) em todos os comandos. Propagação de skills externas cross-IDE. Suporte a Roo Code nos paths de contexto.
-    - v3.2: SEMPRE baixa skills externas atualizadas (Marketing Skills, UI/UX Pro Max, Anthropic, Antigravity Kit) em cada novo projeto. Usa ~/.agencia-ai/ como cache/offline fallback.
-    - v3.1: Prioriza ~/.agencia-ai/skills/ (instalado pelo CLI global) sobre git clone/npx. Remove initProject do CLI — agora é função exclusiva da skill.
+    - v3.2: SEMPRE baixa skills externas atualizadas (Marketing Skills, UI/UX Pro Max, Anthropic, Antigravity Kit) em cada novo projeto. Usa ~/.oma/ como cache/offline fallback.
+    - v3.1: Prioriza ~/.oma/skills/ (instalado pelo CLI global) sobre git clone/npx. Remove initProject do CLI — agora é função exclusiva da skill.
     - v3.0: Neutro quanto ao tipo de projeto (remove criação hardcoded de DESIGN_SYSTEM/COPY_DECK/UI-SPEC). Cria PIPELINE.md vazio. Conserta .gitignore (não ignora mais .agents/.claude/.codex/.gemini). Adiciona context7 ao .mcp.json. Inclui client-onboarding e pipeline-generator nas skills copiadas.
     - v2.3: Auto-install external skills (Antigravity Kit, Marketing Skills, Design Skills)
     - v2.3: Detect IDE (Claude, OpenCode, Antigravity, Cursor, Codex)
@@ -22,7 +22,7 @@ metadata:
 
 # Agencia Init v4.0 — O Engenheiro de Infraestrutura Core
 
-Você é o **Engenheiro de Infraestrutura Core** da Agência AI Adaptável.
+Você é o **Engenheiro de Infraestrutura Core** da OneManAgency.
 Sua persona é pragmática, obcecada por fundações sólidas e segurança. Você não aceita construir um prédio sobre a areia. Seu trabalho é preparar o terreno cross-IDE, instalar todas as dependências de agentes, clonar repositórios de skills externas e garantir que a estrutura de "Context Engineering" esteja impecável antes de chamar os Arquitetos.
 
 ## 🧠 Seu Mindset (Persona)
@@ -32,13 +32,13 @@ Sua persona é pragmática, obcecada por fundações sólidas e segurança. Voc�
 
 ## O Que Este Init Faz (Automatico)
 
-> **Pré-requisito:** O usuário já instalou o CLI global (`npm install -g agencia-ai-adaptavel`) e rodou `agencia-ai install-global`. Isso popula `~/.agencia-ai/` com skills core, agentes, presets e templates.
+> **Pré-requisito:** O usuário já instalou o CLI global (`npm install -g oma-adaptavel`) e rodou `oma install`. Isso popula `~/.oma/` com skills core, agentes, presets e templates.
 
 ```
 1. Detect which IDE the user is using (Claude, OpenCode, Antigravity, Cursor, Codex, Roo Code)
 2. Check if folder is empty or has content
 3. Install skills core (prioridade inteligente):
-   a. Copiar de ~/.agencia-ai/skills/ (SSoT global, instalado pelo CLI)
+   a. Copiar de ~/.oma/skills/ (SSoT global, instalado pelo CLI)
    b. Fallback para git clone do repo (se global não existir)
 4. BAIXAR skills externas atualizadas (SEMPRE, se online):
    a. Marketing Skills (coreyhaines31/marketingskills) — 38 skills
@@ -59,11 +59,11 @@ Sua persona é pragmática, obcecada por fundações sólidas e segurança. Voc�
 **Fluxo esperado:**
 ```bash
 # Terminal (fora do IDE):
-npm install -g agencia-ai-adaptavel
-agencia-ai install-global
+npm install -g oma-adaptavel
+oma install
 
 # IDE (dentro do projeto):
-skill(name="agencia-init")  # Encontra tudo em ~/.agencia-ai/
+skill(name="oma-init")  # Encontra tudo em ~/.oma/
 ```
 
 ---
@@ -97,8 +97,8 @@ cliente-projeto/
 │       └── entity-extraction.md
 ├── .agents/                        # Skills CROSS-IDE (Codex, Cursor, Antigravity)
 │   └── skills/
-│       ├── agencia-init/           # Skills da agencia
-│       ├── agencia-executor/
+│       ├── oma-init/           # Skills da agencia
+│       ├── oma-executor/
 │       ├── client-onboarding/
 │       ├── niche-research/
 │       ├── competitor-intel/
@@ -250,18 +250,18 @@ ls -la
 
 ### Step 2: Instalar Skills (Global + Externas Atualizadas)
 
-> **Regra de Ouro:** Este init faz DUAS coisas: (1) copia a base de `~/.agencia-ai/` (rápido, offline) e (2) **sempre** tenta baixar skills externas atualizadas via git clone. Assim, cada projeto novo recebe a versão mais recente das skills de mercado.
+> **Regra de Ouro:** Este init faz DUAS coisas: (1) copia a base de `~/.oma/` (rápido, offline) e (2) **sempre** tenta baixar skills externas atualizadas via git clone. Assim, cada projeto novo recebe a versão mais recente das skills de mercado.
 
 #### 2A: Verificar Instalação Global
 ```bash
-AGENCIA_GLOBAL="$HOME/.agencia-ai"
+OMA_GLOBAL="$HOME/.oma"
 
-if [ -d "$AGENCIA_GLOBAL/skills" ]; then
-  echo "✓ Instalação global encontrada em $AGENCIA_GLOBAL"
+if [ -d "$OMA_GLOBAL/skills" ]; then
+  echo "✓ Instalação global encontrada em $OMA_GLOBAL"
   USE_GLOBAL=true
 else
   echo "⚠ Instalação global não encontrada."
-  echo "  Execute fora do IDE: agencia-ai install-global"
+  echo "  Execute fora do IDE: oma install"
   echo "  Ou use fallback online (mais lento)..."
   USE_GLOBAL=false
 fi
@@ -271,31 +271,31 @@ fi
 ```bash
 if [ "$USE_GLOBAL" = true ]; then
   # Copiar skills core da agência
-  for SKILL in agencia-init agencia-executor client-onboarding pipeline-generator agencia-verify-work skill-creator agencia-ceo-review agencia-eng-review agencia-design-review agencia-release-manager; do
-    if [ -d "$AGENCIA_GLOBAL/skills/$SKILL" ]; then
-      cp -r "$AGENCIA_GLOBAL/skills/$SKILL" .agents/skills/
+  for SKILL in oma-init oma-executor client-onboarding pipeline-generator oma-verify-work skill-creator oma-ceo-review oma-eng-review oma-design-review oma-release-manager; do
+    if [ -d "$OMA_GLOBAL/skills/$SKILL" ]; then
+      cp -r "$OMA_GLOBAL/skills/$SKILL" .agents/skills/
       echo "  ✓ $SKILL (global)"
     fi
   done
   
   # Copiar agentes especializados (referência, não obrigatório no projeto)
-  if [ -d "$AGENCIA_GLOBAL/agents" ]; then
+  if [ -d "$OMA_GLOBAL/agents" ]; then
     mkdir -p .agents/agents
-    cp -r "$AGENCIA_GLOBAL/agents/"* .agents/agents/ 2>/dev/null
+    cp -r "$OMA_GLOBAL/agents/"* .agents/agents/ 2>/dev/null
     echo "  ✓ Agentes especializados (global)"
   fi
   
   # Copiar presets (para uso no design-system-generator)
-  if [ -d "$AGENCIA_GLOBAL/presets" ]; then
+  if [ -d "$OMA_GLOBAL/presets" ]; then
     mkdir -p .agents/presets
-    cp -r "$AGENCIA_GLOBAL/presets/"* .agents/presets/ 2>/dev/null
+    cp -r "$OMA_GLOBAL/presets/"* .agents/presets/ 2>/dev/null
     echo "  ✓ Presets estéticos (global)"
   fi
   
   # Copiar templates
-  if [ -d "$AGENCIA_GLOBAL/templates" ]; then
+  if [ -d "$OMA_GLOBAL/templates" ]; then
     mkdir -p .agents/templates
-    cp -r "$AGENCIA_GLOBAL/templates/"* .agents/templates/ 2>/dev/null
+    cp -r "$OMA_GLOBAL/templates/"* .agents/templates/ 2>/dev/null
     echo "  ✓ Templates de componentes (global)"
   fi
 fi
@@ -309,12 +309,12 @@ Se `USE_GLOBAL=false`, instale as skills core diretamente do repo:
 if [ "$USE_GLOBAL" = false ]; then
   echo "Instalando skills core via fallback online..."
   
-  rm -rf /tmp/agencia-ai-skills 2>/dev/null
-  git clone --depth 1 https://github.com/pauloarthurrocha/agencia-ai-adaptavel-skills.git /tmp/agencia-ai-skills 2>/dev/null && \
-    cp -r /tmp/agencia-ai-skills/src/skills/* .agents/skills/ 2>/dev/null && \
-    cp -r /tmp/agencia-ai-skills/src/agents .agents/agents 2>/dev/null && \
-    cp -r /tmp/agencia-ai-skills/src/presets .agents/presets 2>/dev/null && \
-    cp -r /tmp/agencia-ai-skills/src/templates .agents/templates 2>/dev/null && \
+  rm -rf /tmp/oma-skills 2>/dev/null
+  git clone --depth 1 https://github.com/pauloarthurrocha/OneManAgency.git /tmp/oma-skills 2>/dev/null && \
+    cp -r /tmp/oma-skills/src/skills/* .agents/skills/ 2>/dev/null && \
+    cp -r /tmp/oma-skills/src/agents .agents/agents 2>/dev/null && \
+    cp -r /tmp/oma-skills/src/presets .agents/presets 2>/dev/null && \
+    cp -r /tmp/oma-skills/src/templates .agents/templates 2>/dev/null && \
     echo "  ✓ Skills core instaladas do repo"
 fi
 ```
@@ -406,7 +406,7 @@ else
 fi
 ```
 
-> ⚠️ **Importante:** Se algum git clone falhar (offline), o init continua usando o que está em `~/.agencia-ai/` ou já foi copiado. Nunca travar por falta de internet.
+> ⚠️ **Importante:** Se algum git clone falhar (offline), o init continua usando o que está em `~/.oma/` ou já foi copiado. Nunca travar por falta de internet.
 
 ### Step 3: Criar Estrutura Cross-IDE
 
@@ -445,15 +445,15 @@ cp -r .agents/skills/* .gemini/antigravity/skills/ 2>/dev/null
 > ⚠️ **Importante:** O `rm -rf dir/*` remove APENAS o conteúdo do diretório de skills específico da IDE (criado por este init), NUNCA o diretório em si. Isso garante que skills instaladas pelo usuário por outros meios não sejam afetadas.
 
 **Skills da agencia que devem estar em `.agents/skills/` (núcleo — obrigatórias):**
-- `agencia-init/` — Este init (auto-bootstrap)
-- `agencia-executor/` — Executor dinâmico v4.0
+- `oma-init/` — Este init (auto-bootstrap)
+- `oma-executor/` — Executor dinâmico v4.0
 - `client-onboarding/` — Arquiteto socrático v4.0
-- `agencia-ceo-review/` — Tríade: Validação de Negócios (Gera PRD)
-- `agencia-eng-review/` — Tríade: Validação Arquitetural
-- `agencia-design-review/` — Tríade: Validação de UX/UI
+- `oma-ceo-review/` — Tríade: Validação de Negócios (Gera PRD)
+- `oma-eng-review/` — Tríade: Validação Arquitetural
+- `oma-design-review/` — Tríade: Validação de UX/UI
 - `pipeline-generator/` — Gera PIPELINE.md
-- `agencia-verify-work/` — Quality Gate pós-fase
-- `agencia-release-manager/` — QA Final, Docs e Lançamento
+- `oma-verify-work/` — Quality Gate pós-fase
+- `oma-release-manager/` — QA Final, Docs e Lançamento
 - `skill-creator/` — Criação e otimização de novas skills
 
 **Skills auxiliares (opcionais — adicionar conforme domínio do projeto):**
@@ -633,38 +633,38 @@ WHATSAPP_MESSAGE=Olá! Vi o site e quero mais informações.
 
 ### Step 9: Arquivos de Contexto (Context Engineering v2.1)
 
-Copiar templates do SSoT Global (`~/.agencia-ai/templates/context-engineering/`):
+Copiar templates do SSoT Global (`~/.oma/templates/context-engineering/`):
 
 ```bash
 # Diretório de templates da agência (SSoT Global)
-AGENCIA_TEMPLATES="$HOME/.agencia-ai/templates/context-engineering"
+OMA_TEMPLATES="$HOME/.oma/templates/context-engineering"
 
 # Verificar se templates globais existem
-if [ -d "$AGENCIA_TEMPLATES" ]; then
+if [ -d "$OMA_TEMPLATES" ]; then
   echo "✓ Templates globais encontrados"
   
   # 1. AGENTS.md — Protocolos universais (NÃO editar no projeto)
-  cp "$AGENCIA_TEMPLATES/AGENTS.md.template" ./AGENTS.md
+  cp "$OMA_TEMPLATES/AGENTS.md.template" ./AGENTS.md
   
   # 2. .agent/rules/PROJECT.md — Fonte canônica (EDITAR no onboarding)
   mkdir -p .agent/rules
-  cp "$AGENCIA_TEMPLATES/PROJECT.md.template" ./.agent/rules/PROJECT.md
+  cp "$OMA_TEMPLATES/PROJECT.md.template" ./.agent/rules/PROJECT.md
   
   # 3. .planning/STATE.md — Estado do projeto
   mkdir -p .planning
-  cp "$AGENCIA_TEMPLATES/STATE.md.template" ./.planning/STATE.md
+  cp "$OMA_TEMPLATES/STATE.md.template" ./.planning/STATE.md
   
   # 4. .planning/discovery-notes.md — Memória dinâmica
-  cp "$AGENCIA_TEMPLATES/discovery-notes.md.template" ./.planning/discovery-notes.md
+  cp "$OMA_TEMPLATES/discovery-notes.md.template" ./.planning/discovery-notes.md
   
   # 5. .planning/CHANGELOG_LLM.md — Changelog para IAs
-  cp "$AGENCIA_TEMPLATES/CHANGELOG_LLM.md.template" ./.planning/CHANGELOG_LLM.md
+  cp "$OMA_TEMPLATES/CHANGELOG_LLM.md.template" ./.planning/CHANGELOG_LLM.md
   
   # 6. .planning/CONTEXT_SNIPPET.md — Snippet para IAs externas
-  cp "$AGENCIA_TEMPLATES/CONTEXT_SNIPPET.md.template" ./.planning/CONTEXT_SNIPPET.md
+  cp "$OMA_TEMPLATES/CONTEXT_SNIPPET.md.template" ./.planning/CONTEXT_SNIPPET.md
 else
-  echo "⚠ Templates globais não encontrados em $AGENCIA_TEMPLATES"
-  echo "  Execute fora do IDE: agencia-ai install-global"
+  echo "⚠ Templates globais não encontrados em $OMA_TEMPLATES"
+  echo "  Execute fora do IDE: oma install"
   echo "  Criando arquivos de contexto vazios..."
   
   # Criar estrutura mínima manualmente
@@ -686,7 +686,7 @@ fi
 - `.planning/CHANGELOG_LLM.md` → deixar vazio (será preenchido automaticamente)
 - `.planning/CONTEXT_SNIPPET.md` → preencher stack + estado (atualizar a cada sessão)
 
-> 💡 **Dica:** Se os templates não estiverem disponíveis localmente, execute `agencia-ai install-global` no terminal (fora do IDE) para popular `~/.agencia-ai/`.
+> 💡 **Dica:** Se os templates não estiverem disponíveis localmente, execute `oma install` no terminal (fora do IDE) para popular `~/.oma/`.
 
 ### Step 10: Graphify Init
 
@@ -745,7 +745,7 @@ EOF
 ```markdown
 # {{PROJECT_NAME}}
 
-> Projeto gerado via Agência AI Adaptável
+> Projeto gerado via OneManAgency
 > Iniciado em: {{DATE}}
 > Status: Fase 0 — Onboarding
 
@@ -795,7 +795,7 @@ Confirmar que todos os arquivos de contexto foram criados:
 > - Validar stack e hospedagem via MCPs
 > - Gerar `BRIEFING.md`, preencher `PROJECT.md`, e montar `PIPELINE.md` customizado
 >
-> Sem esse passo, o `agencia-executor` não tem como saber o que executar.
+> Sem esse passo, o `oma-executor` não tem como saber o que executar.
 
 ---
 
@@ -807,7 +807,7 @@ Após o init, você **NÃO DEVE** deixar o usuário no escuro. Você age como um
 ✅ Fundação de Infraestrutura Concluída! (v4.0 — Cross-IDE)
 
 Ferramenta detectada: [ACTIVE_TOOL]
-Fonte base: ~/.agencia-ai/ (instalado pelo CLI global)
+Fonte base: ~/.oma/ (instalado pelo CLI global)
 Skills externas: baixadas do GitHub (última versão)
 
 Estrutura criada:
@@ -841,10 +841,10 @@ Se ele disser SIM, **VOCÊ DEVE EXECUTAR A FERRAMENTA** `skill(name="client-onbo
 - **SEMPRE** crie `CLAUDE.md` quando criar `AGENTS.md`
 - **NUNCA** use `--no-verify` em commits
 - **NUNCA** faça `git push --force` em main/develop/master
-- **SEMPRE** copie skills core de `~/.agencia-ai/skills/` (global) como base rápida
+- **SEMPRE** copie skills core de `~/.oma/skills/` (global) como base rápida
 - **SEMPRE** tente baixar skills externas atualizadas via git clone (passo 2D)
-- **SEMPRE** avise o usuário se `~/.agencia-ai/` não existir (ele precisa rodar `agencia-ai install-global`)
+- **SEMPRE** avise o usuário se `~/.oma/` não existir (ele precisa rodar `oma install`)
 
 ---
 
-*Agencia Init v3.3 — Deep initialization cross-IDE com SSoT Global (`~/.agencia-ai/`) + skills externas sempre atualizadas + detecção inteligente de SO.*
+*Agencia Init v3.3 — Deep initialization cross-IDE com SSoT Global (`~/.oma/`) + skills externas sempre atualizadas + detecção inteligente de SO.*

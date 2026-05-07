@@ -1,11 +1,11 @@
 <div align="center">
 
-# 🤖 Agência AI Adaptável (v4.0.0)
+# 🤖 OneManAgency (v4.0.0)
 
 **O Framework de Engenharia Agêntica para Solo Builders & Tech Leads.**<br>
 *Orquestração Multi-LLM, Context Engineering, PIV Loop (Plan, Implement, Validate) e TDD Nativo para Claude Code, OpenCode, Cursor, Roo Code e Gemini CLI.*
 
-[![npm version](https://img.shields.io/badge/npm-v4.0.0-CB3837?style=for-the-badge&logo=npm)](https://github.com/pauloarthurrocha/agencia-ai-adaptavel-skills)
+[![npm version](https://img.shields.io/badge/npm-v4.0.0-CB3837?style=for-the-badge&logo=npm)](https://github.com/pauloarthurrocha/OneManAgency)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 [![Cross-IDE](https://img.shields.io/badge/Cross--IDE-Supported-blue?style=for-the-badge)]()
 
@@ -19,7 +19,7 @@
 
 A maioria dos workflows de IA falha quando o projeto cresce. A IA sofre de **Lost in the Middle (LiTM)** ao tentar planejar e codar na mesma janela, alucina designs genéricos ("AI Slop") e escreve código sem testes.
 
-A **Agência AI Adaptável** traz o rigor do Vale do Silício (inspirada em GStack, Superpowers e Spec-Driven Development) para o seu terminal local. 
+A **OneManAgency** traz o rigor do Vale do Silício (inspirada em GStack, Superpowers e Spec-Driven Development) para o seu terminal local. 
 
 ### A Nossa Solução:
 1. **Context Engineering:** O contexto não morre no chat. Tudo é persistido em disco (`HANDOFF.md`, `STATE.md`, `discovery-notes.md`).
@@ -38,7 +38,7 @@ Nosso script detecta automaticamente suas IDEs (`.claude`, `.opencode`, `.cursor
 npm login --registry=https://npm.pkg.github.com
 
 # Instalar globalmente
-npm install -g @pauloarthurrocha/agencia-ai-adaptavel --registry=https://npm.pkg.github.com
+npm install -g @pauloarthurrocha/onemanagency --registry=https://npm.pkg.github.com
 ```
 
 ---
@@ -52,7 +52,7 @@ Crie uma pasta vazia e chame o Engenheiro de Infraestrutura. Ele configura tudo 
 ```bash
 mkdir meu-projeto-foda && cd meu-projeto-foda
 # No terminal do seu IDE de IA:
-skill(name="agencia-init")
+skill(name="oma-init")
 ```
 
 ### 2. O Embate Socrático
@@ -65,7 +65,7 @@ O Briefing passa por:
 - 🎨 **`/plan-design-review`**: Filtro anti-"AI Slop", definindo tokens, OKLCH, typography scale e motion (Gera `UI-SPEC.md`).
 
 ### 4. Execução Isolada (PIV Loop)
-A IA roda o `agencia-executor`.
+A IA roda o `oma-executor`.
 1. Ela planeja os arquivos que vai tocar.
 2. Ela gera o arquivo `.planning/HANDOFF.md`.
 3. Ela para e avisa: *"Limpe o chat (`/clear`) e digite 'resume' para eu codar sem alucinar"*.
@@ -89,7 +89,7 @@ Nós não usamos "roleplay raso". O repositório contém `Agent Definition Files
 ## 📦 O Que Tem Sob o Capô?
 
 ```text
-agencia-ai-adaptavel/
+oma-adaptavel/
 ├── 📂 src/skills/              # Skills Injetáveis (Init, Executor, Tríade)
 ├── 📂 src/agents/              # Agent Definition Files (Personas)
 ├── 📂 src/templates/           # Context Engineering (AGENTS.md, HANDOFF.md)

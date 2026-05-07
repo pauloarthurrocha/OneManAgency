@@ -139,4 +139,4 @@
 
 ---
 
-*Template Filosofia/Sobre v1.0 — Agência AI Adaptável*
+*Template Filosofia/Sobre v1.0 — OneManAgency*

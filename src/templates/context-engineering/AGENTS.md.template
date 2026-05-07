@@ -9,7 +9,7 @@ trigger: always_on
      
      REGRA DE OURO: Este arquivo é GENÉRICO. NUNCA coloque stack específica,
      proibições de tecnologia ou guardrails de produção aqui.
-     Esses vão em .agent/rules/PROJECT.md (gerado pelo agencia-init).
+     Esses vão em .agent/rules/PROJECT.md (gerado pelo oma-init).
 -->
 
 <!-- ═══════════════════════════════════════════════════════
@@ -195,7 +195,7 @@ Ao encerrar sessão ou pausar trabalho:
      ═══════════════════════════════════════════════════════ -->
 
 <notas>
-- Este arquivo é COPIADO para todo projeto novo pelo agencia-init
+- Este arquivo é COPIADO para todo projeto novo pelo oma-init
 - NÃO EDITAR este arquivo com conteúdo específico do projeto
 - Para restrições específicas, editar `.agent/rules/PROJECT.md`
 - Para memória do projeto, editar `.planning/discovery-notes.md`

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-verify_all.py — Validação Completa da Agência AI Adaptável
+verify_all.py — Validação Completa da OneManAgency
 =========================================================
 Executa verificações abrangentes (3-5 min) em projetos:
 - Lighthouse (performance, acessibilidade, SEO, best practices)

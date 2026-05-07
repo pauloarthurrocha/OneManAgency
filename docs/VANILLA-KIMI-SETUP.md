@@ -46,11 +46,11 @@ A diferença prática é que o Kimi K2.6 foi **especificamente otimizado** para 
 
 ```bash
 # No terminal, no seu workspace
-skill(name="agencia-init")
+skill(name="oma-init")
 ```
 
 **O que acontece:**
-- Kimi K2.6 carrega a skill `agencia-init`
+- Kimi K2.6 carrega a skill `oma-init`
 - Detecta que está no OpenCode
 - Cria estrutura completa do projeto
 - Baixa skills externas se necessário
@@ -72,7 +72,7 @@ skill(name="client-onboarding")
 ### 3. Execução de fases (substitui o swarm do OMO)
 
 ```bash
-skill(name="agencia-executor")
+skill(name="oma-executor")
 ```
 
 **O que acontece:**
@@ -188,8 +188,8 @@ O `opencode.json` inclui 6 MCPs com uma regra de custo: ferramentas gratuitas pr
 - [ ] Remover OMO: `opencode plugin uninstall oh-my-opencode`
 - [ ] Aplicar config vanilla: Copiar `settings.json` acima
 - [ ] Verificar skills globais: `~/.opencode/skills/` (manter só as que usa)
-- [ ] Testar init: `skill(name="agencia-init")` em projeto novo
-- [ ] Testar execução: `skill(name="agencia-executor")`
+- [ ] Testar init: `skill(name="oma-init")` em projeto novo
+- [ ] Testar execução: `skill(name="oma-executor")`
 - [ ] Monitorar consumo: Comparar tokens vs antes
 
 ---

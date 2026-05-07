@@ -1,6 +1,6 @@
 ---
-name: agencia-executor
-description: Orquestrador dinâmico da Agência AI Adaptável v4.0. O Diretor de Operações (COO). Lê o PIPELINE.md do projeto e executa a próxima fase pendente com as skills corretas, gate humano com Risk Assessment, detecção de arquivos incompletos, Quality Gate pós-fase e atualização de memória. Agora com suporte a agentes especializados por fase, orquestração multi-agent e Validação Anti-Alucinação via MCPs. Executa o PIPELINE.md aplicando o PIV Loop (Isolamento de Contexto), TDD Obrigatório, Git Worktrees e verifica se etapas vitais (como a Tríade de Revisão) foram puladas. Funciona em qualquer IDE.
+name: oma-executor
+description: Orquestrador dinâmico da OneManAgency v4.0. O Diretor de Operações (COO). Lê o PIPELINE.md do projeto e executa a próxima fase pendente com as skills corretas, gate humano com Risk Assessment, detecção de arquivos incompletos, Quality Gate pós-fase e atualização de memória. Agora com suporte a agentes especializados por fase, orquestração multi-agent e Validação Anti-Alucinação via MCPs. Executa o PIPELINE.md aplicando o PIV Loop (Isolamento de Contexto), TDD Obrigatório, Git Worktrees e verifica se etapas vitais (como a Tríade de Revisão) foram puladas. Funciona em qualquer IDE.
 metadata:
   version: 4.0.0
   changelog:
@@ -14,9 +14,9 @@ metadata:
     - v1.0: Deteccao automatica de fase + gate humano.
 ---
 
-# Agencia AI Adaptavel — Executor Dinâmico v4.0
+# OneManAgency — Executor Dinâmico v4.0
 
-Você é o **orquestrador do workflow** da Agência AI Adaptável. Sua responsabilidade é:
+Você é o **orquestrador do workflow** da OneManAgency. Sua responsabilidade é:
 1. Ler o mapa do projeto (`.planning/PIPELINE.md`)
 2. Identificar a próxima fase pendente
 3. Carregar as skills corretas para a natureza daquela fase (Copy, Design, Backend, Deploy, etc.)
@@ -85,7 +85,7 @@ Antes de detectar fase, verifique integridade do Context Engineering:
 
 | Arquivo | Se ausente |
 |---|---|
-| `AGENTS.md` | Avisar: *"Projeto sem Context Engineering. Execute `skill(name='agencia-init')` primeiro."* |
+| `AGENTS.md` | Avisar: *"Projeto sem Context Engineering. Execute `skill(name='oma-init')` primeiro."* |
 | `.agent/rules/PROJECT.md` | Avisar: *"Fonte canônica não existe. Execute `skill(name='client-onboarding')` para preencher."* |
 | `.planning/STATE.md` | Criar a partir do template |
 | `.planning/discovery-notes.md` | Criar a partir do template |
@@ -250,7 +250,7 @@ Se a metadata `Skills:` estiver ausente, usar a tabela abaixo de **tema → skil
 | `html`, `css`, `static`, `astro` | `frontend-design`, `web-design-guidelines`, `tailwind-patterns` | deep |
 | `python`, `automation`, `script`, `backend` | `python-patterns`, `nodejs-best-practices`, `api-patterns` | deep |
 | `deploy`, `infra`, `cloudflare`, `vercel`, `docker` | `deployment-procedures`, `server-management` | - |
-| `qa`, `review`, `audit`, `test` | `gsd-ui-review`, `gsd-code-review`, `testing-patterns`, `agencia-verify-work` | - |
+| `qa`, `review`, `audit`, `test` | `gsd-ui-review`, `gsd-code-review`, `testing-patterns`, `oma-verify-work` | - |
 | `seo`, `schema`, `meta` | `seo-audit`, `schema-markup`, `ai-seo` | - |
 | `checkout`, `kiwify`, `stripe`, `billing` | `pricing-strategy`, `churn-prevention` | - |
 
@@ -280,9 +280,9 @@ Durante a execução de código (Backend/Frontend), utilize ativamente seus MCPs
 
 Após concluir a tarefa, executar verificação automática:
 
-**Se a skill `agencia-verify-work` está disponível:**
+**Se a skill `oma-verify-work` está disponível:**
 ```
-skill(name="agencia-verify-work")
+skill(name="oma-verify-work")
 → Gera .planning/VERIFICATION_REPORT.md
 → Lê resultado: PASS | WARNING | FAIL
 ```
@@ -313,7 +313,7 @@ Após PASS, o sistema não pode apenas seguir em frente. Ele deve **aprender** c
 
 ### Step 5.6 — O Handoff Final (Se for a última fase)
 Se você acabou de concluir a última fase do `PIPELINE.md`, o desenvolvimento acabou. 
-**AÇÃO OBRIGATÓRIA DA IA:** Você deve perguntar: *"Todas as fases foram concluídas. Posso chamar o Release Manager para preparar a documentação final e o lançamento?"* Se sim, execute autonomamente `skill(name="agencia-release-manager")`.
+**AÇÃO OBRIGATÓRIA DA IA:** Você deve perguntar: *"Todas as fases foram concluídas. Posso chamar o Release Manager para preparar a documentação final e o lançamento?"* Se sim, execute autonomamente `skill(name="oma-release-manager")`.
 
 ### Step 5.6 — Confirmação ao usuário
 
@@ -348,7 +348,7 @@ Deseja prosseguir para a próxima fase? [Y/n]
 ### Exemplo 1 — Novo projeto (sem PIPELINE.md)
 
 ```
-Usuário: /agencia-executor
+Usuário: /oma-executor
 
 Executor:
 🔍 Contexto verificado.
@@ -369,7 +369,7 @@ Deseja prosseguir? [Y/n]
 ### Exemplo 2 — Projeto em andamento (retomada)
 
 ```
-Usuário: /agencia-executor
+Usuário: /oma-executor
 
 Executor:
 📋 RESUMO DO PROJETO
@@ -396,7 +396,7 @@ Deseja prosseguir para Fase 3? [Y/n]
 ### Exemplo 3 — Override e detecção de arquivo incompleto
 
 ```
-Usuário: /agencia-executor fase 6
+Usuário: /oma-executor fase 6
 
 Executor:
 ⚡ OVERRIDE DETECTADO → Fase 6 (Scaffold HTML/CSS)
@@ -574,7 +574,7 @@ Para a continuidade funcionar, o `.gitignore` **NÃO PODE** ignorar `.agents/`, 
 
 ## 11. MCPs Esperados
 
-O executor assume presença destes MCPs (configurados pelo `agencia-init` em `.mcp.json`):
+O executor assume presença destes MCPs (configurados pelo `oma-init` em `.mcp.json`):
 
 | MCP | Uso |
 |---|---|

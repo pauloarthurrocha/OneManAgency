@@ -4,7 +4,7 @@ description: Create new skills, modify and improve existing skills, and measure 
 metadata:
   version: 1.0.0
   changelog:
-    - v1.0.0: Initial integration from Anthropic skills repo. Adapted frontmatter for agencia-ai-adaptavel-skills compatibility.
+    - v1.0.0: Initial integration from Anthropic skills repo. Adapted frontmatter for OneManAgency compatibility.
   source: https://github.com/anthropics/skills/tree/main/skills/skill-creator
   license: MIT (Anthropic)
 ---

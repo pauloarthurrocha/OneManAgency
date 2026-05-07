@@ -1,13 +1,13 @@
 # Arquitetura de Instalação e Distribuição
 
-Este documento descreve a arquitetura de três camadas do sistema **Agência AI Adaptável**, garantindo portabilidade, persistência e execução cross-IDE.
+Este documento descreve a arquitetura de três camadas do sistema **OneManAgency**, garantindo portabilidade, persistência e execução cross-IDE.
 
 ## 🏗️ As 3 Camadas de Skills
 
 O sistema organiza as skills e recursos em três níveis de profundidade, permitindo que a inteligência do sistema esteja disponível globalmente, mas seja customizável por projeto.
 
 ### Camada 1: SSoT Global (Single Source of Truth)
-**Local:** `~/.agencia-ai/`
+**Local:** `~/.oma/`
 
 Esta é a fonte única de verdade do sistema. É populada automaticamente pelo script `build/installer.js` durante o `postinstall` do pacote npm ou manualmente via comando CLI.
 
@@ -32,7 +32,7 @@ O instalador detecta quais IDEs estão presentes no sistema e propaga as skills 
 ### Camada 3: Projeto Local (Repo do Cliente)
 **Locais:** `.agents/skills/`, `.claude/skills/`, `.codex/skills/`, etc.
 
-Esta camada é criada pela skill `agencia-init` dentro do repositório do projeto.
+Esta camada é criada pela skill `oma-init` dentro do repositório do projeto.
 
 *   **Persistência:** Estas pastas são commitadas no Git do projeto.
 *   **Continuidade:** Permite que diferentes desenvolvedores (ou o mesmo desenvolvedor em máquinas diferentes) tenham acesso às mesmas skills do projeto, independentemente da instalação global.
@@ -57,12 +57,12 @@ O processo de instalação segue um fluxo automatizado para garantir que o siste
        │                               │
        ▼                               ▼
 [Camada 1: SSoT]                [Camada 2: IDEs]
-(~/.agencia-ai/)                (~/.claude/skills/...)
+(~/.oma/)                (~/.claude/skills/...)
 Popula recursos                 Detecta IDEs e copia
 globais do sistema              skills (sem sobrescrever)
 ```
 
-1.  **npm install:** O usuário instala o pacote `@pauloarthurrocha/agencia-ai-adaptavel`.
+1.  **npm install:** O usuário instala o pacote `@pauloarthurrocha/onemanagency`.
 2.  **postinstall:** O hook de instalação do npm dispara o script de post-instalação.
 3.  **installer.js:** O motor de instalação popula a Camada 1 e, em seguida, varre o sistema em busca de IDEs compatíveis para popular a Camada 2.
 
@@ -70,7 +70,7 @@ globais do sistema              skills (sem sobrescrever)
 
 ## 🛠️ Gerenciamento via CLI
 
-O CLI `agencia-ai` oferece controle granular sobre este processo através de flags:
+O CLI `oma` oferece controle granular sobre este processo através de flags:
 
 *   `--only <ide>`: Propaga skills apenas para uma IDE específica (ex: `--only claude`).
 *   `--exclude <ide>`: Ignora IDEs específicas durante a propagação.
@@ -78,7 +78,7 @@ O CLI `agencia-ai` oferece controle granular sobre este processo através de fla
 
 Comando principal:
 ```bash
-agencia-ai install-global [--only|--exclude|--dry-run]
+oma install [--only|--exclude|--dry-run]
 ```
 
 ---
@@ -87,8 +87,8 @@ agencia-ai install-global [--only|--exclude|--dry-run]
 
 É fundamental entender a separação de papéis no sistema:
 
-*   **CLI (`agencia-ai`):** Responsável pela infraestrutura global. Instala o sistema, gerencia a SSoT e propaga skills para as IDEs. **O CLI nunca cria arquivos dentro de projetos.**
-*   **Skill (`agencia-init`):** Responsável pela infraestrutura do projeto. É executada de dentro de uma IDE e cria a estrutura de pastas, arquivos de contexto e a Camada 3 de skills. **A skill nunca instala nada fora do repositório do projeto.**
+*   **CLI (`oma`):** Responsável pela infraestrutura global. Instala o sistema, gerencia a SSoT e propaga skills para as IDEs. **O CLI nunca cria arquivos dentro de projetos.**
+*   **Skill (`oma-init`):** Responsável pela infraestrutura do projeto. É executada de dentro de uma IDE e cria a estrutura de pastas, arquivos de contexto e a Camada 3 de skills. **A skill nunca instala nada fora do repositório do projeto.**
 
 Esta separação garante que o sistema seja leve, seguro e não interfira com arquivos globais do usuário de forma inesperada.
 
@@ -96,7 +96,7 @@ Esta separação garante que o sistema seja leve, seguro e não interfira com ar
 
 ## 🧰 Stack de MCPs (Model Context Protocol)
 
-A Agência AI Adaptável utiliza uma stack de 6 MCPs otimizada para custo zero no dia a dia, com Firecrawl reservado apenas para operações avançadas.
+A OneManAgency utiliza uma stack de 6 MCPs otimizada para custo zero no dia a dia, com Firecrawl reservado apenas para operações avançadas.
 
 ### MCPs Gratuitos (uso diário)
 

@@ -1,20 +1,20 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════
-# Agencia AI Adaptável — Bootstrap Installer (Unix)
+# OneManAgency — Bootstrap Installer (Unix)
 # ═══════════════════════════════════════════════════════
 #
 # This bootstrap clones the repository and delegates installation
 # to build/postinstall.js. It also symlinks the CLI into ~/.local/bin.
 #
-# curl -fsSL https://raw.githubusercontent.com/pauloarthurrocha/agencia-ai-adaptavel-skills/main/install/install.sh | bash
+# curl -fsSL https://raw.githubusercontent.com/pauloarthurrocha/OneManAgency/main/install/install.sh | bash
 
 set -e
 
-REPO_URL="https://github.com/pauloarthurrocha/agencia-ai-adaptavel-skills.git"
-INSTALL_DIR="$HOME/.agencia-ai"
+REPO_URL="https://github.com/pauloarthurrocha/OneManAgency.git"
+INSTALL_DIR="$HOME/.oma"
 BIN_DIR="$HOME/.local/bin"
 
-echo "🚀 Agencia AI Adaptável — Bootstrap Installer"
+echo "🚀 OneManAgency — Bootstrap Installer"
 echo ""
 
 # ── Check dependencies ──
@@ -70,11 +70,11 @@ node build/postinstall.js
 # ── Create global command (symlink) ──
 mkdir -p "$BIN_DIR"
 
-if [ -f "$INSTALL_DIR/bin/agencia-ai.js" ]; then
-  rm -f "$BIN_DIR/agencia-ai"
-  ln -sf "$INSTALL_DIR/bin/agencia-ai.js" "$BIN_DIR/agencia-ai"
-  chmod +x "$BIN_DIR/agencia-ai"
-  echo "🔗 Created: $BIN_DIR/agencia-ai"
+if [ -f "$INSTALL_DIR/bin/oma.js" ]; then
+  rm -f "$BIN_DIR/oma"
+  ln -sf "$INSTALL_DIR/bin/oma.js" "$BIN_DIR/oma"
+  chmod +x "$BIN_DIR/oma"
+  echo "🔗 Created: $BIN_DIR/oma"
 fi
 
 # ── Add to PATH if needed ──
@@ -90,7 +90,7 @@ echo "✅ Installation complete!"
 echo ""
 echo "Next steps:"
 echo "  1. Restart your terminal (or: source ~/.bashrc)"
-echo "  2. Verify: agencia-ai doctor"
+echo "  2. Verify: oma doctor"
 echo "  3. Create project: mkdir my-project && cd my-project"
-echo "  4. In your IDE: skill(name='agencia-init')"
+echo "  4. In your IDE: skill(name='oma-init')"
 echo ""

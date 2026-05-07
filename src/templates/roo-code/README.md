@@ -1,4 +1,4 @@
-# Templates Roo Code — Agência AI Adaptável
+# Templates Roo Code — OneManAgency
 
 Este diretório contém os templates de configuração para otimizar o uso do **Roo Code** dentro do workflow da Agência.
 

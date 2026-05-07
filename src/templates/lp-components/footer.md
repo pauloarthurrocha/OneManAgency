@@ -159,4 +159,4 @@
 
 ---
 
-*Template Footer v1.0 — Agência AI Adaptável*
+*Template Footer v1.0 — OneManAgency*

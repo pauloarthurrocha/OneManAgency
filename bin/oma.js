@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 
 /**
- * Agencia AI Adaptavel — CLI Global
+ * OneManAgency — CLI Global
  *
  * RESPONSABILIDADE: Gerenciar a instalacao GLOBAL do sistema.
- * NAO cria projetos. Projetos sao criados pela skill agencia-init dentro do IDE.
+ * NAO cria projetos. Projetos sao criados pela skill oma-init dentro do IDE.
  *
  * Comandos:
- *   agencia-ai install-global   Instala/atualiza recursos em ~/.agencia-ai/ + IDEs
+ *   oma install   Instala/atualiza recursos em ~/.oma/ + IDEs
  *     --only=<a,b,c>            Instalar so em IDEs especificas (claude,cursor,codex,opencode,antigravity,gemini-cli)
  *     --exclude=<a,b,c>         Pular IDEs especificas
  *     --dry-run                 Mostrar o que faria sem mudar nada
- *   agencia-ai update           Atualiza skills globais (com backup)
- *   agencia-ai doctor           Diagnostica instalacao
- *   agencia-ai version          Mostra versao
- *   agencia-ai help             Mostra ajuda
+ *   oma update           Atualiza skills globais (com backup)
+ *   oma doctor           Diagnostica instalacao
+ *   oma version          Mostra versao
+ *   oma help             Mostra ajuda
  */
 
 const fs = require('fs');
@@ -64,7 +64,7 @@ function parseFlags(argv) {
 function cmdInstallGlobal(argv) {
   const { only, exclude, dryRun } = parseFlags(argv);
 
-  log(`\n🚀 ${dryRun ? '[DRY-RUN] ' : ''}Instalando Agencia AI Adaptavel v${VERSION}...`, 'bold');
+  log(`\n🚀 ${dryRun ? '[DRY-RUN] ' : ''}Instalando OneManAgency v${VERSION}...`, 'bold');
 
   if (only) info(`Filtro --only: ${only.join(', ')}`);
   if (exclude) info(`Filtro --exclude: ${exclude.join(', ')}`);
@@ -85,11 +85,11 @@ function cmdInstallGlobal(argv) {
 
   const result = installAll({ packageDir: PACKAGE_DIR, only, exclude, dryRun });
 
-  log(`\n${dryRun ? 'Nada foi alterado (dry-run).' : `Agencia AI Adaptavel v${result.version} instalada.`}`, 'bold');
+  log(`\n${dryRun ? 'Nada foi alterado (dry-run).' : `OneManAgency v${result.version} instalada.`}`, 'bold');
 
   if (!dryRun) {
     info(`Diretorio global: ${GLOBAL_DIR}`);
-    info('Nenhum arquivo do seu sistema foi alterado fora de ~/.agencia-ai e ~/.{ide}/skills/');
+    info('Nenhum arquivo do seu sistema foi alterado fora de ~/.oma e ~/.{ide}/skills/');
   }
 }
 
@@ -115,10 +115,10 @@ function cmdInit(targetDir) {
   log('');
   log('  1. mkdir my-project && cd my-project');
   log('  2. Open the folder in your IDE (Claude, OpenCode, Cursor, etc.)');
-  log('  3. Run: skill(name="agencia-init")');
+  log('  3. Run: skill(name="oma-init")');
   log('');
   log('This will:');
-  log('  • Copy core skills from ~/.agencia-ai/');
+  log('  • Copy core skills from ~/.oma/');
   log('  • Download updated external skills (Marketing, UI/UX, Anthropic, Antigravity)');
   log('  • Set up Context Engineering (AGENTS.md, PROJECT.md, STATE.md)');
   log('  • Create cross-IDE skill structure');
@@ -128,10 +128,10 @@ function cmdInit(targetDir) {
 
 // ─── update ────────────────────────────────────────────────────────
 function cmdUpdate() {
-  log('\n🔄 Atualizando Agencia AI Adaptavel...', 'bold');
+  log('\n🔄 Atualizando OneManAgency...', 'bold');
 
   if (!fs.existsSync(GLOBAL_DIR)) {
-    fail('Instalacao global nao encontrada. Execute: agencia-ai install-global');
+    fail('Instalacao global nao encontrada. Execute: oma install');
   }
 
   // install-global ja faz backup automatico; basta reexecutar
@@ -141,7 +141,7 @@ function cmdUpdate() {
 
 // ─── doctor ────────────────────────────────────────────────────────
 function cmdDoctor() {
-  log(`\n🏥 Diagnostico Agencia AI Adaptavel v${VERSION}\n`, 'bold');
+  log(`\n🏥 Diagnostico OneManAgency v${VERSION}\n`, 'bold');
 
   let issues = 0;
 
@@ -165,7 +165,7 @@ function cmdDoctor() {
     success(`Presets: ${presets.length}`);
   } else {
     warn('SSoT global: NAO ENCONTRADA');
-    info('Execute: agencia-ai install-global');
+    info('Execute: oma install');
     issues++;
   }
 
@@ -197,13 +197,13 @@ function cmdDoctor() {
 
 // ─── help / version ────────────────────────────────────────────────
 function cmdHelp() {
-  log(`\n🚀 Agencia AI Adaptavel v${VERSION} — CLI\n`, 'bold');
+  log(`\n🚀 OneManAgency v${VERSION} — CLI\n`, 'bold');
   log('RESPONSABILIDADE:', 'bold');
-  log('  Gerenciar a instalacao GLOBAL do sistema em ~/.agencia-ai/');
-  log('  NAO cria projetos. Projetos sao criados pela skill agencia-init no IDE.\n');
+  log('  Gerenciar a instalacao GLOBAL do sistema em ~/.oma/');
+  log('  NAO cria projetos. Projetos sao criados pela skill oma-init no IDE.\n');
 
   log('COMANDOS:', 'bold');
-  log('  install-global [flags]   Popula ~/.agencia-ai + propaga para IDEs detectadas');
+  log('  install-global [flags]   Popula ~/.oma + propaga para IDEs detectadas');
   log('    --only=k1,k2           so estas IDEs (claude,cursor,codex,opencode,antigravity,gemini-cli)');
   log('    --exclude=k1,k2        pular estas IDEs');
   log('    --dry-run              mostrar sem alterar');
@@ -213,10 +213,10 @@ function cmdHelp() {
   log('  version                  Mostra versao\n');
 
   log('FLUXO:', 'bold');
-  log('  1. npm install -g @pauloarthurrocha/agencia-ai-adaptavel --registry=https://npm.pkg.github.com');
-  log('  2. (opcional) agencia-ai doctor');
+  log('  1. npm install -g @pauloarthurrocha/onemanagency --registry=https://npm.pkg.github.com');
+  log('  2. (opcional) oma doctor');
   log('  3. cd meu-projeto');
-  log('  4. IDE > skill(name="agencia-init")');
+  log('  4. IDE > skill(name="oma-init")');
   log('  5. IDE > skill(name="client-onboarding")\n');
 }
 
@@ -231,7 +231,7 @@ switch (command) {
   case 'version':
   case '-v':
   case '--version':
-    console.log(`Agencia AI Adaptavel v${VERSION}`);
+    console.log(`OneManAgency v${VERSION}`);
     break;
   case 'help':
   case '-h':

@@ -1,10 +1,10 @@
 {
-  "name": "@pauloarthurrocha/agencia-ai-adaptavel",
+  "name": "@pauloarthurrocha/onemanagency",
   "version": "3.3.0",
-  "description": "Sistema de execução de projetos via IA. Agência AI Adaptável - funciona em qualquer IDE e adapta-se a qualquer projeto.",
-  "main": "bin/agencia-ai.js",
+  "description": "Sistema de execução de projetos via IA. OneManAgency - funciona em qualquer IDE e adapta-se a qualquer projeto.",
+  "main": "bin/oma.js",
   "bin": {
-    "agencia-ai": "./bin/agencia-ai.js"
+    "oma": "./bin/oma.js"
   },
   "scripts": {
     "postinstall": "node build/postinstall.js",
@@ -25,16 +25,16 @@
     "saas",
     "scaffold"
   ],
-  "author": "Agencia AI Adaptavel",
+  "author": "OneManAgency",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pauloarthurrocha/agencia-ai-adaptavel-skills.git"
+    "url": "https://github.com/pauloarthurrocha/OneManAgency.git"
   },
   "bugs": {
-    "url": "https://github.com/pauloarthurrocha/agencia-ai-adaptavel-skills/issues"
+    "url": "https://github.com/pauloarthurrocha/OneManAgency/issues"
   },
-  "homepage": "https://github.com/pauloarthurrocha/agencia-ai-adaptavel-skills#readme",
+  "homepage": "https://github.com/pauloarthurrocha/OneManAgency#readme",
   "engines": {
     "node": ">=18.0.0"
   },

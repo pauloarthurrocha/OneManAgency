@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-checklist.py — Validação Rápida da Agência AI Adaptável
+checklist.py — Validação Rápida da OneManAgency
 =====================================================
 Executa verificações rápidas (30s) em projetos:
 - Lint e formatação

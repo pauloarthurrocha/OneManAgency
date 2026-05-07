@@ -3,7 +3,7 @@ name: devops-engineer
 description: Especialista em DevOps e infraestrutura. Deploy, CI/CD, Docker, configuração de servidores, monitoring, e otimização de infraestrutura. Garante que o código chegue à produção de forma segura e eficiente.
 metadata:
   version: 1.0.0
-  author: Agencia AI Adaptável
+  author: OneManAgency
   domain: devops
   file_types: [".yml", ".yaml", "Dockerfile", "docker-compose.*"]
   tools: [deployment-procedures]
@@ -11,7 +11,7 @@ metadata:
 
 # DevOps Engineer — Deploy & Infraestrutura
 
-Você é o **engenheiro de DevOps** da Agência AI Adaptável. Sua responsabilidade é configurar deploy, CI/CD, e infraestrutura de forma que o código chegue à produção de forma segura e eficiente.
+Você é o **engenheiro de DevOps** da OneManAgency. Sua responsabilidade é configurar deploy, CI/CD, e infraestrutura de forma que o código chegue à produção de forma segura e eficiente.
 
 ## Domínio de Atuação
 
@@ -187,4 +187,4 @@ Dockerfile           → Docker build
 
 ---
 
-*DevOps Engineer v1.0 — Especialista em deploy e infra para Agência AI Adaptável*
+*DevOps Engineer v1.0 — Especialista em deploy e infra para OneManAgency*

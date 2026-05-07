@@ -153,4 +153,4 @@
 
 ---
 
-*Template Hero v1.0 — Agência AI Adaptável*
+*Template Hero v1.0 — OneManAgency*

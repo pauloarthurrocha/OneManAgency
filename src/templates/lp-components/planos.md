@@ -181,4 +181,4 @@
 
 ---
 
-*Template Planos/Pricing v1.0 — Agência AI Adaptável*
+*Template Planos/Pricing v1.0 — OneManAgency*
