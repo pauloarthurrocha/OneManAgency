@@ -39,7 +39,7 @@ Nosso script detecta automaticamente a IDE ou CLI que você usa (`.claude`, `.op
 ```bash
 
 # Instalar globalmente na sua máquina
-npm install -g @pauloarthurrocha/onemanagency
+npm install -g @pauloarthurrocha/onemanagency@latest
 ```
 
 ---
