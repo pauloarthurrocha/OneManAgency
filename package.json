@@ -7,11 +7,7 @@
     "oma": "./bin/oma.js"
   },
   "scripts": {
-    "postinstall": "node build/postinstall.js",
-    "publish:github": "npm publish --registry=https://npm.pkg.github.com"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "postinstall": "node build/postinstall.js"
   },
   "keywords": [
     "ai",

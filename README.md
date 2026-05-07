@@ -37,11 +37,9 @@ A complexidade inteira está no sistema, não no seu fluxo de trabalho. Você co
 Nosso script detecta automaticamente a IDE ou CLI que você usa (`.claude`, `.opencode`, `.cursor`, `.roo`, `.gemini`, `.windsurf`, `.aider`, `.cline`) e injeta as skills lá dentro.
 
 ```bash
-# Autenticar no GitHub Packages (apenas uma vez)
-npm login --registry=https://npm.pkg.github.com
 
 # Instalar globalmente na sua máquina
-npm install -g @pauloarthurrocha/onemanagency --registry=https://npm.pkg.github.com
+npm install -g @pauloarthurrocha/onemanagency
 ```
 
 ---

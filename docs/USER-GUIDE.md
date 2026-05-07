@@ -16,8 +16,7 @@ O OMA é um pacote global do Node.js. O script de instalação faz o trabalho su
 
 ### Instalando na sua máquina
 ```bash
-npm login --registry=https://npm.pkg.github.com
-npm install -g @pauloarthurrocha/onemanagency --registry=https://npm.pkg.github.com
+npm install -g @pauloarthurrocha/onemanagency
 ```
 
 Para confirmar se deu tudo certo:
