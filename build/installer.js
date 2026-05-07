@@ -32,6 +32,10 @@ const IDE_TARGETS = [
   { name: 'antigravity', parent: '.gemini/antigravity', skills: '.gemini/antigravity/skills' },
   { name: 'roo', parent: '.roo', skills: '.roo/skills' },
   { name: 'gemini-cli', parent: '.gemini', skills: '.gemini/skills' },
+  { name: 'windsurf', parent: '.windsurf', skills: '.windsurf/skills' },
+  { name: 'cline', parent: '.cline', skills: '.cline/skills' },
+  { name: 'aider', parent: '.aider', skills: '.aider/skills' },
+  { name: 'goose', parent: '.goose', skills: '.goose/skills' },
 ];
 
 // ─── Helpers ───────────────────────────────────────────────────────
