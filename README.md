@@ -3,7 +3,7 @@
 # 🤖 OneManAgency (v4.0.0)
 
 **O Framework de Engenharia Agêntica para Solo Builders & Tech Leads.**<br>
-*Orquestração Multi-LLM, Context Engineering, PIV Loop (Plan, Implement, Validate) e TDD Nativo para Claude Code, OpenCode, Cursor, Roo Code e Gemini CLI.*
+*Orquestração Multi-LLM, Context Engineering, PIV Loop (Plan, Implement, Validate) e TDD Nativo para Claude Code, OpenCode, Cursor, Windsurf, Aider, Hermes Agent, Roo Code e Gemini CLI.*
 
 [![npm version](https://img.shields.io/badge/npm-v4.0.0-CB3837?style=for-the-badge&logo=npm)](https://github.com/pauloarthurrocha/OneManAgency)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
@@ -83,6 +83,15 @@ Nós não usamos "roleplay raso". O repositório contém `Agent Definition Files
 | **Frontend Specialist** | Acessibilidade (a11y) nativa. Tailwind v4. Skeletons/Error states mandatórios. A âncora de design (`DESIGN.md`) é lei. |
 | **Backend Specialist** | Guardião dos dados. Segue a "TDD Iron Law" (Red-Green-Refactor). Código espaguete é barrado. |
 | **Lead Orchestrator** | Gerente de Waves. Em grandes refatorações, isola subagentes em Git Worktrees paralelos para evitar conflitos de merge. |
+
+---
+
+## 🤝 Integração Contínua (24/7 Coworking)
+
+O OMA Framework é 100% compatível com orquestradores de terminais autônomos. Como ele é fundamentado em *Agent Definition Files* puros e leitura de disco (Context Engineering), você pode rodá-lo em plataformas de "Coworking" de agentes:
+
+*   **[AionUi](https://github.com/iOfficeAI/AionUi):** Uma vez que o OMA é instalado na sua máquina, você pode abrir o AionUi, instanciar múltiplos terminais do Claude Code ou OpenCode lado a lado, e delegar as fases do `PIPELINE.md`. AionUi fará o papel de terminal interativo enquanto o OMA atua como o cérebro/framework.
+*   **[Hermes Agent](https://github.com/NousResearch/hermes-agent) / OpenClaw:** O instalador do OMA detecta as pastas `~/.hermes/skills` e `~/.openclaw/skills` automaticamente. Você pode rodar a agência via Telegram ou Discord, chamando `/oma-init` e orquestrando o código diretamente de um VPS na nuvem 24/7.
 
 ---
 

@@ -36,6 +36,8 @@ const IDE_TARGETS = [
   { name: 'cline', parent: '.cline', skills: '.cline/skills' },
   { name: 'aider', parent: '.aider', skills: '.aider/skills' },
   { name: 'goose', parent: '.goose', skills: '.goose/skills' },
+  { name: 'hermes', parent: '.hermes', skills: '.hermes/skills' },
+  { name: 'openclaw', parent: '.openclaw', skills: '.openclaw/skills' },
 ];
 
 // ─── Helpers ───────────────────────────────────────────────────────

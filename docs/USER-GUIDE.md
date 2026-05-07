@@ -6,7 +6,7 @@ O **OneManAgency (OMA)** transforma a sua IDE de IA favorita em uma agência com
 
 ## ⚡ 1. Instalação & Setup
 
-O OMA é distribuído como um pacote global do Node.js, e o script de instalação se encarrega de detectar suas IDEs (Claude Code, Cursor, OpenCode, Codex, Windsurf, Aider, Roo) e injetar as skills automaticamente.
+O OMA é distribuído como um pacote global do Node.js, e o script de instalação se encarrega de detectar suas IDEs e CLIs (Claude Code, Cursor, OpenCode, Codex, Windsurf, Aider, Roo, Goose, Hermes Agent, OpenClaw) e injetar as skills automaticamente.
 
 ### Pré-requisitos
 - Node.js >= 18
