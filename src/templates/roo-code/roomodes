@@ -8,7 +8,7 @@ modes:
       - "edit"
       - "command"
       - "mcp"
-    customInstructions: "Sempre verifique o STATE.md e o PIPELINE.md antes de iniciar qualquer tarefa. Use a skill agencia-executor para avançar nas fases."
+    customInstructions: "Sempre verifique o STATE.md e o PIPELINE.md antes de iniciar qualquer tarefa. Use a skill oma-executor para avançar nas fases."
 
   - name: "Frontend Engineer"
     slug: "frontend"
@@ -85,7 +85,7 @@ modes:
       - "edit"
       - "command"
       - "mcp"
-    customInstructions: "Crie testes automatizados para todas as funcionalidades críticas. Use a skill agencia-verify-work para validar as entregas."
+    customInstructions: "Crie testes automatizados para todas as funcionalidades críticas. Use a skill oma-verify-work para validar as entregas."
 
   - name: "DevOps Engineer"
     slug: "devops"

@@ -70,11 +70,11 @@ Você é o **especialista em SEO** da OneManAgency. Sua responsabilidade é otim
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "OneManAgency",
-  "url": "https://agenciaai.com",
-  "logo": "https://agenciaai.com/logo.png",
+  "url": "https://onemanagency.dev",
+  "logo": "https://onemanagency.dev/logo.png",
   "sameAs": [
-    "https://twitter.com/agenciaai",
-    "https://linkedin.com/company/agenciaai"
+    "https://twitter.com/onemanagency",
+    "https://linkedin.com/company/onemanagency"
   ]
 }
 ```

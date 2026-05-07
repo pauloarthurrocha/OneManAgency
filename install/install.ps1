@@ -90,22 +90,22 @@ if (!(Test-Path $PROFILE)) {
     New-Item -ItemType File -Force -Path $PROFILE | Out-Null
 }
 
-$agenciaFunction = @'
+$omaFunction = @'
 # OneManAgency — Global function (auto-generated)
 function oma {
     param([Parameter(ValueFromRemainingArguments=$true)] $args)
-    $AGENCIA_HOME = if ($env:AGENCIA_HOME) { $env:AGENCIA_HOME } else { "' + $INSTALL_DIR + '" }
-    & node "$AGENCIA_HOME\bin\oma.js" @args
+    $OMA_HOME = if ($env:OMA_HOME) { $env:OMA_HOME } else { "' + $INSTALL_DIR + '" }
+    & node "$OMA_HOME\bin\oma.js" @args
 }
 '@
 
 if (!(Select-String -Path $PROFILE -Pattern "function oma" -ErrorAction SilentlyContinue)) {
-    Add-Content -Path $PROFILE -Value "`n$agenciaFunction`n"
+    Add-Content -Path $PROFILE -Value "`n$omaFunction`n"
     Write-Host "✅ PowerShell function 'oma' added to profile" -ForegroundColor Green
 }
 
 # ── Create .cmd wrapper in PATH ──
-$BIN_DIR = "$env:LOCALAPPDATA\AgenciaAI\bin"
+$BIN_DIR = "$env:LOCALAPPDATA\OneManAgency\bin"
 New-Item -ItemType Directory -Force -Path $BIN_DIR | Out-Null
 
 $wrapperCmd = @"

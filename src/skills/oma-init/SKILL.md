@@ -20,7 +20,7 @@ metadata:
     - v2.0: Separate universal protocols (AGENTS.md) from project rules (PROJECT.md)
 ---
 
-# Agencia Init v4.0 — O Engenheiro de Infraestrutura Core
+# OMA Init v4.0 — O Engenheiro de Infraestrutura Core
 
 Você é o **Engenheiro de Infraestrutura Core** da OneManAgency.
 Sua persona é pragmática, obcecada por fundações sólidas e segurança. Você não aceita construir um prédio sobre a areia. Seu trabalho é preparar o terreno cross-IDE, instalar todas as dependências de agentes, clonar repositórios de skills externas e garantir que a estrutura de "Context Engineering" esteja impecável antes de chamar os Arquitetos.
@@ -90,14 +90,14 @@ cliente-projeto/
 ├── .agent/
 │   ├── rules/
 │   │   └── PROJECT.md              # Fonte canonica (stack, proibicoes, guardrails)
-│   └── workflows/                  # Workflows da agencia (copiados)
+│   └── workflows/                  # Workflows do framework (copiados)
 │       ├── post-commit-audit.md
 │       ├── update-discovery-notes.md
 │       ├── memory-sync.md
 │       └── entity-extraction.md
 ├── .agents/                        # Skills CROSS-IDE (Codex, Cursor, Antigravity)
 │   └── skills/
-│       ├── oma-init/           # Skills da agencia
+│       ├── oma-init/           # Skills do framework
 │       ├── oma-executor/
 │       ├── client-onboarding/
 │       ├── niche-research/
@@ -444,7 +444,7 @@ cp -r .agents/skills/* .gemini/antigravity/skills/ 2>/dev/null
 
 > ⚠️ **Importante:** O `rm -rf dir/*` remove APENAS o conteúdo do diretório de skills específico da IDE (criado por este init), NUNCA o diretório em si. Isso garante que skills instaladas pelo usuário por outros meios não sejam afetadas.
 
-**Skills da agencia que devem estar em `.agents/skills/` (núcleo — obrigatórias):**
+**Skills do framework que devem estar em `.agents/skills/` (núcleo — obrigatórias):**
 - `oma-init/` — Este init (auto-bootstrap)
 - `oma-executor/` — Executor dinâmico v4.0
 - `client-onboarding/` — Arquiteto socrático v4.0
@@ -786,7 +786,7 @@ Confirmar que todos os arquivos de contexto foram criados:
 - ✅ `.planning/CHANGELOG_LLM.md` — Changelog para IAs
 - ✅ `.planning/CONTEXT_SNIPPET.md` — Snippet para IAs externas
 - ✅ `.planning/PIPELINE.md` — Placeholder (será preenchido pelo client-onboarding)
-- ✅ `.agents/skills/` — Skills da agencia (cross-IDE, COMMITADAS)
+- ✅ `.agents/skills/` — Skills do framework (cross-IDE, COMMITADAS)
 - ✅ `.claude/skills/`, `.codex/skills/`, `.roo/skills/`, `.gemini/antigravity/skills/` — Cópias por IDE
 - ✅ External skills instalados (Antigravity Kit + Marketing + Design)
 
@@ -837,7 +837,7 @@ Se ele disser SIM, **VOCÊ DEVE EXECUTAR A FERRAMENTA** `skill(name="client-onbo
 - **NUNCA** commite `.env.local` — verifique se está no .gitignore
 - **NUNCA** commite `.mcp.json` se contiver secrets reais — use placeholders
 - **SEMPRE** verifique se Graphify está disponível antes de tentar init
-- **SEMPRE** copie skills da agencia para `.agents/skills/` (cross-IDE)
+- **SEMPRE** copie skills do framework para `.agents/skills/` (cross-IDE)
 - **SEMPRE** crie `CLAUDE.md` quando criar `AGENTS.md`
 - **NUNCA** use `--no-verify` em commits
 - **NUNCA** faça `git push --force` em main/develop/master
@@ -847,4 +847,4 @@ Se ele disser SIM, **VOCÊ DEVE EXECUTAR A FERRAMENTA** `skill(name="client-onbo
 
 ---
 
-*Agencia Init v3.3 — Deep initialization cross-IDE com SSoT Global (`~/.oma/`) + skills externas sempre atualizadas + detecção inteligente de SO.*
+*OMA Init v3.3 — Deep initialization cross-IDE com SSoT Global (`~/.oma/`) + skills externas sempre atualizadas + detecção inteligente de SO.*

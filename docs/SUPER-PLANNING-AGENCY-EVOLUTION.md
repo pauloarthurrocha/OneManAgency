@@ -39,7 +39,7 @@ Este documento consolida as melhores práticas das maiores referências open-sou
 - `/plan-design-review` (Prometheus em modo Designer): Valida o `DESIGN.md` contra alucinações de IA (AI slop detection) como cantos super-arredondados e gradientes roxos genéricos.
 
 ### 4. Evolução Contínua do Sistema (System Evolution)
-**Ação:** Criar a skill `system-retro` (ou `agencia-learn`).
+**Ação:** Criar a skill `system-retro` (ou `oma-learn`).
 - **Como será:** No final de cada milestone ou após corrigir um bug complexo, o agente analisa a sessão: "Qual erro de contexto causou essa falha?". Ele então atualiza o `PROJECT.md` (regras locais) ou o `SKILL-REGISTRY.md` automaticamente para que o erro não se repita. A infraestrutura aprende.
 
 ### 5. Suporte a Git Worktrees para Execução Paralela
