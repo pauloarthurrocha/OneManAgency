@@ -1,19 +1,16 @@
 ---
 name: agencia-executor
-description: Orquestrador dinâmico da Agência AI Adaptável v3.4. Lê o PIPELINE.md do projeto e executa a próxima fase pendente com as skills corretas, gate humano com Risk Assessment, detecção de arquivos incompletos, Quality Gate pós-fase e atualização de memória. Agora com suporte a agentes especializados por fase, orquestração multi-agent e Validação Anti-Alucinação via MCPs. Se o PIPELINE.md não existe, delega para client-onboarding. Funciona em qualquer IDE.
+description: Orquestrador dinâmico da Agência AI Adaptável v4.0. Executa o PIPELINE.md aplicando o PIV Loop (Isolamento de Contexto), TDD Obrigatório (Red-Green-Refactor), Git Worktrees para paralelismo seguro e System Evolution (registro de aprendizados). Funciona em qualquer IDE.
 metadata:
-  version: 3.4.0
+  version: 4.0.0
   changelog:
+    - v4.0: Implementação estrita do PIV Loop (Hard Stop para limpar contexto antes de implementar), TDD Raiz obrigatório para backend, Worktrees isoladas para waves de código e System Evolution formalizado via discovery-notes.
     - v3.4: Adicionado "R1.5 - Consultoria Proativa (Risk Assessment)" no gate humano e uso mandatório de MCPs para validação técnica anti-alucinação no Step 5.3.
     - v3.3: Adiciona práticas de Context Engineering (Memory Compaction, 2-Action Rule, Error Persistence) inspiradas no padrão Manus.
-    - v3.2: Adiciona suporte a agentes especializados por fase (metadata Agent:), orquestração multi-agent (metadata Orchestration:), e sistema de File Type Ownership.
-    - v3.1: Merge v2.0 (operacional) + v3.0 (dinâmico). Preserva R1-R7, Quality Gate, hierarquia de carregamento, few-shot. Remove Modo Arquiteto (delegado para client-onboarding).
-    - v3.0: PIPELINE.md dinâmico + Shift-Left Deploy + validação via MCPs.
-    - v2.0: Auto-detect IDE cross-IDE, carregamento inteligente de skills, atualização de memória pós-fase.
-    - v1.0: Deteccao automatica de fase + gate humano.
+    - v3.2: Adiciona suporte a agentes especializados por fase, orquestração multi-agent e sistema de File Type Ownership.
 ---
 
-# Agencia AI Adaptavel — Executor Dinâmico v3.4
+# Agencia AI Adaptavel — Executor Dinâmico v4.0
 
 Você é o **orquestrador do workflow** da Agência AI Adaptável. Sua responsabilidade é:
 1. Ler o mapa do projeto (`.planning/PIPELINE.md`)
