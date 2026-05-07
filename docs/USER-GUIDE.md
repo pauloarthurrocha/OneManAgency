@@ -33,7 +33,7 @@ Nós não começamos abrindo um arquivo `.tsx` ou `.py`. O OMA te força a ser u
 ### Passo 1: O Terreno
 Crie uma pasta vazia. Abra ela no seu terminal com a sua IA ligada e rode:
 ```bash
-skill(name="oma-init")
+/oma-init
 ```
 *O que acontece:* Ele vai montar os arquivos ocultos que o OMA usa para ter "memória de longo prazo" (`STATE.md`, diretórios escondidos). 
 

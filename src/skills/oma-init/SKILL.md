@@ -63,7 +63,7 @@ npm install -g oma-adaptavel
 oma install
 
 # IDE (dentro do projeto):
-skill(name="oma-init")  # Encontra tudo em ~/.oma/
+/oma-init  # Encontra tudo em ~/.oma/
 ```
 
 ---
@@ -725,7 +725,7 @@ cat > .planning/PIPELINE.md << 'EOF'
 > Estrutura esperada: ver documentação do `client-onboarding` ou `pipeline-generator`.
 
 ## Status
-⏸️ **Vazio** — execute `skill(name="client-onboarding")` para montar o pipeline.
+⏸️ **Vazio** — execute `/client-onboarding` para montar o pipeline.
 
 ## Formato Esperado
 ```
@@ -790,7 +790,7 @@ Confirmar que todos os arquivos de contexto foram criados:
 - ✅ `.claude/skills/`, `.codex/skills/`, `.roo/skills/`, `.gemini/antigravity/skills/` — Cópias por IDE
 - ✅ External skills instalados (Antigravity Kit + Marketing + Design)
 
-> 🎯 **Próximo passo OBRIGATÓRIO:** Executar `skill(name="client-onboarding")` para:
+> 🎯 **Próximo passo OBRIGATÓRIO:** Executar `/client-onboarding` para:
 > - Entrevistar o cliente socraticamente
 > - Validar stack e hospedagem via MCPs
 > - Gerar `BRIEFING.md`, preencher `PROJECT.md`, e montar `PIPELINE.md` customizado
@@ -825,7 +825,7 @@ Você precisa conversar com o nosso **Arquiteto Socrático** para definir o esco
 
 **AÇÃO OBRIGATÓRIA DA IA:**
 Pergunte ao cliente: "Posso invocar o Arquiteto Socrático agora para você?"
-Se ele disser SIM, **VOCÊ DEVE EXECUTAR A FERRAMENTA** `skill(name="client-onboarding")` autonomamente. NÃO diga ao cliente para digitar o comando. Assuma a orquestração.
+Se ele disser SIM, **VOCÊ DEVE EXECUTAR A FERRAMENTA** `/client-onboarding` autonomamente. NÃO diga ao cliente para digitar o comando. Assuma a orquestração.
 ```
 
 ---

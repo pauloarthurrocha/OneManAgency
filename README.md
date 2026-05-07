@@ -52,7 +52,7 @@ Você não precisa ficar digitando dezenas de comandos. O OMA tem "Autonomous Sk
 Crie uma pasta vazia para o seu novo produto e chame o Engenheiro de Infraestrutura (oma-init).
 ```bash
 mkdir meu-novo-saas && cd meu-novo-saas
-skill(name="oma-init")
+/oma-init
 ```
 
 ### 2. O Embate Socrático
