@@ -271,7 +271,7 @@ fi
 ```bash
 if [ "$USE_GLOBAL" = true ]; then
   # Copiar skills core da agência
-  for SKILL in agencia-init agencia-executor client-onboarding pipeline-generator agencia-verify-work skill-creator agencia-ceo-review agencia-eng-review agencia-design-review; do
+  for SKILL in agencia-init agencia-executor client-onboarding pipeline-generator agencia-verify-work skill-creator agencia-ceo-review agencia-eng-review agencia-design-review agencia-release-manager; do
     if [ -d "$AGENCIA_GLOBAL/skills/$SKILL" ]; then
       cp -r "$AGENCIA_GLOBAL/skills/$SKILL" .agents/skills/
       echo "  ✓ $SKILL (global)"
@@ -448,11 +448,12 @@ cp -r .agents/skills/* .gemini/antigravity/skills/ 2>/dev/null
 - `agencia-init/` — Este init (auto-bootstrap)
 - `agencia-executor/` — Executor dinâmico v4.0
 - `client-onboarding/` — Arquiteto socrático v4.0
-- `agencia-ceo-review/` — Tríade: Validação de Negócios/Escopo
+- `agencia-ceo-review/` — Tríade: Validação de Negócios (Gera PRD)
 - `agencia-eng-review/` — Tríade: Validação Arquitetural
 - `agencia-design-review/` — Tríade: Validação de UX/UI
-- `pipeline-generator/` — Gera PIPELINE.md (auxiliar do onboarding)
+- `pipeline-generator/` — Gera PIPELINE.md
 - `agencia-verify-work/` — Quality Gate pós-fase
+- `agencia-release-manager/` — QA Final, Docs e Lançamento
 - `skill-creator/` — Criação e otimização de novas skills
 
 **Skills auxiliares (opcionais — adicionar conforme domínio do projeto):**

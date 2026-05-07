@@ -18,6 +18,10 @@ const CORE_SKILLS = [
   'pipeline-generator',
   'agencia-verify-work',
   'skill-creator',
+  'agencia-ceo-review',
+  'agencia-eng-review',
+  'agencia-design-review',
+  'agencia-release-manager',
 ];
 
 const IDE_TARGETS = [

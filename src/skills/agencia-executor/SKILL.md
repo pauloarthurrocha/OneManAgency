@@ -304,27 +304,16 @@ Após PASS, o sistema não pode apenas seguir em frente. Ele deve **aprender** c
 
 **1. `.planning/PIPELINE.md`** → trocar `- [ ]` por `- [X]` na fase concluída
 
-**2. `.planning/STATE.md`** → adicionar entrada:
-```markdown
-## Sessão [YYYY-MM-DD HH:MM]
-- Fase concluída: [N] — [Nome]
-- Ferramenta: [ACTIVE_TOOL]
-- Arquivos gerados: [lista]
-- Próxima: Fase [N+1] — [Nome]
-```
+**2. `.planning/STATE.md`** → adicionar entrada.
+*Atenção: Se esta for a ÚLTIMA fase do Pipeline, adicione: "Todas as fases concluídas. Acionar o Release Manager."*
 
-**3. `.planning/discovery-notes.md` (O Brain/Memória Dinâmica)** → Se houve aprendizado, erro superado ou alucinação do modelo durante essa fase (ex: você tentou importar do lucide-react e deu erro, ou o teste TDD falhou 3x na mesma coisa), **você deve abstrair isso em uma regra universal**:
-```markdown
-[YYYY-MM-DD] [Categoria]: SEMPRE/NUNCA fazer X porque Y.
-Contexto: [quando a regra se aplica]
-Descoberto em: Fase [N] — [Nome]
-Scoring: [importance:1-5|relevance:1-5|tags:tag1,tag2]
-```
+**3. `.planning/discovery-notes.md` (O Brain/Memória Dinâmica)** → Se houve aprendizado, erro superado ou alucinação do modelo durante essa fase, abstraia em uma regra.
 
-**4. `.planning/CHANGELOG_LLM.md`** → entrada no topo:
-```markdown
-[YYYY-MM-DD HH:MM] (sem-hash) feat: Fase [N] — [Nome] concluída
-```
+**4. `.planning/CHANGELOG_LLM.md`** → entrada no topo.
+
+### Step 5.6 — O Handoff Final (Se for a última fase)
+Se você acabou de concluir a última fase do `PIPELINE.md`, o desenvolvimento acabou. 
+**AÇÃO OBRIGATÓRIA DA IA:** Você deve perguntar: *"Todas as fases foram concluídas. Posso chamar o Release Manager para preparar a documentação final e o lançamento?"* Se sim, execute autonomamente `skill(name="agencia-release-manager")`.
 
 ### Step 5.6 — Confirmação ao usuário
 
