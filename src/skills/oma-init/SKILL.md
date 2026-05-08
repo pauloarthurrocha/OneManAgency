@@ -1,6 +1,6 @@
 ---
 name: oma-init
-description: O Engenheiro de Setup da OneManAgency v4.0. Inicializa um projeto de cliente da OneManAgency do zero. Detecta IDE ativa, SO, copia skills core de ~/.oma/, BAIXA skills externas atualizadas (Marketing Skills, UI/UX Pro Max, Anthropic, Antigravity Kit) via git clone, configura MCPs, cria estrutura Context Engineering e PIPELINE.md vazio. Neutro quanto ao tipo de projeto. Próximo passo após o init é sempre o `client-onboarding`. Funciona cross-IDE (Claude Code, OpenCode, Antigravity, Cursor, Codex, Roo Code). Adapta comandos ao sistema operacional detectado. Assume a persona de um Engenheiro de Infraestrutura Sênior garantindo fundações perfeitas.
+description: O Engenheiro de Setup da OneManAgency v4.0. Inicializa um projeto de cliente da OneManAgency do zero. Detecta IDE ativa, SO, copia skills core de ~/.oma/, instala as dependências a partir do cache global, configura MCPs, cria estrutura Context Engineering e PIPELINE.md vazio. Neutro quanto ao tipo de projeto. Próximo passo após o init é sempre o `client-onboarding`. Funciona cross-IDE (Claude Code, OpenCode, Antigravity, Cursor, Codex, Roo Code). Adapta comandos ao sistema operacional detectado. Assume a persona de um Engenheiro de Infraestrutura Sênior garantindo fundações perfeitas.
 metadata:
   version: 4.0.0
   changelog:
@@ -28,7 +28,7 @@ Sua persona é pragmática, obcecada por fundações sólidas e segurança. Voc�
 ## 🧠 Seu Mindset (Persona)
 1. **O Porteiro da Agência:** Sem o seu setup, os outros agentes vão alucinar. Você é rigoroso com o sucesso de cada pasta criada.
 2. **Guia Ativo (Hand-off):** Você não termina seu trabalho e fica calado. Ao terminar, você ativamente pega o cliente pela mão e diz: *"Minha parte técnica está pronta. Agora você PRECISA falar com o nosso Arquiteto Socrático para definir o escopo. Posso chamá-lo para você?"*
-3. **Tratamento de Erros Profissional:** Se o `git clone` falhar, você não entra em pânico. Você reporta: *"A rede falhou, mas ativei os protocolos offline. A fundação está segura."*
+3. **Tratamento de Erros Profissional:** Se a cópia de arquivos falhar, você reporta o problema, mas mantém a fundação segura. Você reporta: *"A rede falhou, mas ativei os protocolos offline. A fundação está segura."*
 
 ## O Que Este Init Faz (Automatico)
 
@@ -248,9 +248,10 @@ ls -la
 - **Tem arquivos:** Perguntar se quer fazer init parcial ou apenas configurar o que falta
 - **Já tem .planning/:** Pular para Step 11 (apenas verificar integridade)
 
-### Step 2: Instalar Skills (Global + Externas Atualizadas)
+### Step 2: Instalar Skills a partir do SSoT Global
 
-> **Regra de Ouro:** Este init faz DUAS coisas: (1) copia a base de `~/.oma/` (rápido, offline) e (2) **sempre** tenta baixar skills externas atualizadas via git clone. Assim, cada projeto novo recebe a versão mais recente das skills de mercado.
+> **Regra de Ouro:** Este init faz a cópia de todas as skills (Core + Externas) diretamente do diretório global `~/.oma/`. 
+> O download via `git clone` não acontece mais aqui, ele acontece apenas uma vez quando o usuário roda `oma install` no terminal. Isso torna o seu init **instantâneo e offline-first**.
 
 #### 2A: Verificar Instalação Global
 ```bash
@@ -258,155 +259,41 @@ OMA_GLOBAL="$HOME/.oma"
 
 if [ -d "$OMA_GLOBAL/skills" ]; then
   echo "✓ Instalação global encontrada em $OMA_GLOBAL"
-  USE_GLOBAL=true
 else
-  echo "⚠ Instalação global não encontrada."
-  echo "  Execute fora do IDE: oma install"
-  echo "  Ou use fallback online (mais lento)..."
-  USE_GLOBAL=false
+  echo "⚠️ Instalação global não encontrada."
+  echo "  PARE A EXECUÇÃO E AVISE O USUÁRIO:"
+  echo "  'Você precisa rodar o comando: oma install no terminal (fora da IDE) para baixar o ecossistema.'"
+  exit 1
 fi
 ```
 
-#### 2B: Copiar Skills da Agência (Prioridade 1 — Global)
+#### 2B: Copiar Skills e Agentes (Core e Externos)
 ```bash
-if [ "$USE_GLOBAL" = true ]; then
-  # Copiar skills core da agência
-  for SKILL in oma-init oma-executor client-onboarding pipeline-generator oma-verify-work skill-creator oma-ceo-review oma-eng-review oma-design-review oma-release-manager; do
-    if [ -d "$OMA_GLOBAL/skills/$SKILL" ]; then
-      cp -r "$OMA_GLOBAL/skills/$SKILL" .agents/skills/
-      echo "  ✓ $SKILL (global)"
-    fi
-  done
-  
-  # Copiar agentes especializados (referência, não obrigatório no projeto)
-  if [ -d "$OMA_GLOBAL/agents" ]; then
-    mkdir -p .agents/agents
-    cp -r "$OMA_GLOBAL/agents/"* .agents/agents/ 2>/dev/null
-    echo "  ✓ Agentes especializados (global)"
-  fi
-  
-  # Copiar presets (para uso no design-system-generator)
-  if [ -d "$OMA_GLOBAL/presets" ]; then
-    mkdir -p .agents/presets
-    cp -r "$OMA_GLOBAL/presets/"* .agents/presets/ 2>/dev/null
-    echo "  ✓ Presets estéticos (global)"
-  fi
-  
-  # Copiar templates
-  if [ -d "$OMA_GLOBAL/templates" ]; then
-    mkdir -p .agents/templates
-    cp -r "$OMA_GLOBAL/templates/"* .agents/templates/ 2>/dev/null
-    echo "  ✓ Templates de componentes (global)"
-  fi
+# Copiar todas as skills instaladas globalmente (inclui OMA, Marketing, Design, Anthropic)
+cp -r "$OMA_GLOBAL/skills/"* .agents/skills/ 2>/dev/null
+echo "✓ Todas as skills carregadas do cache global"
+
+# Copiar agentes especializados
+if [ -d "$OMA_GLOBAL/agents" ]; then
+  mkdir -p .agents/agents
+  cp -r "$OMA_GLOBAL/agents/"* .agents/agents/ 2>/dev/null
+  echo "✓ Agentes especializados carregados"
+fi
+
+# Copiar presets
+if [ -d "$OMA_GLOBAL/presets" ]; then
+  mkdir -p .agents/presets
+  cp -r "$OMA_GLOBAL/presets/"* .agents/presets/ 2>/dev/null
+  echo "✓ Presets estéticos carregados"
+fi
+
+# Copiar design library (Awesome Design MD)
+if [ -d "$OMA_GLOBAL/design-library" ]; then
+  mkdir -p .agents/design-library
+  cp -r "$OMA_GLOBAL/design-library/"* .agents/design-library/ 2>/dev/null
+  echo "✓ Biblioteca de Design Systems carregada"
 fi
 ```
-
-#### 2C: Fallback Online (SE Global Não Existir)
-
-Se `USE_GLOBAL=false`, instale as skills core diretamente do repo:
-
-```bash
-if [ "$USE_GLOBAL" = false ]; then
-  echo "Instalando skills core via fallback online..."
-  
-  rm -rf /tmp/oma-skills 2>/dev/null
-  git clone --depth 1 https://github.com/pauloarthurrocha/OneManAgency.git /tmp/oma-skills 2>/dev/null && \
-    cp -r /tmp/oma-skills/src/skills/* .agents/skills/ 2>/dev/null && \
-    cp -r /tmp/oma-skills/src/agents .agents/agents 2>/dev/null && \
-    cp -r /tmp/oma-skills/src/presets .agents/presets 2>/dev/null && \
-    cp -r /tmp/oma-skills/src/templates .agents/templates 2>/dev/null && \
-    echo "  ✓ Skills core instaladas do repo"
-fi
-```
-
-#### 2D: Baixar Skills Externas Atualizadas (SEMPRE executar)
-
-> 💡 Este passo **sempre** roda para garantir que o projeto tenha a versão mais recente das skills de mercado. Se offline, pula silenciosamente.
-
-```bash
-echo "📦 Baixando skills externas atualizadas..."
-
-# Marketing Skills — 38 skills de CRO, copy, SEO, ads, etc.
-rm -rf /tmp/marketingskills 2>/dev/null
-if git clone --depth 1 https://github.com/coreyhaines31/marketingskills.git /tmp/marketingskills 2>/dev/null; then
-  if [ -d "/tmp/marketingskills/skills" ]; then
-    for skill_dir in /tmp/marketingskills/skills/*; do
-      if [ -d "$skill_dir" ]; then
-        skill_name=$(basename "$skill_dir")
-        rm -rf ".agents/skills/$skill_name"
-        cp -r "$skill_dir" ".agents/skills/$skill_name"
-        echo "  ✓ $skill_name (marketing)"
-      fi
-    done
-  fi
-else
-  echo "  ⚠ Marketing Skills indisponível (offline?)"
-fi
-
-# UI/UX Pro Max — design system generator, 67 estilos, 161 paletas
-rm -rf /tmp/ui-ux-pro-max-skill 2>/dev/null
-if git clone --depth 1 https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git /tmp/ui-ux-pro-max-skill 2>/dev/null; then
-  if [ -d "/tmp/ui-ux-pro-max-skill/.claude/skills" ]; then
-    for skill_dir in /tmp/ui-ux-pro-max-skill/.claude/skills/*; do
-      if [ -d "$skill_dir" ]; then
-        skill_name=$(basename "$skill_dir")
-        rm -rf ".agents/skills/$skill_name"
-        cp -r "$skill_dir" ".agents/skills/$skill_name"
-        echo "  ✓ $skill_name (design)"
-      fi
-    done
-  fi
-else
-  echo "  ⚠ UI/UX Pro Max indisponível (offline?)"
-fi
-
-# Anthropic Skills — frontend-design, docx, pdf, pptx, xlsx
-rm -rf /tmp/anthropics-skills 2>/dev/null
-if git clone --depth 1 https://github.com/anthropics/skills.git /tmp/anthropics-skills 2>/dev/null; then
-  # Copiar apenas skills selecionadas (não todas — token bloat)
-  ANTHROPIC_SKILLS="frontend-design docx pdf pptx xlsx web-artifacts-builder brand-guidelines doc-coauthoring"
-  for skill_name in $ANTHROPIC_SKILLS; do
-    if [ -d "/tmp/anthropics-skills/skills/$skill_name" ]; then
-      rm -rf ".agents/skills/$skill_name"
-      cp -r "/tmp/anthropics-skills/skills/$skill_name" ".agents/skills/$skill_name"
-      echo "  ✓ $skill_name (anthropic)"
-    fi
-  done
-else
-  echo "  ⚠ Anthropic Skills indisponível (offline?)"
-fi
-
-# Antigravity Kit — agentes, workflows, shared (UI/UX Pro Max data), scripts
-rm -rf /tmp/antigravity-kit 2>/dev/null
-if git clone --depth 1 https://github.com/vudovn/antigravity-kit.git /tmp/antigravity-kit 2>/dev/null; then
-  if [ -d "/tmp/antigravity-kit/.agent" ]; then
-    mkdir -p .agents/antigravity-kit
-    cp -r /tmp/antigravity-kit/.agent/agents .agents/antigravity-kit/ 2>/dev/null
-    cp -r /tmp/antigravity-kit/.agent/workflows .agents/antigravity-kit/ 2>/dev/null
-    cp -r /tmp/antigravity-kit/.agent/.shared .agents/antigravity-kit/shared 2>/dev/null
-    cp -r /tmp/antigravity-kit/.agent/scripts .agents/antigravity-kit/ 2>/dev/null
-    cp /tmp/antigravity-kit/.agent/ARCHITECTURE.md .agents/antigravity-kit/ 2>/dev/null
-    cp /tmp/antigravity-kit/.agent/mcp_config.json .agents/antigravity-kit/ 2>/dev/null
-    echo "  ✓ Antigravity Kit (agents, workflows, shared, scripts)"
-  fi
-else
-  echo "  ⚠ Antigravity Kit indisponível (offline?)"
-fi
-
-# Awesome Design MD — 71+ templates de design systems (Vercel, Stripe, Notion, Linear, etc.)
-rm -rf /tmp/awesome-design-md 2>/dev/null
-if git clone --depth 1 https://github.com/VoltAgent/awesome-design-md.git /tmp/awesome-design-md 2>/dev/null; then
-  if [ -d "/tmp/awesome-design-md/design-systems" ]; then
-    mkdir -p ".agents/design-library"
-    cp -r /tmp/awesome-design-md/design-systems/* ".agents/design-library/"
-    echo "  ✓ Awesome Design MD ($(ls -d .agents/design-library/*/ 2>/dev/null | wc -l) templates)"
-  fi
-else
-  echo "  ⚠ Awesome Design MD indisponível (offline?)"
-fi
-```
-
-> ⚠️ **Importante:** Se algum git clone falhar (offline), o init continua usando o que está em `~/.oma/` ou já foi copiado. Nunca travar por falta de internet.
 
 ### Step 3: Criar Estrutura Cross-IDE
 
