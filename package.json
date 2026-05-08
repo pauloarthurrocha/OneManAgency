@@ -1,6 +1,6 @@
 {
   "name": "onemanagency",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Sistema de execução de projetos via IA. OneManAgency - funciona em qualquer IDE e adapta-se a qualquer projeto.",
   "main": "bin/oma.js",
   "bin": {
