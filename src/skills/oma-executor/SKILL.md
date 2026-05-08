@@ -282,7 +282,7 @@ Após concluir a tarefa, executar verificação automática:
 
 **Se a skill `oma-verify-work` está disponível:**
 ```
-skill(name="oma-verify-work")
+/oma-verify-work
 → Gera .planning/VERIFICATION_REPORT.md
 → Lê resultado: PASS | WARNING | FAIL
 ```
