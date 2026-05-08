@@ -76,17 +76,29 @@ Validação:
 2. Verificar se cada critério está atendido (busca por keywords, estrutura, etc.)
 3. Para cada critério: ✅ atendido | ⚠️ parcial | ❌ não atendido
 
-### Step 4: Validação Técnica (quando aplicável)
+### Step 4: Validação Técnica e Eval Harness (O Novo Padrão)
 
-Se a fase envolve código, rodar verificações técnicas:
+A validação agora é híbrida: **Determinística** (Scripts) + **Heurística Avançada** (LLM-as-a-Judge Eval Harness).
 
+#### 4A. QA Determinístico (Se envolver código funcional)
+Se a fase envolve código compilável, rodar:
 | Tipo de projeto | Comando | Se falhar |
 |---|---|---|
 | Next.js / React | `npm run build` | FAIL |
-| Python | `python -m py_compile src/*.py` ou `pytest -q` | FAIL |
-| HTML/CSS | Lighthouse móvel ≥ 85 | WARNING se < 85 |
+| Python | `pytest -q` (Testes TDD obrigatórios do Backend) | FAIL |
 | Docker | `docker build --no-cache .` | FAIL |
-| API Deprecation | Se usa APIs externas (Stripe, OpenAI), validar sintaxe via MCP `context7` | WARNING se usar sintaxe antiga/depreciada |
+| API Deprecation | Se usa APIs externas (ex: Stripe, OpenAI), validar a sintaxe contra documentação via MCP `context7` | WARNING se usar sintaxe antiga/depreciada |
+
+#### 4B. Eval Harness (LLM-as-a-Judge)
+**Este é o diferencial de classe mundial.** Se a fase for de *Planejamento* (PRD, Arquitetura), *Design* (UI-SPEC) ou *Copywriting*, scripts Python não servem. O código está "certo", mas pode estar "ruim". Você deve atuar como um Avaliador Cego (Harness).
+
+Se o output for texto/design/arquitetura, aplique um **Score de 0 a 10** nas seguintes dimensões (A matriz "Impeccable/Emil"):
+
+1. **Anti-AI Slop (0-10):** O design usa gradientes genéricos (roxo/azul)? Usa a fonte Inter para tudo? Tem ícones arredondados sem sentido? Se sim, score baixo.
+2. **Elegância & Motion (0-10):** As animações usam `Spring Physics` em vez de `Linear`? O espaçamento negativo é intencional? 
+3. **Escopo Focado (0-10):** O PRD focou no MVP (The Wedge) ou alucinou features que vão demorar 3 meses para codar?
+
+Se a média dessas 3 dimensões for menor que **8/10**, você emite um **FAIL** com a rubrica exata do que o Agente Especialista tem que consertar antes do humano ver o código. Se usa APIs externas (Stripe, OpenAI), validar sintaxe via MCP `context7` | WARNING se usar sintaxe antiga/depreciada |
 
 > ⚠️ **Nunca exponha secrets.** Se precisar de env vars, usar apenas `.env.example`.
 
