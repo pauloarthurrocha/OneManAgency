@@ -1,3 +1,9 @@
+# ──────────────────────────────────────────────────────────
+# OneManAgency — .gitignore
+# Filosofia: só ignorar o que NÃO ajuda ninguém que clona ou
+# instala o OMA. Tudo que serve para contribuidor ou usuário fica.
+# ──────────────────────────────────────────────────────────
+
 # Dependencies
 node_modules/
 .pnp
@@ -6,24 +12,21 @@ node_modules/
 # Testing
 coverage/
 
-# Next.js
+# Next.js / build output (não-build do OMA — build/ contém installer)
 .next/
 out/
-
-# Production
-# NOTE: build/ is intentionally removed from ignore — it contains distribution scripts (installer.js, postinstall.js), not build output.
 dist/
 
-# Misc
+# Misc / OS
 .DS_Store
 *.pem
 
-# Debug
+# Debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Local env files
+# Env vars (NUNCA commitar)
 .env.local
 .env.*.local
 
@@ -34,42 +37,38 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Graphify
+# Graphify cache
 .graphify/cache/
 
-# Planning / Development-only files
+# ──────────────────────────────────────────────────────────
+# Internal-only docs e work artifacts (não público)
+# ──────────────────────────────────────────────────────────
 .planning/HANDOFF.json
 .continue-here.md
 HANDOFF.md
 docs/internal/
-docs/ARCHITECTURE.md
 docs/ROO-CODE-SETUP.md
 docs/SKILL-REGISTRY.md
 docs/SUPER-PLANNING-AGENCY-EVOLUTION.md
 docs/VANILLA-KIMI-SETUP.md
 opencode-vanilla-config.json
 
-# IDE test artifacts (not part of distribution)
-.roo/
-
-# IMPORTANTE: NÃO ignorar .agents/, .claude/, .codex/, .gemini/
-# Essas pastas contêm as skills que precisam ser commitadas para
-# continuidade cross-IDE. Se ignorar, outra IDE/PC não acha as skills.
-
-# MCP config (pode conter secrets — usar .mcp.json.example se precisar compartilhar)
-.mcp.json
-
-# Generated locally by running 'oma init' inside the CLI repo
+# ──────────────────────────────────────────────────────────
+# Artefatos gerados localmente quando o usuário (ou o próprio dev)
+# roda `oma init` dentro de um projeto. Esses arquivos só existem
+# DENTRO de projetos cliente, não no repo do framework.
+# ──────────────────────────────────────────────────────────
 .agent/
 .agents/
 .claude/
 .gemini/
 .codex/
 .roo/
-AGENTS.md
-CLAUDE.md
-GEMINI.md
 .planning/
-.mcp.json
 .graphify/
+.mcp.json
 .npmrc
+
+# ATENÇÃO: NÃO ignorar AGENTS.md no repo do framework — ele é o
+# dev context para contribuidores. Em projetos cliente o oma-init
+# gera um AGENTS.md diferente, mas isso é problema do projeto cliente.

@@ -17,11 +17,11 @@ O OMA resolve as maiores dores do desenvolvimento assistido por IA:
 
 O sistema é dividido em um fluxo ponta-a-ponta (End-to-End):
 
-### A. Core Engine & CLI (TypeScript/Node)
+### A. Core Engine & CLI (Node.js)
 - Instalado globalmente via NPM (`npm install -g onemanagency`).
-- O instalador (`build/installer.js`) faz um **Deep Scan** nas pastas do usuário, detecta todas as 11 maiores IDEs de IA do mercado e injeta o framework nelas.
-- Ele baixa os repositórios externos gigantes **uma única vez** e os armazena no cofre global (`~/.oma/`).
-- O processo de inicialização (`/oma-init`) roda localmente em 0.5 segundos, sendo 100% **Offline-First** e imune a quebras de SO (Windows/Mac/Linux), pois usa ferramentas nativas de filesystem em vez de shell scripts.
+- O instalador (`build/installer.js`) faz um **Deep Scan** nas pastas do usuário, detecta até **13 IDEs de IA** (Claude Code, Cursor, OpenCode, Codex, Antigravity, Gemini CLI, Roo Code, Windsurf, Cline, Aider, Goose, Hermes, OpenClaw) e injeta o framework nelas.
+- Clona via git (depth=1) repositórios puros de markdown (awesome-design-md, marketing-skills, anthropic-skills) e instala de forma global ferramentas CLI de terceiros via NPM (`uipro-cli`, `@vudovn/ag-kit`).
+- O processo de inicialização (`/oma-init`) roda localmente em sub-segundos sendo **Offline-First** (para o cache clonado) e cross-OS (Windows/Mac/Linux).
 
 ### B. Context Engineering (Persistência em Disco)
 Em vez de depender da memória da janela de chat, a agência escreve seu estado no disco:
@@ -35,12 +35,15 @@ O código não é gerado a partir de um rascunho. Ele passa por 3 Skills de Revi
 2. **Eng Review:** Trava fluxos de dados e banco de dados gerando `ARCHITECTURE.md`.
 3. **Design Review:** Barra o "AI Slop" e gera o `UI-SPEC.md`.
 
-### D. Baterias Inclusas (Zero-Config MCPs)
-O `/oma-init` injeta um `.mcp.json` na raiz do projeto com ferramentas gratuitas que a IA pode usar a qualquer momento:
-- `Puppeteer` (Scraping gratuito de concorrentes).
-- `Context7` (Leitura de documentação atualizada de bibliotecas).
-- `Sequential Thinking` (Para forçar a IA a raciocinar passo a passo ao debugar).
-- `Memory` e `Fetch`.
+### D. Baterias Inclusas (Zero-Config MCPs — sem API keys)
+O `/oma-init` injeta um `.mcp.json` na raiz do projeto com a **stack canônica zero-API**:
+- **Context7** — Leitura de documentação atualizada de bibliotecas (anti-código-depreciado).
+- **Sequential Thinking** — Força a IA a raciocinar passo-a-passo em debug e arquitetura.
+- **Playwright** — Browser automation local: scraping de concorrentes, screenshots, páginas JS.
+- **Memory** — Knowledge graph persistente entre sessões (Anthropic memory tool).
+- **Fetch** — HTTP/JSON read-only para APIs simples.
+
+MCPs opcionais com API key (brave-search, firecrawl, github) ficam documentados como add-ons em `oma-init` Step 5.
 
 ---
 
@@ -61,13 +64,15 @@ Este framework unificou a filosofia dos maiores repositórios open-source do mun
 ---
 
 ## 🎒 4. Ecossistema Externo de Skills (Para o Cliente Final)
-Durante o `npm install -g`, o instalador do OMA puxa silenciosamente repositórios colossais de skills externas. Quando o usuário digita `/oma-init`, ele ganha todo este arsenal instantaneamente na pasta `.agents/skills/`:
+Durante o `oma install` (parte do `npm install -g`), o instalador clona repos curados no cofre global `~/.oma/external/` e instala pacotes NPM complementares. Quando o usuário roda `/oma-init`, o conteúdo é injetado no projeto (em `.agents/` e `.agent/`):
 
-1. **Marketing Skills** (by Corey Haines): 38 skills para SEO, Copywriting, Ads, Email Sequences, CRO.
-2. **UI/UX Pro Max** (by NextLevelBuilder): 67 estilos de design, 161 paletas de cores, permitindo a agência gerar sistemas de design inteiros no terminal.
-3. **Anthropic Skills** (by Anthropic): Ferramentas corporativas para ler PDFs, DOCX, XLSX e gerar apresentações (PPTX).
-4. **Awesome Design MD** (by VoltAgent): 71+ templates de Design Systems reversos (Estilo Vercel, Stripe, Linear, Notion) para a IA usar como âncora.
-5. **Antigravity Kit** (by vudovn): Agentes extras, workflows complexos e scripts de validação Python.
+1. **Awesome Design MD** ([voltagent/awesome-design-md](https://github.com/voltagent/awesome-design-md)): 73+ templates de Design Systems reversos (Vercel, Stripe, Linear, Notion, Apple, Cal, Resend, etc.) que servem de âncora visual para a fase de Design System — combatendo "AI Slop" (Clonado via Git).
+2. **Marketing Skills** ([coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills)): 38 skills para SEO, Copywriting, Ads, Email Sequences, CRO — usadas após o produto pronto, na fase de marketing (Clonado via Git).
+3. **Anthropic Skills** ([anthropics/skills](https://github.com/anthropics/skills)): Ferramentas oficiais (PDF, DOCX, XLSX, PPTX, frontend-design) (Clonado via Git).
+4. **UI/UX Pro Max** ([nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)): 67 estilos de design + 161 paletas de cores (Instalado e Injetado via `npx uipro-cli`).
+5. **Antigravity Kit** ([vudovn/antigravity-kit](https://github.com/vudovn/antigravity-kit)): Agents extras, workflows complexos, scripts de validação (Instalado e Injetado via `npx @vudovn/ag-kit`).
+
+> Falhas de download ou dependências de CLI (npm) são tratadas grácilmente. Skills core OMA continuam funcionando offline.
 
 ---
 

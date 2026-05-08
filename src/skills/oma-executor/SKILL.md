@@ -268,7 +268,9 @@ Executar a tarefa da fase, honrando:
 - **Isolamento de Contexto (O PIV Loop e o HANDOFF):** Você NÃO deve executar pesquisas/planejamento extensos e logo depois gerar código na mesma janela. O "Plan" gerou as instruções, o "Implement" age em contexto isolado. 
   1. Elabore o plano arquitetural.
   2. Escreva EXATAMENTE onde o próximo agente deve começar no arquivo `.planning/HANDOFF.md` (crie este arquivo).
-  3. PARE e diga ao usuário: *"Plano concluído e HANDOFF.md gerado. Para evitar alucinações (LiTM), peço que você digite `/clear` (ou abra um novo chat) e digite 'resume' para eu continuar a implementação limpa."*- **TDD Raiz (RED-GREEN-REFACTOR):** Para tarefas lógicas e de Backend, o TDD é **MANDATÓRIO**. Você não implementa código funcional sem antes escrever o teste que descreve o comportamento desejado. Escreva o teste -> Execute (deve falhar) -> Escreva o código mínimo para passar -> Execute novamente -> Refatore (DRY).
+  3. **Condicional Cross-IDE para Execução Limpa:**
+     - **Se você estiver rodando no Claude Code ou OpenCode (com suporte a sub-agentes/Task tool):** Em vez de parar, inicie imediatamente um sub-agente (via ferramenta `Task` ou `Agent`) passando o comando para ler o `HANDOFF.md` e executar a implementação em um ambiente isolado.
+     - **Se você estiver no Cursor, Windsurf, Roo Code ou não tiver suporte a sub-agentes:** PARE e diga ao usuário: *"Plano concluído e HANDOFF.md gerado. Para evitar alucinações (Lost in the Middle), peço que você limpe este chat (ex: `/clear` ou abra um novo chat) e digite 'resume' para eu continuar a implementação com a memória limpa."*- **TDD Raiz (RED-GREEN-REFACTOR):** Para tarefas lógicas e de Backend, o TDD é **MANDATÓRIO**. Você não implementa código funcional sem antes escrever o teste que descreve o comportamento desejado. Escreva o teste -> Execute (deve falhar) -> Escreva o código mínimo para passar -> Execute novamente -> Refatore (DRY).
 - Protocolos universais do `AGENTS.md` (read-first, micro-batches, silêncio operacional).
 - Regras específicas do `.agent/rules/PROJECT.md`.
 - Regra Shift-Left Deploy: se a fase é "setup de infra", ela deve vir **antes** de qualquer escrita de código substancial. Se o PIPELINE.md quebra essa regra, alertar o usuário antes de executar.
@@ -315,7 +317,7 @@ Após PASS, o sistema não pode apenas seguir em frente. Ele deve **aprender** c
 Se você acabou de concluir a última fase do `PIPELINE.md`, o desenvolvimento acabou. 
 **AÇÃO OBRIGATÓRIA DA IA:** Você deve perguntar: *"Todas as fases foram concluídas. Posso chamar o Release Manager para preparar a documentação final e o lançamento?"* Se sim, execute autonomamente `skill(name="oma-release-manager")`.
 
-### Step 5.6 — Confirmação ao usuário
+### Step 5.7 — Confirmação ao usuário
 
 ```
 ✅ Fase [N] concluída com sucesso
@@ -343,232 +345,14 @@ Deseja prosseguir para a próxima fase? [Y/n]
 
 ---
 
-## 7. Exemplos (Few-Shot)
+## 7. Referências e Exemplos
 
-### Exemplo 1 — Novo projeto (sem PIPELINE.md)
-
-```
-Usuário: /oma-executor
-
-Executor:
-🔍 Contexto verificado.
-❌ .planning/PIPELINE.md não existe.
-
-Este é um projeto novo. Vou delegar para o arquiteto socrático.
-
-→ skill(name="client-onboarding")
-
-[client-onboarding conduz entrevista → gera BRIEFING.md + PIPELINE.md + PROJECT.md]
-
-Executor (volta a assumir):
-✅ PIPELINE.md criado.
-🎯 Próxima fase: Fase 1 — Setup Cloudflare Pages
-Deseja prosseguir? [Y/n]
-```
-
-### Exemplo 2 — Projeto em andamento (retomada)
-
-```
-Usuário: /oma-executor
-
-Executor:
-📋 RESUMO DO PROJETO
-
-Projeto: acai-delivery (tipo: low_ticket, hosting: cloudflare_pages)
-Fases concluídas: 2/5
-  ✅ 1. Setup Cloudflare (há 1 dia)
-  ✅ 2. Copywriting e Oferta (há 3 horas)
-  ⏳ 3. Design UI/UX ← próxima
-  ⏸️ 4. HTML/CSS Responsivo
-  ⏸️ 5. Kiwify + Deploy
-
-Último arquivo modificado: COPY_DECK.md (há 3h, 11:15)
-
-Deseja prosseguir para Fase 3? [Y/n]
-
-[Usuário: Y]
-→ Carrega skills: psychology-color-picker, ui-ux-pro-max, frontend-design
-→ Executa fase
-→ Quality Gate: PASS
-→ Atualiza STATE.md, discovery-notes.md, CHANGELOG_LLM.md
-```
-
-### Exemplo 3 — Override e detecção de arquivo incompleto
-
-```
-Usuário: /oma-executor fase 6
-
-Executor:
-⚡ OVERRIDE DETECTADO → Fase 6 (Scaffold HTML/CSS)
-
-Inputs esperados:
-  ✅ BRIEFING.md (completo, 85 linhas)
-  ✅ COPY_DECK.md (completo, 142 linhas)
-  ⚠️ DESIGN_SYSTEM.md (existe mas parece incompleto)
-     → Linhas: 8 | Contém [PLACEHOLDER]: sim (3x)
-     → Última modificação idêntica à criação
-
-Opções:
-  [1] Refazer Fase 3 (Design System) antes de prosseguir
-  [2] Prosseguir mesmo assim (risco: LP sem design coerente)
-  [3] Editar DESIGN_SYSTEM.md manualmente agora
-```
-
----
-
-## 8. Agente Especializado por Fase (v3.2)
-
-O executor pode invocar **agentes especializados** para executar fases específicas, garantindo maior qualidade e menos alucinações.
-
-### Como funciona
-
-Cada fase no PIPELINE.md pode ter metadata `Agent:` indicando qual especialista deve executá-la:
+Para ver exemplos de execução (Few-Shot) ou entender o Protocolo de Worktrees/Orchestration e fluxo Cross-IDE, **SEMPRE** consulte o arquivo `references/examples.md`.
 
 ```markdown
-- [ ] Fase 4: UI Spec
-      Agent: frontend-specialist
-      Skills: gsd-ui-phase, frontend-design, tailwind-patterns
-      Output: .planning/UI-SPEC.md
+# Instrução interna: 
+# Leia src/skills/oma-executor/references/examples.md se precisar de exemplos práticos.
 ```
-
-### Mapeamento de Fase → Agente
-
-| Tipo de Fase | Agente Sugerido | Domínio |
-|---|---|---|
-| Design System, UI Spec, Scaffold (frontend) | `frontend-specialist` | UI/UX, React, Tailwind |
-| API, Backend, Integrações | `backend-specialist` | Node.js, Python, APIs |
-| Database, Schema, Migrations | `database-architect` | PostgreSQL, Prisma, RLS |
-| Auth, Segurança | `security-auditor` | OWASP, JWT, middleware |
-| Testes, QA | `test-engineer` | Unit, E2E, coverage |
-| Deploy, CI/CD, Infra | `devops-engineer` | Docker, GitHub Actions |
-| SEO, Analytics | `seo-specialist` | Meta tags, schema, Core Web Vitals |
-| Copywriting | `copywriter-specialist` | Headlines, CTAs, copy deck |
-| Design Visual | `design-specialist` | Tokens, componentes, layout |
-| Multi-domínio complexo | `orchestrator` | Coordenação paralela |
-
-### Carregamento do Agente
-
-1. Verificar se `.agents/agents/[agente].md` existe
-2. Se sim, carregar como contexto adicional antes de executar a fase
-3. Se não, executar com skills normais (fallback)
-
-### File Type Ownership
-
-Quando um agente especializado está ativo, ele tem "prioridade de edição" sobre seus tipos de arquivo:
-
-```
-frontend-specialist  → *.tsx, *.jsx, *.css, *.scss, tailwind.config.*
-backend-specialist   → *.ts (API), *.js (API), *.py, routes.*
-database-architect   → *.prisma, schema.*, migrations/*
-security-auditor     → middleware.*, auth.*, security.*
-test-engineer        → *.test.*, *.spec.*, __tests__/*
-devops-engineer      → *.yml, *.yaml, Dockerfile, docker-compose.*
-seo-specialist       → robots.txt, sitemap.xml, manifest.json
-copywriter-specialist → COPY_DECK.md, copy-*.md
-design-specialist    → DESIGN_SYSTEM.md, design-*.md
-```
-
-**Regra**: O agente ativo pode editar QUALQUER arquivo, mas deve respeitar a especialização de outros agentes quando houver conflito.
-
----
-
-## 9. Orquestração Multi-Agent (v3.2)
-
-Quando uma fase toca múltiplos domínios (ex: full-stack), o executor pode orquestrar agentes em paralelo.
-
-### Ativação
-
-Metadata `Orchestration: true` no PIPELINE.md:
-
-```markdown
-- [ ] Fase 5: Implementação Full-Stack
-      Orchestration: true
-      Agents: frontend-specialist, backend-specialist, database-architect
-      Skills: landing-page-scaffold, nextjs-react-expert, python-patterns
-      Output: src/
-```
-
-### Protocolo de Orquestração
-
-#### Step 1 — Decomposição
-
-O executor (como orchestrator) divide a fase em subtarefas:
-
-```markdown
-## Subtarefa A — Frontend
-- Agente: frontend-specialist
-- Input: UI-SPEC.md, DESIGN_SYSTEM.md
-- Output: app/, components/
-- Dependências: nenhuma
-
-## Subtarefa B — Backend
-- Agente: backend-specialist
-- Input: PRD-BACKEND.md
-- Output: app/api/, services/
-- Dependências: nenhuma
-
-## Subtarefa C — Database
-- Agente: database-architect
-- Input: PRD-BACKEND.md
-- Output: prisma/schema.prisma
-- Dependências: nenhuma
-```
-
-#### Step 2 — Execução em Waves e Git Worktrees (Execução Paralela Segura)
-
-Inspirado na arquitetura Superpowers, quando lidamos com grandes refatorações ou multi-agentes simultâneos, evite poluir a branch principal. O executor deve isolar a execução:
-- Se a complexidade for média/alta, o executor spawnará uma nova **Git Worktree** (uma branch isolada em uma pasta separada) para o agente trabalhar.
-- Cada subagente trabalha no seu Worktree, previnindo conflitos de arquivo.
-
-```
-Wave 1 (paralelo):
-  → frontend-specialist (Worktree A): Scaffold + Components
-  → backend-specialist (Worktree B): API routes + Services
-  → database-architect (Branch Principal): Schema + Migrations
-
-Wave 2 (paralelo, depende da Wave 1):
-  → frontend-specialist: Integração com API
-  → backend-specialist: Webhooks + Auth
-  → test-engineer: Tests de integração
-
-Wave 3 (sequencial):
-  → security-auditor: Security review
-  → devops-engineer: Deploy config
-```
-
-#### Step 3 — Sincronização
-
-Após cada wave, verificar:
-- Todos os outputs foram gerados?
-- Não há conflitos entre arquivos?
-- Interfaces (API ↔ Frontend) estão alinhadas?
-
-Arquivo de sincronização: `.planning/ORCHESTRATION.md`
-
-#### Step 4 — Consolidação
-
-Combinar todos os outputs e executar Quality Gate final.
-
-### Fallback
-
-Se `Orchestration: true` mas não há múltiplos agentes listados, executar sequencialmente com skills indicadas.
-
----
-
-## 10. Integração por IDE (enxuto)
-
-Cross-IDE funciona porque `.planning/` e `.agents/skills/` são **commitados no repo**. Qualquer IDE que abrir o projeto lê esses dois caminhos.
-
-| IDE | Lê skills de | Lê contexto de |
-|---|---|---|
-| Claude Code | `.claude/skills/` → `.agents/skills/` → `~/.claude/skills/` | `CLAUDE.md` + `.planning/` |
-| OpenCode | `.agents/skills/` → `~/.opencode/skills/` | `AGENTS.md` + `.planning/` |
-| Antigravity | `.gemini/antigravity/skills/` → `.agents/skills/` | `AGENTS.md` + `.planning/` |
-| Codex | `.codex/skills/` → `.agents/skills/` → `~/.codex/skills/` | `AGENTS.md` + `.planning/` |
-| Cursor | `.agents/skills/` → `~/.cursor/skills/` | `AGENTS.md` + `.cursorrules` + `.planning/` |
-| Roo Code | `.roo/skills/` → `.agents/skills/` → `~/.roo/skills/` | `AGENTS.md` + `.planning/` |
-
-Para a continuidade funcionar, o `.gitignore` **NÃO PODE** ignorar `.agents/`, `.claude/`, `.codex/`, `.gemini/`, `.roo/`.
 
 ---
 

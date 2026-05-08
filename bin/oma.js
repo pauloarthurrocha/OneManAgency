@@ -26,6 +26,7 @@ const {
   GLOBAL_DIR,
   CORE_SKILLS,
   IDE_TARGETS,
+  EXTERNAL_CLIS,
   installAll,
   resolveTargets,
 } = require('../build/installer');
@@ -36,7 +37,6 @@ const PACKAGE_DIR = path.resolve(__dirname, '..');
 
 const SKILLS_DIR  = path.join(GLOBAL_DIR, 'skills');
 const AGENTS_DIR  = path.join(GLOBAL_DIR, 'agents');
-const SCRIPTS_DIR = path.join(GLOBAL_DIR, 'scripts');
 
 const colors = {
   reset: '\x1b[0m', green: '\x1b[32m', yellow: '\x1b[33m',
@@ -53,6 +53,7 @@ function parseFlags(argv) {
   const flags = {};
   for (const a of argv) {
     if (a === '--dry-run') flags.dryRun = true;
+    else if (a === '--no-external') flags.skipExternal = true;
     else if (a.startsWith('--only='))    flags.only    = a.slice('--only='.length).split(',').map(s => s.trim()).filter(Boolean);
     else if (a.startsWith('--exclude=')) flags.exclude = a.slice('--exclude='.length).split(',').map(s => s.trim()).filter(Boolean);
   }
@@ -61,18 +62,19 @@ function parseFlags(argv) {
 
 // ─── install-global ────────────────────────────────────────────────
 function cmdInstallGlobal(argv) {
-  const { only, exclude, dryRun } = parseFlags(argv);
+  const { only, exclude, dryRun, skipExternal } = parseFlags(argv);
 
   log(`\n🚀 ${dryRun ? '[DRY-RUN] ' : ''}Instalando OneManAgency v${VERSION}...`, 'bold');
 
   if (only) info(`Filtro --only: ${only.join(', ')}`);
   if (exclude) info(`Filtro --exclude: ${exclude.join(', ')}`);
+  if (skipExternal) info('Pulando download de repos externos (--no-external)');
 
   // Backup se ja existe instalacao
   if (!dryRun && fs.existsSync(path.join(GLOBAL_DIR, 'version'))) {
     info('Instalacao existente detectada. Fazendo backup...');
     const ts = new Date().toISOString().replace(/[:.]/g, '-');
-    for (const d of [SKILLS_DIR, AGENTS_DIR, PRESETS_DIR, SCRIPTS_DIR]) {
+    for (const d of [SKILLS_DIR, AGENTS_DIR, SCRIPTS_DIR]) {
       if (fs.existsSync(d)) {
         const backupPath = `${d}.backup-${ts}`;
         // copia simples (evita mv cross-device)
@@ -82,13 +84,23 @@ function cmdInstallGlobal(argv) {
     }
   }
 
-  const result = installAll({ packageDir: PACKAGE_DIR, only, exclude, dryRun });
+  const result = installAll({ packageDir: PACKAGE_DIR, only, exclude, dryRun, skipExternal });
 
   log(`\n${dryRun ? 'Nada foi alterado (dry-run).' : `OneManAgency v${result.version} instalada.`}`, 'bold');
 
   if (!dryRun) {
     info(`Diretorio global: ${GLOBAL_DIR}`);
     info('Nenhum arquivo do seu sistema foi alterado fora de ~/.oma e ~/.{ide}/skills/');
+    if (result.external) {
+      const ext = result.external;
+      const total = ext.cloned.length + ext.updated.length;
+      if (total > 0) {
+        success(`Repos externos: ${ext.cloned.length} clonados, ${ext.updated.length} atualizados`);
+      }
+      if (ext.failed.length > 0) {
+        warn(`Repos externos com falha: ${ext.failed.map(f => f.name).join(', ')} (rode com internet ou use --no-external)`);
+      }
+    }
   }
 }
 
@@ -158,9 +170,38 @@ function cmdDoctor() {
     success(`SSoT global: ${GLOBAL_DIR}`);
     const skills  = fs.existsSync(SKILLS_DIR)  ? fs.readdirSync(SKILLS_DIR)  : [];
     const agents  = fs.existsSync(AGENTS_DIR)  ? fs.readdirSync(AGENTS_DIR)  : [];
-        success(`Skills:  ${skills.length}`);
+    success(`Skills:  ${skills.length}`);
     success(`Agentes: ${agents.length}`);
+
+    // External repos
+    const externalDir = path.join(GLOBAL_DIR, 'external');
+    if (fs.existsSync(externalDir)) {
+      const externals = fs.readdirSync(externalDir).filter(d =>
+        fs.statSync(path.join(externalDir, d)).isDirectory()
+      );
+      if (externals.length > 0) {
+        success(`Repos externos: ${externals.length} (${externals.join(', ')})`);
       } else {
+        warn('Repos externos: pasta existe mas vazia');
+      }
+    } else {
+      warn('Repos externos: nao baixados (rode `oma install` com internet)');
+    }
+
+    // External CLIs
+    if (EXTERNAL_CLIS && EXTERNAL_CLIS.length > 0) {
+      log('\nFerramentas de Terceiros (Global NPM):', 'bold');
+      for (const cli of EXTERNAL_CLIS) {
+        try {
+          execSync(`npm list -g ${cli.package} --depth=0`, { stdio: 'ignore' });
+          success(`${cli.name.padEnd(16)} instalado (${cli.package})`);
+        } catch {
+          warn(`${cli.name.padEnd(16)} NAO INSTALADO (${cli.package})`);
+          issues++;
+        }
+      }
+    }
+  } else {
     warn('SSoT global: NAO ENCONTRADA');
     info('Execute: oma install');
     issues++;
@@ -200,9 +241,10 @@ function cmdHelp() {
   log('  NAO cria projetos. Projetos sao criados pela skill oma-init no IDE.\n');
 
   log('COMANDOS:', 'bold');
-  log('  install [flags]          Popula ~/.oma + propaga para IDEs detectadas');
+  log('  install [flags]          Popula ~/.oma + clona repos externos + propaga para IDEs detectadas');
   log('    --only=k1,k2           so estas IDEs (claude,cursor,codex,opencode,antigravity,gemini-cli)');
   log('    --exclude=k1,k2        pular estas IDEs');
+  log('    --no-external          pular clone de repos externos (offline-only)');
   log('    --dry-run              mostrar sem alterar');
   log('  init [dir]               Mostra como inicializar um projeto novo');
   log('  update                   Re-instala com backup automatico');

@@ -17,8 +17,8 @@ Sua função é injetar regras de Engenharia de Software pesada (TDD, PIV Loop, 
 - O usuário roda `npm install -g onemanagency`.
 - O NPM roda o `build/postinstall.js`.
 - O `build/installer.js` vasculha o sistema operacional do usuário procurando pastas `.claude`, `.cursor`, `.windsurf`, `.hermes`, etc.
-- **SSoT (Single Source of Truth):** Ele cria a pasta `~/.oma/` no diretório global do usuário e baixa todas as skills externas (Marketing, UI/UX, Anthropic) **apenas uma vez** nesta pasta.
-- Em seguida, ele propaga *symlinks/cópias* para as pastas das IDEs detectadas.
+- **SSoT (Single Source of Truth):** Ele cria a pasta `~/.oma/` no diretório global do usuário e baixa skills externas offline (Marketing, Anthropic). Algumas ferramentas avançadas como o `ui-ux-pro-max` e `antigravity-kit` são instaladas via NPM globalmente.
+- Em seguida, ele propaga *symlinks/cópias* e inicializa CLIs específicos (ex: `npx uipro-cli init`) para as pastas das IDEs detectadas.
 
 ### 2. A Lógica de Inicialização de Projetos (`oma-init`)
 - Quando o usuário digita `/oma-init` em uma pasta vazia, o OMA copia a base do `~/.oma/` para o projeto local.
@@ -35,12 +35,31 @@ Se você for criar ou alterar lógicas de negócio no OMA, lembre-se deste fluxo
 6. `oma-verify-work` e `oma-release-manager`: O QA e o lançador.
 
 ### 4. Agent Definition Files (Em `src/agents/`)
-Não usamos "Roleplay Raso" (ex: "Aja como um dev sênior"). Usamos arquivos estritos baseados na filosofia do *agency-agents* e *Superpowers*.
+Não usamos "Roleplay Raso" (ex: "Aja como um dev sênior"). Usamos arquivos estritos baseados na filosofia do *agency-agents* e *Superpowers*. **15 personas em 4 categorias:**
+
+**Implementação (4):** `frontend-specialist`, `backend-specialist`, `database-architect`, `devops-engineer`
+**Design & Conteúdo (2):** `design-specialist`, `copywriter-specialist`
+**Qualidade (5):** `code-reviewer`, `accessibility-auditor`, `performance-engineer`, `reality-checker`, `test-engineer`
+**Especialistas (4):** `security-auditor`, `seo-specialist`, `mcp-builder`, `orchestrator`
+
+Regras de edição:
 - Se mexer no `backend-specialist.md`: O **TDD (Red-Green-Refactor) é inegociável**.
 - Se mexer no `frontend-specialist.md` ou `design-specialist.md`: Use a filosofia do **Emil Kowalski** (Spring animations) e **Huashu** (High-fidelity HTML native), banindo gradientes roxos genéricos ("AI Slop").
+- Se mexer no `code-reviewer.md`/`accessibility-auditor.md`/`performance-engineer.md`/`reality-checker.md`/`mcp-builder.md`: importados de [agency-agents](https://github.com/msitarzewski/agency-agents) e adaptados ao padrão OMA — manter conciso (<150 linhas) e citar `source:` no frontmatter.
+
+### 5. Stack MCP Canônica (Zero-API)
+O `.mcp.json` injetado no projeto cliente tem **5 MCPs sem chave**:
+- `context7` (`@upstash/context7-mcp`) — docs de libs
+- `sequential-thinking` (`@modelcontextprotocol/server-sequential-thinking`) — raciocínio passo-a-passo
+- `playwright` (`@executeautomation/playwright-mcp-server`) — browser automation
+- `memory` (`@modelcontextprotocol/server-memory`) — knowledge graph persistente
+- `fetch` (`@modelcontextprotocol/server-fetch`) — HTTP read-only
+
+**Regra:** Se mexer em `src/skills/oma-init/SKILL.md` Step 5, mantenha essa stack canônica. MCPs com chave ficam em seção opcional documentada.
 
 ## ⚠️ Regras Contribuição (Se você for alterar código aqui)
-1. **Nunca use Hardcoded `git clone` em skills.** Os downloads ocorrem apenas no `build/installer.js`. As skills em runtime (`oma-init`) devem sempre copiar offline de `~/.oma/` para serem instantâneas.
-2. **Bash/Windows:** Ao criar comandos CLI, garanta que eles funcionem em Linux/Mac (Bash) e Windows (PowerShell) detectando o `$env:OS`.
-3. **O Nome do Projeto:** Sempre use "OneManAgency" ou "OMA Framework". Nunca use o nome antigo "Agência AI Adaptável".
-4. Se você travar e tentar iterar num bug da própria CLI do OMA, lembre-se de rodar o MCP `sequential-thinking`.
+1. **Instalação Externa:** Repos em `EXTERNAL_REPOS` no `installer.js` usam `git clone` para cópia estática. Ferramentas como `uipro-cli` e `ag-kit` usam instalação global NPM direta e `npx init` durante o `oma-init`. Mudou repo? Edite as constantes correspondentes no installer.
+2. **Bash/Windows:** Ao criar comandos CLI, garanta que funcionem em Linux/Mac (Bash) e Windows (PowerShell). Quando possível, prefira `path.join`/`fs` em Node.js a shell scripts.
+3. **O Nome do Projeto:** Sempre "OneManAgency" ou "OMA Framework". Nunca o nome antigo "Agência AI Adaptável".
+4. Em bug da própria CLI do OMA, use o MCP `sequential-thinking` para raciocinar antes de chutar fix.
+5. **Skills longas (>500 linhas)** violam o padrão skill-creator. Se precisar adicionar conteúdo grande (playbooks, exemplos), splite em `src/skills/<skill>/references/<topic>.md` e referencie do SKILL.md principal.

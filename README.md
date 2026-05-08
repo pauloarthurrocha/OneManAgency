@@ -30,7 +30,7 @@ A complexidade inteira está no sistema, não no seu fluxo de trabalho. Você co
 3. **Tríade de Revisão:** Antes de codar, o seu briefing não vira código imediatamente. Ele é barrado por 3 "agentes" (CEO, Tech Lead, Design Lead) que cortam features inúteis, cravam o banco de dados e proíbem o "AI Slop".
 4. **TDD é Lei:** O agente de Backend é proibido de escrever código de produção sem antes escrever um teste que falhe. Sério.
 5. **Batteries Included (MCPs Embutidos):** Ferramentas de IA são burras sem ferramentas externas. O `/oma-init` injeta na raiz do seu projeto um arquivo `.mcp.json` hiper-otimizado. Sem você configurar NENHUMA chave de API, a sua IA ganha o poder de **Puppeteer** (para navegar e raspar sites de graça), **Context7** (para ler docs oficiais e não usar código depreciado), **Sequential Thinking** (força a IA a raciocinar antes de gerar código bugado) e **Memory**.
-6. **Offline-First & Cross-OS:** A instalação das bibliotecas globais acontece uma única vez via NPM. Depois disso, rodar o `/oma-init` num projeto novo leva 0.5 segundos, mesmo sem internet. E como os agentes usam ferramentas nativas do FileSystem em vez de *Shell Scripts*, a agência roda perfeitamente em Mac, Linux e Windows (PowerShell) sem quebrar.
+6. **Híbrido e Otimizado (Offline-First & Cross-OS):** A instalação do framework acontece uma única vez via NPM. Repositórios base de skills são clonados silenciosamente, e CLIs avançados (como de UI/UX) são instalados no sistema global. Depois disso, rodar o `/oma-init` num projeto novo leva 0.5 segundos e propaga a inteligência para a sua IDE instantaneamente. E como os agentes usam ferramentas nativas do FileSystem em vez de *Shell Scripts*, a agência roda perfeitamente em Mac, Linux e Windows (PowerShell).
 
 
 ---
@@ -75,12 +75,44 @@ A IA planeja a tarefa, escreve no disco e pede para você limpar a tela. Você l
 
 ## 🧠 Nós usamos Personas Reais, não "Roleplay Raso"
 
-Dizer *"aja como um sênior"* no começo de um prompt não funciona. O OMA usa `Agent Definition Files` estritos em `src/agents/`. São arquivos que dizem exatamente o que o agente odeia e como ele opera:
+Dizer *"aja como um sênior"* no começo de um prompt não funciona. O OMA usa `Agent Definition Files` estritos em `src/agents/`. São arquivos que dizem exatamente o que o agente odeia e como ele opera. **15 personas** disparadas pelo PIPELINE.md via metadata `Agent: <nome>`:
 
-- **Design Specialist:** Baseado na filosofia do Emil Kowalski. Ele sabe que "bom gosto se treina". Ele usa *spring animations* em vez de transições lineares duras.
-- **Frontend Specialist:** Acessibilidade nativa. Skeletons e Error states são obrigatórios. A âncora de design não pode ser quebrada.
-- **Backend Specialist:** Segue a "TDD Iron Law". Se tentar fazer gambiarra, o arquivo de persona barra.
-- **Lead Orchestrator:** Em refatorações gigantes, ele abre repositórios paralelos (Git Worktrees) e bota os agentes pra codar lá sem quebrar a sua branch principal.
+**Implementação (4):**
+- **Frontend Specialist** — Acessibilidade nativa, skeletons/error states obrigatórios, âncora de design intransigente.
+- **Backend Specialist** — Segue a "TDD Iron Law". Se tentar gambiarra, a persona barra.
+- **Database Architect** — Schema, índices, RLS policies (Supabase), migrations idempotentes.
+- **DevOps Engineer** — CI/CD, Docker, observability, deploy seguro.
+
+**Design & Conteúdo (2):**
+- **Design Specialist** — Filosofia Emil Kowalski. Spring animations, espaço negativo, anti-AI-slop.
+- **Copywriter Specialist** — Headlines, CTAs, tom de voz. Marketing-psychology-aware.
+
+**Qualidade (5):**
+- **Code Reviewer** — Audita correctness, segurança, manutenibilidade, performance. Prioriza blocker/sugestão/nit.
+- **Accessibility Auditor** — WCAG 2.2 AA. Screen reader-first. Lighthouse 100/100 não é prova.
+- **Performance Engineer** — Mede com p95/p99 antes de otimizar. Core Web Vitals, k6, profiling.
+- **Reality Checker** — Default NEEDS WORK. Exige evidência visual antes de "production ready".
+- **Test Engineer** — Unit, integration, E2E. Coverage como sinal, não como meta.
+
+**Especialistas (4):**
+- **Security Auditor** — OWASP, JWT, middleware, secrets hygiene.
+- **SEO Specialist** — Meta tags, schema, Core Web Vitals, AI citation (GEO/AEO).
+- **MCP Builder** — Constrói servidores Model Context Protocol customizados.
+- **Lead Orchestrator** — Em refatorações multi-domínio, abre Git Worktrees e coordena waves paralelas.
+
+---
+
+## 🔌 Bring Your Own Agents
+
+O OMA dispara agentes via metadata `Agent: <nome>` no `PIPELINE.md`. Qualquer arquivo `.md` com frontmatter `name:` em `.agents/agents/` é elegível. Você não está limitado às 15 personas core — recomendamos colar essas bibliotecas para ampliar:
+
+| Biblioteca | Stars | Quando ajuda | Como integrar |
+|---|---|---|---|
+| [agency-agents](https://github.com/msitarzewski/agency-agents) (msitarzewski) | 73-94k | 144 agentes em 12 divisões: Marketing (29), Sales (9), Finance (5), Game Dev (20), Spatial Computing (6) | Copie o `.md` desejado para `.agents/agents/` e referencie no PIPELINE |
+| [GStack](https://github.com/garrytan/gstack) (Garry Tan, YC) | — | 23 personas com foco em product validation e office-hours framework | Copie o agent para `.agents/agents/` |
+| [Superpowers](https://github.com/obra/superpowers) (obra) | — | 15 skills compostas (TDD, brainstorming, systematic-debugging) | Use como **skill** em `.agents/skills/`, não como agent |
+
+**Convenção de nomes:** OMA usa kebab-case curto (ex: `code-reviewer.md`). Agency-agents usa `<division>-<name>.md`. Renomeie ao copiar ou referencie pelo nome exato no PIPELINE.
 
 ---
 
