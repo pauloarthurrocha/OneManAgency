@@ -5,6 +5,7 @@ metadata:
   version: 4.0.0
   changelog:
     - v4.0: Adoção de Persona (Tech Lead Ágil / Scrum Master). Adição da etapa de Validação Estratégica e Anti-Alucinação. Atua como Arquiteto de Soluções Anti-Escopo para evitar pipelines tecnicamente impossíveis.
+    - v1.2: Playbooks F (Script de Dados), G (Mobile React Native/Expo), H (Chatbot WhatsApp), I (Híbrido/Monorepo) adicionados. Playbook A corrigido com Agent: e Validation: em todas as fases. Todas as skills referenciadas validadas contra tabela de fallback do executor.
     - v1.1: Adição da etapa de Validação Estratégica e Anti-Alucinação. Atua como Arquiteto de Soluções Anti-Escopo para evitar pipelines tecnicamente impossíveis.
     - v1.0: Criação com 9 playbooks (LP estática, LP Next.js, SaaS, Python automation, low-ticket, script, mobile, chatbot, híbrido) + regras de composição para casos especiais.
 ---

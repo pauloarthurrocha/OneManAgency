@@ -4,6 +4,7 @@ description: Orquestrador dinâmico da OneManAgency v4.0. O Diretor de Operaçõ
 metadata:
   version: 4.0.0
   changelog:
+    - "v4.1: Step 5.1b — Carregar Agent: obrigatório. O campo Agent: no PIPELINE.md agora carrega mecanicamente o arquivo de definição do agente (src/agents/[agent].md) e aplica suas Strict Rules durante a execução. Se ausente, heurística por tema da fase."
     - "v4.0: Adoção de Persona (Diretor de Operações/COO). Adicionada verificação estrita de pular etapas vitais: se o usuário tentar rodar código sem passar pela Tríade de Revisão (PRD, Architecture, Design), o COO alerta e bloqueia (salvo override explícito). Implementação estrita do PIV Loop, TDD Raiz obrigatório para backend, Worktrees isoladas para waves de código e System Evolution formalizado via discovery-notes."
     - v3.4: Adicionado "R1.5 - Consultoria Proativa (Risk Assessment)" no gate humano e uso mandatório de MCPs para validação técnica anti-alucinação no Step 5.3.
     - v3.3: Adiciona práticas de Context Engineering (Memory Compaction, 2-Action Rule, Error Persistence) inspiradas no padrão Manus.
@@ -253,6 +254,44 @@ Se a metadata `Skills:` estiver ausente, usar a tabela abaixo de **tema → skil
 | `qa`, `review`, `audit`, `test` | `gsd-ui-review`, `gsd-code-review`, `testing-patterns`, `oma-verify-work` | - |
 | `seo`, `schema`, `meta` | `seo-audit`, `schema-markup`, `ai-seo` | - |
 | `checkout`, `kiwify`, `stripe`, `billing` | `pricing-strategy`, `churn-prevention` | - |
+| `tdd`, `test-driven`, `red-green` | `tdd-workflow` | deep |
+| `database`, `schema`, `migration`, `db` | `database-design`, `database-architect` | deep |
+| `clean`, `refactor`, `code-quality` | `clean-code` | - |
+
+### Step 5.1b — Carregar Agent (persona obrigatória)
+
+Cada linha de fase no `PIPELINE.md` pode ter metadata `Agent:` com o nome de um agente definido em `src/agents/`. Diferente das skills (que são instruções de tarefa), o **Agent é a persona** que governa COMO a tarefa será executada — suas regras rígidas, anti-patterns e filosofia.
+
+**Se `Agent:` está presente na fase:**
+1. Tentar `src/agents/[agent].md`
+2. Se falhar, tentar `.agents/agents/[agent].md`
+3. Se encontrar: **carregar o arquivo inteiro como contexto de persona**. As regras em "Strict Rules" do agente são **obrigatórias** — violá-las é motivo de reprovação no Quality Gate.
+4. Se não encontrar: avisar, mas prosseguir com persona genérica.
+
+**Se `Agent:` está ausente na fase:**
+- Usar heurística pelo tema da fase para selecionar o agente mais adequado:
+  - `deploy`, `infra`, `docker` → `devops-engineer`
+  - `copy`, `research`, `competitor` → `copywriter-specialist`
+  - `design`, `ui`, `tokens`, `branding` → `design-specialist`
+  - `frontend`, `react`, `next.js`, `html`, `css` → `frontend-specialist`
+  - `backend`, `api`, `database`, `auth`, `stripe` → `backend-specialist`
+  - `seo`, `schema`, `meta` → `seo-specialist`
+  - `qa`, `test`, `review`, `audit` → `test-engineer`
+  - `security`, `vulnerability` → `security-auditor`
+  - `performance`, `lighthouse`, `optimization` → `performance-engineer`
+  - `accessibility`, `a11y`, `aria` → `accessibility-auditor`
+  - `database`, `schema`, `migration` → `database-architect`
+  - `mobile`, `react-native`, `expo`, `flutter`, `ios`, `android` → `mobile-specialist`
+  - `chatbot`, `whatsapp`, `bot`, `conversational` → `chatbot-specialist`
+
+**Exemplo de aplicação:**
+Se a fase tem `Agent: design-specialist`, o executor carrega `src/agents/design-specialist.md` e durante a execução aplica:
+- "Anti-AI Slop: Do not write generic 'bootstrap' code"
+- "Never ignore the Design Anchor"
+- "Mobile-First Always"
+- "Springs over Linear" (Emil Kowalski)
+
+Essas regras substituem qualquer comportamento genérico do LLM base.
 
 ### Step 5.2 — Carregar skills
 
@@ -294,6 +333,7 @@ Após concluir a tarefa, executar verificação automática:
 - Output tem conteúdo mínimo (> 20 linhas úteis)?
 - Sem `[PLACEHOLDER]`, `TODO`, `FIXME` remanescentes?
 - Se fase é código: `npm run build` ou `python -m py_compile` passa?
+- **Se a fase tinha `Agent:` carregado**: as Strict Rules do agente foram respeitadas? (ex: se o agent é `design-specialist` e o output contém `bg-blue-500` quando o DESIGN.md define outra cor → FAIL por violação de persona)
 
 Decisão:
 - **PASS** → marcar fase com `[X]`, seguir para Step 5.5
