@@ -728,8 +728,7 @@ Se ele disser SIM, **VOCÊ DEVE EXECUTAR A FERRAMENTA** `/client-onboarding` aut
 - **NUNCA** use `--no-verify` em commits
 - **NUNCA** faça `git push --force` em main/develop/master
 - **SEMPRE** copie skills core de `~/.oma/skills/` (global) como base rápida
-- **SEMPRE** tente baixar skills externas atualizadas via git clone (passo 2D)
-- **SEMPRE** avise o usuário se `~/.oma/` não existir (ele precisa rodar `oma install`)
+- **SEMPRE** avise o usuário se `~/.oma/` não existir (ele precisa rodar `oma install` no terminal global)
 
 ---
 
