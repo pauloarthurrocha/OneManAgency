@@ -36,7 +36,6 @@ const PACKAGE_DIR = path.resolve(__dirname, '..');
 
 const SKILLS_DIR  = path.join(GLOBAL_DIR, 'skills');
 const AGENTS_DIR  = path.join(GLOBAL_DIR, 'agents');
-const PRESETS_DIR = path.join(GLOBAL_DIR, 'presets');
 const SCRIPTS_DIR = path.join(GLOBAL_DIR, 'scripts');
 
 const colors = {
@@ -159,11 +158,9 @@ function cmdDoctor() {
     success(`SSoT global: ${GLOBAL_DIR}`);
     const skills  = fs.existsSync(SKILLS_DIR)  ? fs.readdirSync(SKILLS_DIR)  : [];
     const agents  = fs.existsSync(AGENTS_DIR)  ? fs.readdirSync(AGENTS_DIR)  : [];
-    const presets = fs.existsSync(PRESETS_DIR) ? fs.readdirSync(PRESETS_DIR) : [];
-    success(`Skills:  ${skills.length}`);
+        success(`Skills:  ${skills.length}`);
     success(`Agentes: ${agents.length}`);
-    success(`Presets: ${presets.length}`);
-  } else {
+      } else {
     warn('SSoT global: NAO ENCONTRADA');
     info('Execute: oma install');
     issues++;

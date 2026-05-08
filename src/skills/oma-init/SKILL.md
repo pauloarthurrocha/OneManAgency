@@ -279,12 +279,6 @@ if [ -d "$OMA_GLOBAL/agents" ]; then
   echo "✓ Agentes especializados carregados"
 fi
 
-# Copiar presets
-if [ -d "$OMA_GLOBAL/presets" ]; then
-  mkdir -p .agents/presets
-  cp -r "$OMA_GLOBAL/presets/"* .agents/presets/ 2>/dev/null
-  echo "✓ Presets estéticos carregados"
-fi
 
 # Copiar design library (Awesome Design MD)
 if [ -d "$OMA_GLOBAL/design-library" ]; then
@@ -340,7 +334,6 @@ cp -r .agents/skills/* .gemini/antigravity/skills/ 2>/dev/null
 - `pipeline-generator/` — Gera PIPELINE.md
 - `oma-verify-work/` — Quality Gate pós-fase
 - `oma-release-manager/` — QA Final, Docs e Lançamento
-- `skill-creator/` — Criação e otimização de novas skills
 
 **Skills auxiliares (opcionais — adicionar conforme domínio do projeto):**
 - `niche-research/`, `competitor-intel/`, `web-scraper-intel/` — research

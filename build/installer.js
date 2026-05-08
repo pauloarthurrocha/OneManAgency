@@ -7,7 +7,6 @@ const os = require('os');
 const GLOBAL_DIR = path.join(os.homedir(), '.oma');
 const SKILLS_DIR = path.join(GLOBAL_DIR, 'skills');
 const AGENTS_DIR = path.join(GLOBAL_DIR, 'agents');
-const PRESETS_DIR = path.join(GLOBAL_DIR, 'presets');
 const TEMPLATES_DIR = path.join(GLOBAL_DIR, 'templates');
 const SCRIPTS_DIR = path.join(GLOBAL_DIR, 'scripts');
 
@@ -17,7 +16,6 @@ const CORE_SKILLS = [
   'client-onboarding',
   'pipeline-generator',
   'oma-verify-work',
-  'skill-creator',
   'oma-ceo-review',
   'oma-eng-review',
   'oma-design-review',
@@ -105,7 +103,7 @@ function installAll({ packageDir, only, exclude, dryRun } = {}) {
   }
 
   // ── 1. Create global dirs ──
-  for (const d of [SKILLS_DIR, AGENTS_DIR, PRESETS_DIR, TEMPLATES_DIR, SCRIPTS_DIR]) {
+  for (const d of [SKILLS_DIR, AGENTS_DIR, TEMPLATES_DIR, SCRIPTS_DIR]) {
     if (!dryRun) {
       if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true });
     }
