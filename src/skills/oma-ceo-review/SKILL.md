@@ -1,6 +1,6 @@
 ---
 name: oma-ceo-review
-description: Atua como CEO / YC Partner na Tríade de Revisão. Desafia o escopo do BRIEFING.md, foca na "cunha" (wedge) inicial, corta complexidade e gera o PRD.md (Product Requirements Document) oficial para a equipe técnica.
+description: 'Atua como CEO / YC Partner na Tríade de Revisão. Desafia o escopo do BRIEFING.md, foca na "cunha" (wedge) inicial, corta complexidade e gera o PRD.md (Product Requirements Document) oficial para a equipe técnica.'
 metadata:
   version: 4.1.0
 ---

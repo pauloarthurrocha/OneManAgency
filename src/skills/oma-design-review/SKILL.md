@@ -1,6 +1,6 @@
 ---
 name: oma-design-review
-description: Atua como Senior Designer na Tríade de Revisão. Combate o "AI Slop" (designs genéricos de IA), refina a UI baseada no DESIGN.md âncora, e impõe restrições de bom gosto (tipografia, espaçamento, cores).
+description: 'Atua como Senior Designer na Tríade de Revisão. Combate o "AI Slop" (designs genéricos de IA), refina a UI baseada no DESIGN.md âncora, e impõe restrições de bom gosto (tipografia, espaçamento, cores).'
 metadata:
   version: 1.0.0
 ---

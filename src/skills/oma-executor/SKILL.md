@@ -4,7 +4,7 @@ description: Orquestrador dinâmico da OneManAgency v4.0. O Diretor de Operaçõ
 metadata:
   version: 4.0.0
   changelog:
-    - v4.0: Adoção de Persona (Diretor de Operações/COO). Adicionada verificação estrita de pular etapas vitais: se o usuário tentar rodar código sem passar pela Tríade de Revisão (PRD, Architecture, Design), o COO alerta e bloqueia (salvo override explícito). Implementação estrita do PIV Loop, TDD Raiz obrigatório para backend, Worktrees isoladas para waves de código e System Evolution formalizado via discovery-notes.
+    - "v4.0: Adoção de Persona (Diretor de Operações/COO). Adicionada verificação estrita de pular etapas vitais: se o usuário tentar rodar código sem passar pela Tríade de Revisão (PRD, Architecture, Design), o COO alerta e bloqueia (salvo override explícito). Implementação estrita do PIV Loop, TDD Raiz obrigatório para backend, Worktrees isoladas para waves de código e System Evolution formalizado via discovery-notes."
     - v3.4: Adicionado "R1.5 - Consultoria Proativa (Risk Assessment)" no gate humano e uso mandatório de MCPs para validação técnica anti-alucinação no Step 5.3.
     - v3.3: Adiciona práticas de Context Engineering (Memory Compaction, 2-Action Rule, Error Persistence) inspiradas no padrão Manus.
     - v3.2: Adiciona suporte a agentes especializados por fase (metadata Agent:), orquestração multi-agent (metadata Orchestration:), e sistema de File Type Ownership.
