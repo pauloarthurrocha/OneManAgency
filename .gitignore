@@ -42,6 +42,7 @@ next-env.d.ts
 .continue-here.md
 HANDOFF.md
 docs/internal/
+opencode-vanilla-config.json
 
 # IDE test artifacts (not part of distribution)
 .roo/
