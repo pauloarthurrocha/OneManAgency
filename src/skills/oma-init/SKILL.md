@@ -176,17 +176,16 @@ cliente-projeto/
 
 ### Step -1: Detectar Sistema Operacional (ANTES de qualquer comando)
 
-> ⚠️ **REGRA CRÍTICA:** ANTES de executar QUALQUER comando, detecte o sistema operacional e adapte TODOS os comandos subsequentes.
+### Step -1: Detectar Sistema Operacional (ANTES de qualquer comando)
 
-```bash
-# Detectar SO e guardar na variável OS_TYPE
-uname -s 2>/dev/null && echo "os=linux|mac" || echo "os=windows"
-```
+> ⚠️ **REGRA CRÍTICA:** ANTES de executar QUALQUER comando de terminal, você deve considerar o ambiente do usuário. Como as IDEs (Cursor, Claude Code, Roo) executam os comandos na máquina host, um script bash falhará em um ambiente Windows padrão (PowerShell).
 
-No PowerShell:
-```powershell
-$env:OS # retorna "Windows_NT"
-```
+**O OMA Framework é 100% Cross-OS.** Para garantir isso, a regra oficial para a criação e manipulação de arquivos ou diretórios durante os workflows da Agência é: **SEMPRE prefira usar as ferramentas nativas de manipulação de arquivos do seu ambiente (ex: `write_file`, `create_directory`, `edit_file`, ou os FileSystem MCPs) ao invés de rodar scripts de terminal (Bash/PowerShell).** 
+
+Isso elimina completamente a falha de compatibilidade entre sistemas operacionais (Windows vs Mac/Linux). 
+
+Se você for ESTRITAMENTE obrigado a rodar um comando no terminal que não pode ser resolvido com ferramentas de arquivos (ex: invocar um compilador, rodar npm install, dar git init), você DEVE primeiro rodar um comando passivo para descobrir se o terminal é Windows ou Unix, e formatar seu comando adequadamente.
+
 
 **Guia rápido de adaptação de comandos:**
 
