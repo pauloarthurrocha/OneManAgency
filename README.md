@@ -30,6 +30,8 @@ A complexidade inteira está no sistema, não no seu fluxo de trabalho. Você co
 3. **Tríade de Revisão:** Antes de codar, o seu briefing não vira código imediatamente. Ele é barrado por 3 "agentes" (CEO, Tech Lead, Design Lead) que cortam features inúteis, cravam o banco de dados e proíbem o "AI Slop".
 4. **TDD é Lei:** O agente de Backend é proibido de escrever código de produção sem antes escrever um teste que falhe. Sério.
 5. **Batteries Included (MCPs Embutidos):** Ferramentas de IA são burras sem ferramentas externas. O `/oma-init` injeta na raiz do seu projeto um arquivo `.mcp.json` hiper-otimizado. Sem você configurar NENHUMA chave de API, a sua IA ganha o poder de **Puppeteer** (para navegar e raspar sites de graça), **Context7** (para ler docs oficiais e não usar código depreciado), **Sequential Thinking** (força a IA a raciocinar antes de gerar código bugado) e **Memory**.
+6. **Offline-First & Cross-OS:** A instalação das bibliotecas globais acontece uma única vez via NPM. Depois disso, rodar o `/oma-init` num projeto novo leva 0.5 segundos, mesmo sem internet. E como os agentes usam ferramentas nativas do FileSystem em vez de *Shell Scripts*, a agência roda perfeitamente em Mac, Linux e Windows (PowerShell) sem quebrar.
+
 
 ---
 
