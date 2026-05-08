@@ -1,11 +1,11 @@
 <div align="center">
 
-# 🤖 OneManAgency (v4.0)
+# 🤖 OneManAgency (v4.1)
 
 **O framework open-source para você construir software como se tivesse uma agência inteira trabalhando para você.**<br>
 *Orquestração Multi-LLM, Context Engineering nativo, PIV Loop e TDD para Claude Code, OpenCode, Cursor, Windsurf, Aider, Hermes Agent, Roo Code e Gemini CLI.*
 
-[![npm version](https://img.shields.io/badge/npm-v4.0.0-CB3837?style=for-the-badge&logo=npm)](https://github.com/pauloarthurrocha/OneManAgency)
+[![npm version](https://img.shields.io/badge/npm-v4.1.0-CB3837?style=for-the-badge&logo=npm)](https://github.com/pauloarthurrocha/OneManAgency)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
 *“Não escreva prompts. Arquiteture sistemas.”*
@@ -75,13 +75,14 @@ A IA planeja a tarefa, escreve no disco e pede para você limpar a tela. Você l
 
 ## 🧠 Nós usamos Personas Reais, não "Roleplay Raso"
 
-Dizer *"aja como um sênior"* no começo de um prompt não funciona. O OMA usa `Agent Definition Files` estritos em `src/agents/`. São arquivos que dizem exatamente o que o agente odeia e como ele opera. **15 personas** disparadas pelo PIPELINE.md via metadata `Agent: <nome>`:
+Dizer *"aja como um sênior"* no começo de um prompt não funciona. O OMA usa `Agent Definition Files` estritos em `src/agents/`. São arquivos que dizem exatamente o que o agente odeia e como ele opera. **17 personas** disparadas pelo PIPELINE.md via metadata `Agent: <nome>`:
 
-**Implementação (4):**
+**Implementação (5):**
 - **Frontend Specialist** — Acessibilidade nativa, skeletons/error states obrigatórios, âncora de design intransigente.
 - **Backend Specialist** — Segue a "TDD Iron Law". Se tentar gambiarra, a persona barra.
 - **Database Architect** — Schema, índices, RLS policies (Supabase), migrations idempotentes.
 - **DevOps Engineer** — CI/CD, Docker, observability, deploy seguro.
+- **Mobile Specialist** — React Native/Expo, touch-first UX, performance em devices低端, app store guidelines.
 
 **Design & Conteúdo (2):**
 - **Design Specialist** — Filosofia Emil Kowalski. Spring animations, espaço negativo, anti-AI-slop.
@@ -94,10 +95,11 @@ Dizer *"aja como um sênior"* no começo de um prompt não funciona. O OMA usa `
 - **Reality Checker** — Default NEEDS WORK. Exige evidência visual antes de "production ready".
 - **Test Engineer** — Unit, integration, E2E. Coverage como sinal, não como meta.
 
-**Especialistas (4):**
+**Especialistas (5):**
 - **Security Auditor** — OWASP, JWT, middleware, secrets hygiene.
 - **SEO Specialist** — Meta tags, schema, Core Web Vitals, AI citation (GEO/AEO).
 - **MCP Builder** — Constrói servidores Model Context Protocol customizados.
+- **Chatbot Specialist** — WhatsApp bots (BuilderBot/Baileys/Botpress), fluxos conversacionais, integração com APIs de messaging.
 - **Lead Orchestrator** — Em refatorações multi-domínio, abre Git Worktrees e coordena waves paralelas.
 
 ---
@@ -113,6 +115,46 @@ O OMA dispara agentes via metadata `Agent: <nome>` no `PIPELINE.md`. Qualquer ar
 | [Superpowers](https://github.com/obra/superpowers) (obra) | — | 15 skills compostas (TDD, brainstorming, systematic-debugging) | Use como **skill** em `.agents/skills/`, não como agent |
 
 **Convenção de nomes:** OMA usa kebab-case curto (ex: `code-reviewer.md`). Agency-agents usa `<division>-<name>.md`. Renomeie ao copiar ou referencie pelo nome exato no PIPELINE.
+
+---
+
+## 📋 Playbooks Testados (9 tipos de projeto)
+
+O `pipeline-generator` já tem playbooks prontos para cada tipo de projeto. Cada playbook define fases, agentes, skills e critérios de aceite específicos:
+
+| Playbook | Tipo | Stack |
+|---|---|---|
+| A | SaaS Full-Stack | Next.js + Supabase + Vercel |
+| B | Landing Page Estática | HTML/CSS + Vercel/Netlify |
+| C | Landing Page Next.js | Next.js + Vercel |
+| D | Automação Python | Python + FastAPI + Cloud Run |
+| E | Low-Ticket / Infoproduto | HTML + Kiwify Checkout |
+| F | Data Pipeline / ETL | Python + Airflow/Prefect + BigQuery |
+| G | Mobile React Native | React Native + Expo + EAS |
+| H | Chatbot WhatsApp | Node.js + Baileys/Botpress |
+| I | Hybrid / Monorepo | Turborepo + shared packages |
+
+Cada playbook é testado em produção. Novos playbooks podem ser criados pela comunidade — basta seguir o schema em `src/skills/pipeline-generator/references/playbooks.md`.
+
+---
+
+## 🧬 Progressive Disclosure (Performance de Contexto)
+
+Desde a v4.1, todas as skills core (`client-onboarding`, `pipeline-generator`, `oma-executor`, `oma-init`) foram modularizadas. O `SKILL.md` principal carrega apenas o essencial (~200 linhas) e referência playbooks e exemplos em `references/`. Isso garante:
+
+- **Menos tokens injetados** por prompt → mais espaço para o código real
+- **Carregamento sob demanda** → a IA só puxa o playbook relevante ao tipo de projeto
+- **Manutenção mais fácil** → atualizar um playbook não exige reescrever a skill
+
+---
+
+## 🔬 Eval Harness (QA Autônomo com LLM-as-a-Judge)
+
+O `oma-verify-work` agora inclui um sistema de avaliação autônomo que usa LLM como juiz para validar qualidade estética e arquitetônica. Após cada fase, além dos checks de arquivo e build, o agente:
+
+- Avalia se o código segue o `DESIGN.md` (anti-AI Slop)
+- Verifica se a arquitetura bate com o `ARCHITECTURE.md`
+- Gera um relatório `.planning/VERIFICATION_REPORT.md` com status PASS/WARNING/FAIL
 
 ---
 
