@@ -37,9 +37,9 @@ The complexity lives in the system, not in your workflow. You keep using the IDE
 
 ```mermaid
 graph LR
-    A["ðŸ“‹ PLAN"] -->|"/clear"| B["âš¡ IMPLEMENT"]
-    B --> C["âœ… VALIDATE"]
-    C -->|pass| D["ðŸš€ SHIP"]
+    A["📋 PLAN"] -->|"/clear"| B["⚡ IMPLEMENT"]
+    B --> C["✅ VALIDATE"]
+    C -->|pass| D["🚀 SHIP"]
     C -->|fail| A
 
     style A fill:#3b82f6,stroke:#1e40af,color:#fff
@@ -54,12 +54,12 @@ OMA forbids AI from planning and coding in the same breath. Agent plans, generat
 
 ```mermaid
 graph TD
-    BRIEFING["ðŸ“ BRIEFING"] --> CEO["ðŸ‘” CEO REVIEW"]
-    CEO -->|approved| ENG["âš™ï¸ ENG REVIEW"]
-    CEO -->|rejected| CUT["âŒ CUT"]
-    ENG -->|approved| DESIGN["ðŸŽ¨ DESIGN REVIEW"]
+    BRIEFING["📝 BRIEFING"] --> CEO["👔 CEO REVIEW"]
+    CEO -->|approved| ENG["⚙️ ENG REVIEW"]
+    CEO -->|rejected| CUT["❌ CUT"]
+    ENG -->|approved| DESIGN["🎨 DESIGN REVIEW"]
     ENG -->|rejected| CUT
-    DESIGN -->|approved| PRD["ðŸ“„ PRD.md"]
+    DESIGN -->|approved| PRD["📄 PRD.md"]
     DESIGN -->|rejected| CUT
 
     style CEO fill:#3b82f6,stroke:#1e40af,color:#fff
@@ -75,7 +75,7 @@ Before coding, your briefing doesn't become code immediately. It's blocked by 3 
 
 ```mermaid
 graph TB
-    subgraph IDE["ðŸ–¥ï¸ Supported IDEs"]
+    subgraph IDE["🖥️ Supported IDEs"]
         CC["Claude Code"]
         OC["OpenCode"]
         CU["Cursor"]
@@ -84,7 +84,7 @@ graph TB
         GC["Gemini CLI"]
     end
 
-    subgraph OMA["ðŸ¤– OneManAgency"]
+    subgraph OMA["🤖 OneManAgency"]
         INIT["/oma-init"]
         ONB["/client-onboarding"]
         PIPE["/pipeline-generator"]
@@ -92,7 +92,7 @@ graph TB
         VERIFY["/oma-verify-work"]
     end
 
-    subgraph AGENTS["ðŸ‘¥ 17 Agents"]
+    subgraph AGENTS["👥 17 Agents"]
         FE["Frontend"]
         BE["Backend"]
         DB["Database"]
@@ -138,10 +138,10 @@ OMA uses strict `Agent Definition Files` in `src/agents/`. These are files that 
 
 | Category | Agents |
 |---|---|
-| **Implementation (5)** | Frontend Specialist Â· Backend Specialist Â· Database Architect Â· DevOps Engineer Â· Mobile Specialist |
-| **Design & Content (2)** | Design Specialist Â· Copywriter Specialist |
-| **Quality (5)** | Code Reviewer Â· Accessibility Auditor Â· Performance Engineer Â· Reality Checker Â· Test Engineer |
-| **Specialists (5)** | Security Auditor Â· SEO Specialist Â· MCP Builder Â· Chatbot Specialist Â· Lead Orchestrator |
+| **Implementation (5)** | Frontend Specialist · Backend Specialist · Database Architect · DevOps Engineer · Mobile Specialist |
+| **Design & Content (2)** | Design Specialist · Copywriter Specialist |
+| **Quality (5)** | Code Reviewer · Accessibility Auditor · Performance Engineer · Reality Checker · Test Engineer |
+| **Specialists (5)** | Security Auditor · SEO Specialist · MCP Builder · Chatbot Specialist · Lead Orchestrator |
 
 ---
 
@@ -176,9 +176,9 @@ OMA doesn't give you a passive form. The agent assumes the persona of a **Y Comb
 
 ### 3. The Barrier (Triad)
 The briefing passes through 3 automatic filters:
-- **CEO Review** â†’ Generates `PRD.md`
-- **Eng Review** â†’ Defines schema and data flow (`ARCHITECTURE.md`)
-- **Design Review** â†’ Defines tokens, typography, and anti-generic motion rules (`UI-SPEC.md`)
+- **CEO Review** → Generates `PRD.md`
+- **Eng Review** → Defines schema and data flow (`ARCHITECTURE.md`)
+- **Design Review** → Defines tokens, typography, and anti-generic motion rules (`UI-SPEC.md`)
 
 ### 4. Execution (PIV Loop)
 The Pipeline Generator slices everything into atomic tasks. You invoke `oma-executor`.
@@ -191,7 +191,7 @@ The AI plans the task, writes to disk, and asks you to clear the screen. You cle
 | Feature | Description |
 |---|---|
 | **Context Engineering** | Project state persisted on disk (`HANDOFF.md`, `STATE.md`), not in chat RAM |
-| **PIV Loop** | Plan â†’ /clear â†’ Implement â†’ Validate. Prevents hallucination. |
+| **PIV Loop** | Plan → /clear → Implement → Validate. Prevents hallucination. |
 | **3-Gate Review** | CEO + Eng + Design cut useless features before code is written |
 | **TDD Iron Law** | Backend agent is forbidden to write production code without a failing test first |
 | **Batteries Included** | MCPs auto-configured: Puppeteer, Context7, Sequential Thinking, Memory |
@@ -208,8 +208,8 @@ OMA triggers agents via metadata `Agent: <name>` in `PIPELINE.md`. Any `.md` fil
 | Library | Stars | When it helps | How to integrate |
 |---|---|---|---|
 | [agency-agents](https://github.com/msitarzewski/agency-agents) | 73-94k | 144 agents in 12 divisions | Copy `.md` to `.agents/agents/` |
-| [GStack](https://github.com/garrytan/gstack) (Garry Tan, YC) | â€” | 23 personas focused on product validation | Copy agent to `.agents/agents/` |
-| [Superpowers](https://github.com/obra/superpowers) | â€” | 15 composite skills (TDD, debugging) | Use as **skill** in `.agents/skills/` |
+| [GStack](https://github.com/garrytan/gstack) (Garry Tan, YC) | — | 23 personas focused on product validation | Copy agent to `.agents/agents/` |
+| [Superpowers](https://github.com/obra/superpowers) | — | 15 composite skills (TDD, debugging) | Use as **skill** in `.agents/skills/` |
 
 ---
 
@@ -218,18 +218,18 @@ OMA triggers agents via metadata `Agent: <name>` in `PIPELINE.md`. Any `.md` fil
 I didn't invent the wheel. OMA is a synthesis of the brightest minds in Agentic Engineering and Design:
 
 ### Architecture & Product Management
-- **[GStack](https://github.com/garrytan/gstack)** (Garry Tan) â€” Inspired our Review Triad
-- **[Get-Shit-Done](https://github.com/gsd-build/get-shit-done)** â€” Inspired our lightweight file persistence
-- **[Spec-Kit](https://github.com/github/spec-kit)** â€” Validated Spec-Driven Development
+- **[GStack](https://github.com/garrytan/gstack)** (Garry Tan) — Inspired our Review Triad
+- **[Get-Shit-Done](https://github.com/gsd-build/get-shit-done)** — Inspired our lightweight file persistence
+- **[Spec-Kit](https://github.com/github/spec-kit)** — Validated Spec-Driven Development
 
 ### Engineering
-- **[Superpowers](https://github.com/obra/superpowers)** â€” Base of our Backend Specialist (TDD Iron Law)
-- **[Agency-Agents](https://github.com/msitarzewski/agency-agents)** â€” Taught us that "shallow roleplay" doesn't work
+- **[Superpowers](https://github.com/obra/superpowers)** — Base of our Backend Specialist (TDD Iron Law)
+- **[Agency-Agents](https://github.com/msitarzewski/agency-agents)** — Taught us that "shallow roleplay" doesn't work
 
 ### Anti-"AI Slop"
-- **[Impeccable](https://github.com/pbakaus/impeccable)** & **[Taste-Skill](https://github.com/leonxlnx/taste-skill)** â€” Defense against AI Slop
-- **[Emil Kowalski's Philosophy](https://emilkowal.ski/)** â€” Backbone of our Design Specialist
-- **[Huashu Design](https://github.com/alchaincyf/huashu-design)** â€” Rapid prototyping insights
+- **[Impeccable](https://github.com/pbakaus/impeccable)** & **[Taste-Skill](https://github.com/leonxlnx/taste-skill)** — Defense against AI Slop
+- **[Emil Kowalski's Philosophy](https://emilkowal.ski/)** — Backbone of our Design Specialist
+- **[Huashu Design](https://github.com/alchaincyf/huashu-design)** — Rapid prototyping insights
 
 If you like OMA, please consider giving a Star to the repos of these giants. We stand on their shoulders.
 
@@ -239,8 +239,8 @@ If you like OMA, please consider giving a Star to the repos of these giants. We 
 
 Since OMA uses files on disk (Context Engineering) instead of chat memory, it's the perfect engine for autonomous terminal orchestrators:
 
-- **[AionUi](https://github.com/iOfficeAI/AionUi)** â€” Instantiate multiple terminals side by side. AionUi is the "office", OMA is the "method".
-- **[Hermes Agent](https://github.com/NousResearch/hermes-agent) / OpenClaw** â€” Run the agency on a VPS and command agents via Telegram or Discord.
+- **[AionUi](https://github.com/iOfficeAI/AionUi)** — Instantiate multiple terminals side by side. AionUi is the "office", OMA is the "method".
+- **[Hermes Agent](https://github.com/NousResearch/hermes-agent) / OpenClaw** — Run the agency on a VPS and command agents via Telegram or Discord.
 
 ---
 
