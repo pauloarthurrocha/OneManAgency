@@ -39,18 +39,7 @@ Enterprise tools were too heavy. So I took the best methodologies from Silicon V
 
 ### PIV Loop (Plan-Implement-Validate)
 
-```mermaid
-graph LR
-    A["PLAN"] -->|"/clear"| B["IMPLEMENT"]
-    B --> C["VALIDATE"]
-    C -->|pass| D["SHIP"]
-    C -->|fail| A
-
-    style A fill:#3b82f6,stroke:#1e40af,color:#fff
-    style B fill:#f59e0b,stroke:#d97706,color:#fff
-    style C fill:#10b981,stroke:#059669,color:#fff
-    style D fill:#8b5cf6,stroke:#6d28d9,color:#fff
-```
+![PIV Loop](docs/piv-loop.svg)
 
 **The problem:** AI plans and codes in the same breath. Context window fills up. AI forgets architecture. Generates "AI Slop."
 
@@ -62,22 +51,7 @@ graph LR
 
 ### 3-Gate Review Triad
 
-```mermaid
-graph LR
-    BRIEFING --> CEO["CEO REVIEW"]
-    CEO -->|approved| ENG["ENG REVIEW"]
-    CEO -->|rejected| CUT["CUT"]
-    ENG -->|approved| DESIGN["DESIGN REVIEW"]
-    ENG -->|rejected| CUT
-    DESIGN -->|approved| PRD["PRD.md"]
-    DESIGN -->|rejected| CUT
-
-    style CEO fill:#3b82f6,stroke:#1e40af,color:#fff
-    style ENG fill:#f59e0b,stroke:#d97706,color:#fff
-    style DESIGN fill:#ec4899,stroke:#be185d,color:#fff
-    style PRD fill:#10b981,stroke:#059669,color:#fff
-    style CUT fill:#ef4444,stroke:#dc2626,color:#fff
-```
+![3-Gate Review Triad](docs/triad-review.svg)
 
 **The problem:** You ask AI for a feature. It builds everything. Half of it is useless. You waste tokens, time, and money.
 
@@ -92,45 +66,7 @@ graph LR
 
 ### Architecture Overview
 
-```mermaid
-graph LR
-    subgraph IDE["IDEs"]
-        CC["Claude Code"]
-        OC["OpenCode"]
-        CU["Cursor"]
-        WS["Windsurf"]
-        AD["Aider"]
-        GC["Gemini CLI"]
-    end
-
-    subgraph OMA["OneManAgency"]
-        INIT["/oma-init"]
-        ONB["/client-onboarding"]
-        PIPE["/pipeline-generator"]
-        EXEC["/oma-executor"]
-        VERIFY["/oma-verify-work"]
-    end
-
-    subgraph AGENTS["17 Agents"]
-        FE["Frontend"]
-        BE["Backend"]
-        DB["Database"]
-        DO["DevOps"]
-        SEC["Security"]
-        MORE["12 more"]
-    end
-
-    IDE --> INIT
-    INIT --> ONB
-    ONB --> PIPE
-    PIPE --> EXEC
-    EXEC --> AGENTS
-    AGENTS --> VERIFY
-
-    style IDE fill:#6366f1,stroke:#4f46e5,color:#fff
-    style OMA fill:#059669,stroke:#047857,color:#fff
-    style AGENTS fill:#f59e0b,stroke:#d97706,color:#fff
-```
+![Architecture Overview](docs/architecture.svg)
 
 ---
 
