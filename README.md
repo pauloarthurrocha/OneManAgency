@@ -21,13 +21,17 @@ Multi-LLM Orchestration, native Context Engineering, PIV Loop, and TDD for Claud
 
 ## Why I Built This
 
-I'm a solo builder. I build SaaS and products end-to-end.
+I build SaaS solo. End to end.
 
-I was tired of AI getting lost in large projects. Context window would fill up (the infamous **Lost in the Middle**), AI would forget the architecture, start writing that generic purple gradient design (the "AI Slop"), and generate untested code that broke in production.
+Every time I used Claude Code, Cursor, or any LLM to build a real project, the same thing happened:
+- Context window filled up. AI forgot the architecture.
+- AI started writing generic purple-gradient design (the "AI Slop").
+- Code shipped without tests. Broke in production.
+- I asked for one feature. AI rewrote the entire project.
 
-Enterprise tools were too heavy for my workflow. So I took the best methodologies from Silicon Valley (Y Combinator, Spec-Driven Development, TDD) and created **OneManAgency (OMA)**.
+Enterprise tools were too heavy. So I took the best methodologies from Silicon Valley (Y Combinator, Spec-Driven Development, TDD) and built **OneManAgency (OMA)**.
 
-The complexity lives in the system, not in your workflow. You keep using the IDE you love, but now your AI follows invisible corporate rules under the hood.
+**The core idea:** The complexity lives in the system, not in your workflow. You keep your IDE. Your AI follows corporate rules invisibly.
 
 ---
 
@@ -37,9 +41,9 @@ The complexity lives in the system, not in your workflow. You keep using the IDE
 
 ```mermaid
 graph LR
-    A["📋 PLAN"] -->|"/clear"| B["⚡ IMPLEMENT"]
-    B --> C["✅ VALIDATE"]
-    C -->|pass| D["🚀 SHIP"]
+    A["PLAN"] -->|"/clear"| B["IMPLEMENT"]
+    B --> C["VALIDATE"]
+    C -->|pass| D["SHIP"]
     C -->|fail| A
 
     style A fill:#3b82f6,stroke:#1e40af,color:#fff
@@ -48,18 +52,24 @@ graph LR
     style D fill:#8b5cf6,stroke:#6d28d9,color:#fff
 ```
 
-OMA forbids AI from planning and coding in the same breath. Agent plans, generates Handoff, and warns: *"Clear the chat to avoid hallucination."* You clear, hit play, and AI codes with empty context and laser focus.
+**The problem:** AI plans and codes in the same breath. Context window fills up. AI forgets architecture. Generates "AI Slop."
+
+**The fix:** OMA forces a hard stop between planning and coding. Agent plans, generates `HANDOFF.md`, and warns: *"Clear the chat."* You clear. AI returns with empty context, laser-focused on execution.
+
+**Result:** Zero hallucination. Zero rewrites.
+
+---
 
 ### 3-Gate Review Triad
 
 ```mermaid
-graph TD
-    BRIEFING["📝 BRIEFING"] --> CEO["👔 CEO REVIEW"]
-    CEO -->|approved| ENG["⚙️ ENG REVIEW"]
-    CEO -->|rejected| CUT["❌ CUT"]
-    ENG -->|approved| DESIGN["🎨 DESIGN REVIEW"]
+graph LR
+    BRIEFING --> CEO["CEO REVIEW"]
+    CEO -->|approved| ENG["ENG REVIEW"]
+    CEO -->|rejected| CUT["CUT"]
+    ENG -->|approved| DESIGN["DESIGN REVIEW"]
     ENG -->|rejected| CUT
-    DESIGN -->|approved| PRD["📄 PRD.md"]
+    DESIGN -->|approved| PRD["PRD.md"]
     DESIGN -->|rejected| CUT
 
     style CEO fill:#3b82f6,stroke:#1e40af,color:#fff
@@ -69,13 +79,22 @@ graph TD
     style CUT fill:#ef4444,stroke:#dc2626,color:#fff
 ```
 
-Before coding, your briefing doesn't become code immediately. It's blocked by 3 "agents" (CEO, Tech Lead, Design Lead) that cut useless features, lock the database schema, and forbid "AI Slop."
+**The problem:** You ask AI for a feature. It builds everything. Half of it is useless. You waste tokens, time, and money.
+
+**The fix:** Before code touches your repo, every feature passes through 3 filters:
+- **CEO** — "Does this generate revenue on day 1?" Cuts scope.
+- **Eng** — "Does the schema hold? Any edge cases?" Locks architecture.
+- **Design** — "Is this AI Slop?" Forbids generic design.
+
+**Result:** Features that survive the Triad are worth building.
+
+---
 
 ### Architecture Overview
 
 ```mermaid
-graph TB
-    subgraph IDE["🖥️ Supported IDEs"]
+graph LR
+    subgraph IDE["IDEs"]
         CC["Claude Code"]
         OC["OpenCode"]
         CU["Cursor"]
@@ -84,7 +103,7 @@ graph TB
         GC["Gemini CLI"]
     end
 
-    subgraph OMA["🤖 OneManAgency"]
+    subgraph OMA["OneManAgency"]
         INIT["/oma-init"]
         ONB["/client-onboarding"]
         PIPE["/pipeline-generator"]
@@ -92,13 +111,13 @@ graph TB
         VERIFY["/oma-verify-work"]
     end
 
-    subgraph AGENTS["👥 17 Agents"]
+    subgraph AGENTS["17 Agents"]
         FE["Frontend"]
         BE["Backend"]
         DB["Database"]
         DO["DevOps"]
         SEC["Security"]
-        MORE["...12 more"]
+        MORE["12 more"]
     end
 
     IDE --> INIT
