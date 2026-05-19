@@ -1,4 +1,4 @@
-# Playbooks de Pipeline (A-I)
+# Playbooks de Pipeline (A-J)
 
 Estes são os templates de pipeline para diferentes tipos de projeto.
 
@@ -727,15 +727,15 @@ Estes são os templates de pipeline para diferentes tipos de projeto.
 ```markdown
 - [ ] Fase 1: Docker Infrastructure + Laravel 13 Scaffold
       Agent: devops-engineer
-      Skills: deployment-procedures, environment-setup
+      Skills: deployment-procedures, server-management
       Output: docker-compose.yml, Dockerfile, .env.example, artisan-wrapper.sh
       Shift-Left: sim
       Validation: quick
       Critérios de aceite:
-        - `docker-compose up` sobe App (PHP 8.4+), Postgres 16+, Redis e Mailpit [cite: 18, 54]
-        - Laravel 13 instalado e respondendo localmente [cite: 18, 26]
-        - Script wrapper para comandos artisan funcional via container [cite: 29, 36]
-        - .env.example documenta todas as variáveis necessárias [cite: 36]
+        - `docker-compose up` sobe App (PHP 8.4+), Postgres 16+, Redis e Mailpit
+        - Laravel 13 instalado e respondendo localmente
+        - Script wrapper para comandos artisan funcional via container
+        - .env.example documenta todas as variáveis necessárias
 
 - [ ] Fase 2: Database Modeling (Postgres Optimized)
       Agent: database-architect
@@ -744,57 +744,57 @@ Estes são os templates de pipeline para diferentes tipos de projeto.
       Shift-Left: não
       Validation: quick
       Critérios de aceite:
-        - Migrations com tipos Postgres nativos (UUID, JSONB, Timestamptz) [cite: 18, 39]
-        - Models usando PHP 8.4 Property Promotion e Type Hinting rigoroso [cite: 45, 65]
-        - Relacionamentos Eloquent definidos e documentados [cite: 21, 66]
-        - Conexão com banco de dados funcional e migrada [cite: 19, 37]
+        - Migrations com tipos Postgres nativos (UUID, JSONB, Timestamptz)
+        - Models usando PHP 8.4 Property Promotion e Type Hinting rigoroso
+        - Relacionamentos Eloquent definidos e documentados
+        - Conexão com banco de dados funcional e migrada
 
 - [ ] Fase 3: Filament 5 Admin Scaffold
-      Agent: design-specialist
-      Skills: frontend-design, ui-ux-pro-max
+      Agent: backend-specialist
+      Skills: clean-code, deployment-procedures
       Output: Filament Panel Provider, Admin Themes, Custom Login
       Shift-Left: não
-      Âncora: .planning/DESIGN.md (template escolhido no onboarding) [cite: 5, 46]
+      Âncora: .planning/DESIGN.md (template escolhido no onboarding)
       Validation: none
       Critérios de aceite:
-        - Painel administrativo acessível com Vite configurado [cite: 10, 44]
-        - Navegação lateral estruturada por grupos de domínio [cite: 6, 56]
-        - Identidade visual e tokens de cores aplicados ao tema [cite: 5, 47]
+        - Painel administrativo acessível com Vite configurado
+        - Navegação lateral estruturada por grupos de domínio
+        - Identidade visual e tokens de cores aplicados ao tema
 
 - [ ] Fase 4: Core Domain Logic (Services & Actions)
       Agent: backend-specialist
-      Skills: clean-code, tdd-workflow, auth-patterns
+      Skills: clean-code, tdd-workflow
       Output: app/Services/, app/Actions/, app/Contracts/, Pest Tests
       Shift-Left: não
       Validation: quick
       Critérios de aceite:
-        - Lógica de negócio isolada em Service Classes ou Actions [cite: 21, 37]
-        - TDD: Testes de unidade e integração escritos antes da implementação [cite: 38, 48]
-        - Validação de entrada de dados (FormRequests/DTOs) implementada [cite: 21, 38]
-        - Fluxo de autenticação e proteção de rotas funcional [cite: 20, 46]
+        - Lógica de negócio isolada em Service Classes ou Actions
+        - TDD: Testes de unidade e integração escritos antes da implementação
+        - Validação de entrada de dados (FormRequests/DTOs) implementada
+        - Fluxo de autenticação e proteção de rotas funcional
 
 - [ ] Fase 5: Filament Resource Implementation
-      Agent: frontend-specialist
-      Skills: nextjs-react-expert, tailwind-patterns
+      Agent: backend-specialist
+      Skills: clean-code, tdd-workflow
       Output: Filament Resources (Forms, Tables, Pages, Widgets)
       Shift-Left: não
       Validation: quick
       Critérios de aceite:
-        - CRUD completo funcional com componentes nativos do Filament [cite: 22, 56]
-        - Tables com filtros, busca e Bulk Actions configurados [cite: 22, 56]
-        - Loading states e feedback visual de sucesso/erro [cite: 23, 48]
-        - Responsividade garantida para uso em dispositivos mobile [cite: 15, 68]
+        - CRUD completo funcional com componentes nativos do Filament
+        - Tables com filtros, busca e Bulk Actions configurados
+        - Loading states e feedback visual de sucesso/erro
+        - Responsividade garantida para uso em dispositivos mobile
 
 - [ ] Fase 6: Security & Policy Hardening
-      Agent: test-engineer
+      Agent: backend-specialist
       Skills: testing-patterns, oma-verify-work
       Output: Laravel Policies, Gates, Spatie Permissions config
       Shift-Left: não
       Validation: full
       Critérios de aceite:
-        - Permissões de acesso validadas para cada Resource (ACL) [cite: 20, 33]
-        - Nenhuma vulnerabilidade crítica detectada em auditoria simples [cite: 24, 71]
-        - Tratamento de mensagens duplicadas e rate limiting [cite: 27, 61]
+        - Permissões de acesso validadas para cada Resource (ACL)
+        - Nenhuma vulnerabilidade crítica detectada em auditoria simples
+        - Rate limiting e proteção contra CSRF implementados
 
 - [ ] Fase 7: QA Final + Deploy Pipeline
       Agent: devops-engineer
@@ -803,8 +803,8 @@ Estes são os templates de pipeline para diferentes tipos de projeto.
       Shift-Left: não
       Validation: full
       Critérios de aceite:
-        - Pipeline de CI/CD verde com lint + testes automatizados [cite: 9, 64]
-        - Performance: Consultas SQL otimizadas (sem N+1 queries) [cite: 41, 50]
-        - Deploy automatizado em ambiente de staging/produção [cite: 17, 42]
-        - README documenta setup, comandos e monitoramento [cite: 42, 60]
+        - Pipeline de CI/CD verde com lint + testes automatizados
+        - Performance: Consultas SQL otimizadas (sem N+1 queries)
+        - Deploy automatizado em ambiente de staging/produção
+        - README documenta setup, comandos e monitoramento
 ```
