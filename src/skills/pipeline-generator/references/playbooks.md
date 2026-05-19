@@ -717,3 +717,94 @@ Estes são os templates de pipeline para diferentes tipos de projeto.
         - EAS Build gerando builds de produção
         - Nenhuma vulnerabilidade crítica (npm audit)
 ```
+
+## Playbook J — Laravel Enterprise (Laravel 13 + Filament 5 + Docker)
+
+> Para projetos monorepo robustos que utilizam o ecossistema PHP moderno.
+> Baseado em Docker Compose com PHP 8.4+, PostgreSQL 16+ e interface administrativa via Filament 5.
+> Para projetos menores, usar Playbook C (SaaS) ou G (Mobile) separadamente.
+
+```markdown
+- [ ] Fase 1: Docker Infrastructure + Laravel 13 Scaffold
+      Agent: devops-engineer
+      Skills: deployment-procedures, environment-setup
+      Output: docker-compose.yml, Dockerfile, .env.example, artisan-wrapper.sh
+      Shift-Left: sim
+      Validation: quick
+      Critérios de aceite:
+        - `docker-compose up` sobe App (PHP 8.4+), Postgres 16+, Redis e Mailpit [cite: 18, 54]
+        - Laravel 13 instalado e respondendo localmente [cite: 18, 26]
+        - Script wrapper para comandos artisan funcional via container [cite: 29, 36]
+        - .env.example documenta todas as variáveis necessárias [cite: 36]
+
+- [ ] Fase 2: Database Modeling (Postgres Optimized)
+      Agent: database-architect
+      Skills: database-design, tdd-workflow
+      Output: Migrations, Models (Strict Typed), Eloquent Factories
+      Shift-Left: não
+      Validation: quick
+      Critérios de aceite:
+        - Migrations com tipos Postgres nativos (UUID, JSONB, Timestamptz) [cite: 18, 39]
+        - Models usando PHP 8.4 Property Promotion e Type Hinting rigoroso [cite: 45, 65]
+        - Relacionamentos Eloquent definidos e documentados [cite: 21, 66]
+        - Conexão com banco de dados funcional e migrada [cite: 19, 37]
+
+- [ ] Fase 3: Filament 5 Admin Scaffold
+      Agent: design-specialist
+      Skills: frontend-design, ui-ux-pro-max
+      Output: Filament Panel Provider, Admin Themes, Custom Login
+      Shift-Left: não
+      Âncora: .planning/DESIGN.md (template escolhido no onboarding) [cite: 5, 46]
+      Validation: none
+      Critérios de aceite:
+        - Painel administrativo acessível com Vite configurado [cite: 10, 44]
+        - Navegação lateral estruturada por grupos de domínio [cite: 6, 56]
+        - Identidade visual e tokens de cores aplicados ao tema [cite: 5, 47]
+
+- [ ] Fase 4: Core Domain Logic (Services & Actions)
+      Agent: backend-specialist
+      Skills: clean-code, tdd-workflow, auth-patterns
+      Output: app/Services/, app/Actions/, app/Contracts/, Pest Tests
+      Shift-Left: não
+      Validation: quick
+      Critérios de aceite:
+        - Lógica de negócio isolada em Service Classes ou Actions [cite: 21, 37]
+        - TDD: Testes de unidade e integração escritos antes da implementação [cite: 38, 48]
+        - Validação de entrada de dados (FormRequests/DTOs) implementada [cite: 21, 38]
+        - Fluxo de autenticação e proteção de rotas funcional [cite: 20, 46]
+
+- [ ] Fase 5: Filament Resource Implementation
+      Agent: frontend-specialist
+      Skills: nextjs-react-expert, tailwind-patterns
+      Output: Filament Resources (Forms, Tables, Pages, Widgets)
+      Shift-Left: não
+      Validation: quick
+      Critérios de aceite:
+        - CRUD completo funcional com componentes nativos do Filament [cite: 22, 56]
+        - Tables com filtros, busca e Bulk Actions configurados [cite: 22, 56]
+        - Loading states e feedback visual de sucesso/erro [cite: 23, 48]
+        - Responsividade garantida para uso em dispositivos mobile [cite: 15, 68]
+
+- [ ] Fase 6: Security & Policy Hardening
+      Agent: test-engineer
+      Skills: testing-patterns, oma-verify-work
+      Output: Laravel Policies, Gates, Spatie Permissions config
+      Shift-Left: não
+      Validation: full
+      Critérios de aceite:
+        - Permissões de acesso validadas para cada Resource (ACL) [cite: 20, 33]
+        - Nenhuma vulnerabilidade crítica detectada em auditoria simples [cite: 24, 71]
+        - Tratamento de mensagens duplicadas e rate limiting [cite: 27, 61]
+
+- [ ] Fase 7: QA Final + Deploy Pipeline
+      Agent: devops-engineer
+      Skills: deployment-procedures, performance-profiling
+      Output: GitHub Actions (CI/CD), relatório de performance
+      Shift-Left: não
+      Validation: full
+      Critérios de aceite:
+        - Pipeline de CI/CD verde com lint + testes automatizados [cite: 9, 64]
+        - Performance: Consultas SQL otimizadas (sem N+1 queries) [cite: 41, 50]
+        - Deploy automatizado em ambiente de staging/produção [cite: 17, 42]
+        - README documenta setup, comandos e monitoramento [cite: 42, 60]
+```
