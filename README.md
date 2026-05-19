@@ -1,196 +1,253 @@
 <div align="center">
 
-# 🤖 OneManAgency (v4.1)
+# OneManAgency (v4.1)
 
-**O framework open-source para você construir software como se tivesse uma agência inteira trabalhando para você.**<br>
-*Orquestração Multi-LLM, Context Engineering nativo, PIV Loop e TDD para Claude Code, OpenCode, Cursor, Windsurf, Aider, Hermes Agent, Roo Code e Gemini CLI.*
+**Open-source framework to build software like you have a full agency working for you.**
 
-[![npm version](https://img.shields.io/badge/npm-v4.1.0-CB3837?style=for-the-badge&logo=npm)](https://github.com/pauloarthurrocha/OneManAgency)
+Multi-LLM Orchestration, native Context Engineering, PIV Loop, and TDD for Claude Code, OpenCode, Cursor, Windsurf, Aider, Hermes Agent, Roo Code, and Gemini CLI.
+
+[![npm version](https://img.shields.io/npm/v/onemanagency?style=for-the-badge&logo=npm&color=CB3837)](https://www.npmjs.com/package/onemanagency)
+[![npm downloads](https://img.shields.io/npm/dm/onemanagency?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/onemanagency)
+[![GitHub stars](https://img.shields.io/github/stars/pauloarthurrocha/OneManAgency?style=for-the-badge&logo=github)](https://github.com/pauloarthurrocha/OneManAgency/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/pauloarthurrocha/OneManAgency?style=for-the-badge&logo=github)](https://github.com/pauloarthurrocha/OneManAgency/issues)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![Node.js](https://img.shields.io/badge/Node.js-20+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
 
-*“Não escreva prompts. Arquiteture sistemas.”*
+*"Don't write prompts. Architect systems."*
 
 </div>
 
 ---
 
-## 🌪️ Por que eu construí isso?
+## Why I Built This
 
-Eu sou um solo builder. Eu construo SaaS e produtos de ponta a ponta. 
+I'm a solo builder. I build SaaS and products end-to-end.
 
-Eu estava cansado de ver a inteligência artificial se perder no meio de projetos grandes. A janela de contexto enchia (o famoso **Lost in the Middle**), a IA esquecia a arquitetura, começava a escrever aquele design genérico com gradientes roxos (o "AI Slop") e gerava código sem testes que quebrava na produção. 
+I was tired of AI getting lost in large projects. Context window would fill up (the infamous **Lost in the Middle**), AI would forget the architecture, start writing that generic purple gradient design (the "AI Slop"), and generate untested code that broke in production.
 
-Ferramentas empresariais eram pesadas demais para o meu fluxo de trabalho. Então eu peguei as melhores metodologias do Vale do Silício (Y Combinator, Spec-Driven Development, TDD) e criei a **OneManAgency (OMA)**. 
+Enterprise tools were too heavy for my workflow. So I took the best methodologies from Silicon Valley (Y Combinator, Spec-Driven Development, TDD) and created **OneManAgency (OMA)**.
 
-A complexidade inteira está no sistema, não no seu fluxo de trabalho. Você continua usando a IDE que ama, mas agora a sua IA segue regras corporativas invisíveis por baixo dos panos.
-
-### Como o OMA conserta a IA:
-1. **Context Engineering no lugar de memória RAM:** O contexto do seu projeto não morre mais no chat. Tudo é persistido em arquivos invisíveis no seu disco (`HANDOFF.md`, `STATE.md`). Quando você abre a IDE no dia seguinte, a IA lê isso e já sabe onde parou.
-2. **O PIV Loop (Plan, Implement, Validate):** O OMA proíbe a IA de planejar e codar no mesmo fôlego. O agente faz o plano, gera o Handoff e avisa: *"Limpe o chat para não alucinar"*. Você limpa, dá o play, e a IA coda com contexto vazio e foco a laser.
-3. **Tríade de Revisão:** Antes de codar, o seu briefing não vira código imediatamente. Ele é barrado por 3 "agentes" (CEO, Tech Lead, Design Lead) que cortam features inúteis, cravam o banco de dados e proíbem o "AI Slop".
-4. **TDD é Lei:** O agente de Backend é proibido de escrever código de produção sem antes escrever um teste que falhe. Sério.
-5. **Batteries Included (MCPs Embutidos):** Ferramentas de IA são burras sem ferramentas externas. O `/oma-init` injeta na raiz do seu projeto um arquivo `.mcp.json` hiper-otimizado. Sem você configurar NENHUMA chave de API, a sua IA ganha o poder de **Puppeteer** (para navegar e raspar sites de graça), **Context7** (para ler docs oficiais e não usar código depreciado), **Sequential Thinking** (força a IA a raciocinar antes de gerar código bugado) e **Memory**.
-6. **Híbrido e Otimizado (Offline-First & Cross-OS):** A instalação do framework acontece uma única vez via NPM. Repositórios base de skills são clonados silenciosamente, e CLIs avançados (como de UI/UX) são instalados no sistema global. Depois disso, rodar o `/oma-init` num projeto novo leva 0.5 segundos e propaga a inteligência para a sua IDE instantaneamente. E como os agentes usam ferramentas nativas do FileSystem em vez de *Shell Scripts*, a agência roda perfeitamente em Mac, Linux e Windows (PowerShell).
-
+The complexity lives in the system, not in your workflow. You keep using the IDE you love, but now your AI follows invisible corporate rules under the hood.
 
 ---
 
-## ⚡ Instalação 
+## How OMA Fixes AI
 
-Nosso script detecta automaticamente a IDE ou CLI que você usa (`.claude`, `.opencode`, `.cursor`, `.roo`, `.gemini`, `.windsurf`, `.aider`, `.cline`) e injeta as skills lá dentro.
+### PIV Loop (Plan-Implement-Validate)
 
-```bash
+```mermaid
+graph LR
+    A["ðŸ“‹ PLAN"] -->|"/clear"| B["âš¡ IMPLEMENT"]
+    B --> C["âœ… VALIDATE"]
+    C -->|pass| D["ðŸš€ SHIP"]
+    C -->|fail| A
 
-# Instalar globalmente na sua máquina
-npm install -g onemanagency@latest
+    style A fill:#3b82f6,stroke:#1e40af,color:#fff
+    style B fill:#f59e0b,stroke:#d97706,color:#fff
+    style C fill:#10b981,stroke:#059669,color:#fff
+    style D fill:#8b5cf6,stroke:#6d28d9,color:#fff
+```
+
+OMA forbids AI from planning and coding in the same breath. Agent plans, generates Handoff, and warns: *"Clear the chat to avoid hallucination."* You clear, hit play, and AI codes with empty context and laser focus.
+
+### 3-Gate Review Triad
+
+```mermaid
+graph TD
+    BRIEFING["ðŸ“ BRIEFING"] --> CEO["ðŸ‘” CEO REVIEW"]
+    CEO -->|approved| ENG["âš™ï¸ ENG REVIEW"]
+    CEO -->|rejected| CUT["âŒ CUT"]
+    ENG -->|approved| DESIGN["ðŸŽ¨ DESIGN REVIEW"]
+    ENG -->|rejected| CUT
+    DESIGN -->|approved| PRD["ðŸ“„ PRD.md"]
+    DESIGN -->|rejected| CUT
+
+    style CEO fill:#3b82f6,stroke:#1e40af,color:#fff
+    style ENG fill:#f59e0b,stroke:#d97706,color:#fff
+    style DESIGN fill:#ec4899,stroke:#be185d,color:#fff
+    style PRD fill:#10b981,stroke:#059669,color:#fff
+    style CUT fill:#ef4444,stroke:#dc2626,color:#fff
+```
+
+Before coding, your briefing doesn't become code immediately. It's blocked by 3 "agents" (CEO, Tech Lead, Design Lead) that cut useless features, lock the database schema, and forbid "AI Slop."
+
+### Architecture Overview
+
+```mermaid
+graph TB
+    subgraph IDE["ðŸ–¥ï¸ Supported IDEs"]
+        CC["Claude Code"]
+        OC["OpenCode"]
+        CU["Cursor"]
+        WS["Windsurf"]
+        AD["Aider"]
+        GC["Gemini CLI"]
+    end
+
+    subgraph OMA["ðŸ¤– OneManAgency"]
+        INIT["/oma-init"]
+        ONB["/client-onboarding"]
+        PIPE["/pipeline-generator"]
+        EXEC["/oma-executor"]
+        VERIFY["/oma-verify-work"]
+    end
+
+    subgraph AGENTS["ðŸ‘¥ 17 Agents"]
+        FE["Frontend"]
+        BE["Backend"]
+        DB["Database"]
+        DO["DevOps"]
+        SEC["Security"]
+        MORE["...12 more"]
+    end
+
+    IDE --> INIT
+    INIT --> ONB
+    ONB --> PIPE
+    PIPE --> EXEC
+    EXEC --> AGENTS
+    AGENTS --> VERIFY
+
+    style IDE fill:#6366f1,stroke:#4f46e5,color:#fff
+    style OMA fill:#059669,stroke:#047857,color:#fff
+    style AGENTS fill:#f59e0b,stroke:#d97706,color:#fff
 ```
 
 ---
 
-## 🚀 Como Funciona na Prática
+## Quick Start
 
-Você não precisa ficar digitando dezenas de comandos. O OMA tem "Autonomous Skill Chaining". A IA guia o processo.
+```bash
+# Install globally
+npm install -g onemanagency@latest
 
-### 1. O Setup
-Crie uma pasta vazia para o seu novo produto e chame o Engenheiro de Infraestrutura (oma-init).
+# Create a new project
+mkdir my-new-saas && cd my-new-saas
+
+# Initialize OMA (auto-detects your IDE)
+/oma-init
+```
+
+The installer auto-detects your IDE (`.claude`, `.opencode`, `.cursor`, `.roo`, `.gemini`, `.windsurf`, `.aider`, `.cline`) and injects skills there.
+
+---
+
+## 17 Specialized Personas
+
+OMA uses strict `Agent Definition Files` in `src/agents/`. These are files that tell exactly what the agent hates and how it operates. **17 personas** triggered by `PIPELINE.md` via metadata `Agent: <name>`:
+
+| Category | Agents |
+|---|---|
+| **Implementation (5)** | Frontend Specialist Â· Backend Specialist Â· Database Architect Â· DevOps Engineer Â· Mobile Specialist |
+| **Design & Content (2)** | Design Specialist Â· Copywriter Specialist |
+| **Quality (5)** | Code Reviewer Â· Accessibility Auditor Â· Performance Engineer Â· Reality Checker Â· Test Engineer |
+| **Specialists (5)** | Security Auditor Â· SEO Specialist Â· MCP Builder Â· Chatbot Specialist Â· Lead Orchestrator |
+
+---
+
+## 9 Tested Playbooks
+
+The `pipeline-generator` has ready playbooks for each project type:
+
+| Playbook | Type | Stack |
+|---|---|---|
+| A | SaaS Full-Stack | Next.js + Supabase + Vercel |
+| B | Static Landing Page | HTML/CSS + Vercel/Netlify |
+| C | Landing Page Next.js | Next.js + Vercel |
+| D | Python Automation | Python + FastAPI + Cloud Run |
+| E | Low-Ticket / Infoproduct | HTML + Kiwify Checkout |
+| F | Data Pipeline / ETL | Python + Airflow/Prefect + BigQuery |
+| G | Mobile React Native | React Native + Expo + EAS |
+| H | WhatsApp Chatbot | Node.js + Baileys/Botpress |
+| I | Hybrid / Monorepo | Turborepo + shared packages |
+
+---
+
+## How It Works in Practice
+
+### 1. Setup
 ```bash
 mkdir meu-novo-saas && cd meu-novo-saas
 /oma-init
 ```
 
-### 2. O Embate Socrático
-O OMA não vai te dar um formulário passivo. O agente assume a persona de um **Partner da Y Combinator**. Se você falar "quero um app com 50 features", a IA vai te perguntar: *"Qual a dor real? Vamos focar só na funcionalidade que gera receita no dia 1"*.
+### 2. Socratic Interview
+OMA doesn't give you a passive form. The agent assumes the persona of a **Y Combinator Partner**. If you say "I want an app with 50 features", the AI asks: *"What's the real pain? Let's focus only on the feature that generates revenue on day 1."*
 
-### 3. A Barreira (Tríade)
-O briefing passa por três filtros automáticos:
-- 👔 **CEO Review**: Gera o `PRD.md` (Product Requirements Document).
-- ⚙️ **Eng Review**: Define o schema e fluxo de dados (`ARCHITECTURE.md`).
-- 🎨 **Design Review**: Define os tokens, tipografia e regras de motion anti-genérico (`UI-SPEC.md`).
+### 3. The Barrier (Triad)
+The briefing passes through 3 automatic filters:
+- **CEO Review** â†’ Generates `PRD.md`
+- **Eng Review** â†’ Defines schema and data flow (`ARCHITECTURE.md`)
+- **Design Review** â†’ Defines tokens, typography, and anti-generic motion rules (`UI-SPEC.md`)
 
-### 4. Execução (O PIV Loop)
-O Gerador de Pipeline fatia tudo em tarefas atômicas. Você aciona o `oma-executor`. 
-A IA planeja a tarefa, escreve no disco e pede para você limpar a tela. Você limpa. Ao retornar, o agente de Frontend (focado em acessibilidade e Tailwind) ou de Backend (focado em TDD) entra em ação. Sem alucinações.
-
----
-
-## 🧠 Nós usamos Personas Reais, não "Roleplay Raso"
-
-Dizer *"aja como um sênior"* no começo de um prompt não funciona. O OMA usa `Agent Definition Files` estritos em `src/agents/`. São arquivos que dizem exatamente o que o agente odeia e como ele opera. **17 personas** disparadas pelo PIPELINE.md via metadata `Agent: <nome>`:
-
-**Implementação (5):**
-- **Frontend Specialist** — Acessibilidade nativa, skeletons/error states obrigatórios, âncora de design intransigente.
-- **Backend Specialist** — Segue a "TDD Iron Law". Se tentar gambiarra, a persona barra.
-- **Database Architect** — Schema, índices, RLS policies (Supabase), migrations idempotentes.
-- **DevOps Engineer** — CI/CD, Docker, observability, deploy seguro.
-- **Mobile Specialist** — React Native/Expo, touch-first UX, performance em devices低端, app store guidelines.
-
-**Design & Conteúdo (2):**
-- **Design Specialist** — Filosofia Emil Kowalski. Spring animations, espaço negativo, anti-AI-slop.
-- **Copywriter Specialist** — Headlines, CTAs, tom de voz. Marketing-psychology-aware.
-
-**Qualidade (5):**
-- **Code Reviewer** — Audita correctness, segurança, manutenibilidade, performance. Prioriza blocker/sugestão/nit.
-- **Accessibility Auditor** — WCAG 2.2 AA. Screen reader-first. Lighthouse 100/100 não é prova.
-- **Performance Engineer** — Mede com p95/p99 antes de otimizar. Core Web Vitals, k6, profiling.
-- **Reality Checker** — Default NEEDS WORK. Exige evidência visual antes de "production ready".
-- **Test Engineer** — Unit, integration, E2E. Coverage como sinal, não como meta.
-
-**Especialistas (5):**
-- **Security Auditor** — OWASP, JWT, middleware, secrets hygiene.
-- **SEO Specialist** — Meta tags, schema, Core Web Vitals, AI citation (GEO/AEO).
-- **MCP Builder** — Constrói servidores Model Context Protocol customizados.
-- **Chatbot Specialist** — WhatsApp bots (BuilderBot/Baileys/Botpress), fluxos conversacionais, integração com APIs de messaging.
-- **Lead Orchestrator** — Em refatorações multi-domínio, abre Git Worktrees e coordena waves paralelas.
+### 4. Execution (PIV Loop)
+The Pipeline Generator slices everything into atomic tasks. You invoke `oma-executor`.
+The AI plans the task, writes to disk, and asks you to clear the screen. You clear. On return, the Frontend agent (focused on accessibility and Tailwind) or Backend agent (focused on TDD) takes action. No hallucinations.
 
 ---
 
-## 🔌 Bring Your Own Agents
+## Key Features
 
-O OMA dispara agentes via metadata `Agent: <nome>` no `PIPELINE.md`. Qualquer arquivo `.md` com frontmatter `name:` em `.agents/agents/` é elegível. Você não está limitado às 15 personas core — recomendamos colar essas bibliotecas para ampliar:
+| Feature | Description |
+|---|---|
+| **Context Engineering** | Project state persisted on disk (`HANDOFF.md`, `STATE.md`), not in chat RAM |
+| **PIV Loop** | Plan â†’ /clear â†’ Implement â†’ Validate. Prevents hallucination. |
+| **3-Gate Review** | CEO + Eng + Design cut useless features before code is written |
+| **TDD Iron Law** | Backend agent is forbidden to write production code without a failing test first |
+| **Batteries Included** | MCPs auto-configured: Puppeteer, Context7, Sequential Thinking, Memory |
+| **Offline-First** | Works without internet after install. Native FileSystem, not shell scripts. |
+| **Cross-IDE** | Claude Code, Cursor, OpenCode, Windsurf, Aider, Gemini CLI, and more |
+| **Progressive Disclosure** | Skills load only essential (~200 lines), playbooks load on demand |
 
-| Biblioteca | Stars | Quando ajuda | Como integrar |
+---
+
+## Bring Your Own Agents
+
+OMA triggers agents via metadata `Agent: <name>` in `PIPELINE.md`. Any `.md` file with frontmatter `name:` in `.agents/agents/` is eligible. You're not limited to the 17 core personas:
+
+| Library | Stars | When it helps | How to integrate |
 |---|---|---|---|
-| [agency-agents](https://github.com/msitarzewski/agency-agents) (msitarzewski) | 73-94k | 144 agentes em 12 divisões: Marketing (29), Sales (9), Finance (5), Game Dev (20), Spatial Computing (6) | Copie o `.md` desejado para `.agents/agents/` e referencie no PIPELINE |
-| [GStack](https://github.com/garrytan/gstack) (Garry Tan, YC) | — | 23 personas com foco em product validation e office-hours framework | Copie o agent para `.agents/agents/` |
-| [Superpowers](https://github.com/obra/superpowers) (obra) | — | 15 skills compostas (TDD, brainstorming, systematic-debugging) | Use como **skill** em `.agents/skills/`, não como agent |
-
-**Convenção de nomes:** OMA usa kebab-case curto (ex: `code-reviewer.md`). Agency-agents usa `<division>-<name>.md`. Renomeie ao copiar ou referencie pelo nome exato no PIPELINE.
+| [agency-agents](https://github.com/msitarzewski/agency-agents) | 73-94k | 144 agents in 12 divisions | Copy `.md` to `.agents/agents/` |
+| [GStack](https://github.com/garrytan/gstack) (Garry Tan, YC) | â€” | 23 personas focused on product validation | Copy agent to `.agents/agents/` |
+| [Superpowers](https://github.com/obra/superpowers) | â€” | 15 composite skills (TDD, debugging) | Use as **skill** in `.agents/skills/` |
 
 ---
 
-## 📋 Playbooks Testados (9 tipos de projeto)
+## Inspiration (Prior Art)
 
-O `pipeline-generator` já tem playbooks prontos para cada tipo de projeto. Cada playbook define fases, agentes, skills e critérios de aceite específicos:
+I didn't invent the wheel. OMA is a synthesis of the brightest minds in Agentic Engineering and Design:
 
-| Playbook | Tipo | Stack |
-|---|---|---|
-| A | SaaS Full-Stack | Next.js + Supabase + Vercel |
-| B | Landing Page Estática | HTML/CSS + Vercel/Netlify |
-| C | Landing Page Next.js | Next.js + Vercel |
-| D | Automação Python | Python + FastAPI + Cloud Run |
-| E | Low-Ticket / Infoproduto | HTML + Kiwify Checkout |
-| F | Data Pipeline / ETL | Python + Airflow/Prefect + BigQuery |
-| G | Mobile React Native | React Native + Expo + EAS |
-| H | Chatbot WhatsApp | Node.js + Baileys/Botpress |
-| I | Hybrid / Monorepo | Turborepo + shared packages |
+### Architecture & Product Management
+- **[GStack](https://github.com/garrytan/gstack)** (Garry Tan) â€” Inspired our Review Triad
+- **[Get-Shit-Done](https://github.com/gsd-build/get-shit-done)** â€” Inspired our lightweight file persistence
+- **[Spec-Kit](https://github.com/github/spec-kit)** â€” Validated Spec-Driven Development
 
-Cada playbook é testado em produção. Novos playbooks podem ser criados pela comunidade — basta seguir o schema em `src/skills/pipeline-generator/references/playbooks.md`.
+### Engineering
+- **[Superpowers](https://github.com/obra/superpowers)** â€” Base of our Backend Specialist (TDD Iron Law)
+- **[Agency-Agents](https://github.com/msitarzewski/agency-agents)** â€” Taught us that "shallow roleplay" doesn't work
 
----
+### Anti-"AI Slop"
+- **[Impeccable](https://github.com/pbakaus/impeccable)** & **[Taste-Skill](https://github.com/leonxlnx/taste-skill)** â€” Defense against AI Slop
+- **[Emil Kowalski's Philosophy](https://emilkowal.ski/)** â€” Backbone of our Design Specialist
+- **[Huashu Design](https://github.com/alchaincyf/huashu-design)** â€” Rapid prototyping insights
 
-## 🧬 Progressive Disclosure (Performance de Contexto)
-
-Desde a v4.1, todas as skills core (`client-onboarding`, `pipeline-generator`, `oma-executor`, `oma-init`) foram modularizadas. O `SKILL.md` principal carrega apenas o essencial (~200 linhas) e referência playbooks e exemplos em `references/`. Isso garante:
-
-- **Menos tokens injetados** por prompt → mais espaço para o código real
-- **Carregamento sob demanda** → a IA só puxa o playbook relevante ao tipo de projeto
-- **Manutenção mais fácil** → atualizar um playbook não exige reescrever a skill
+If you like OMA, please consider giving a Star to the repos of these giants. We stand on their shoulders.
 
 ---
 
-## 🔬 Eval Harness (QA Autônomo com LLM-as-a-Judge)
+## Continuous Integration (24/7 Coworking)
 
-O `oma-verify-work` agora inclui um sistema de avaliação autônomo que usa LLM como juiz para validar qualidade estética e arquitetônica. Após cada fase, além dos checks de arquivo e build, o agente:
+Since OMA uses files on disk (Context Engineering) instead of chat memory, it's the perfect engine for autonomous terminal orchestrators:
 
-- Avalia se o código segue o `DESIGN.md` (anti-AI Slop)
-- Verifica se a arquitetura bate com o `ARCHITECTURE.md`
-- Gera um relatório `.planning/VERIFICATION_REPORT.md` com status PASS/WARNING/FAIL
-
----
-
-## 🤝 Integração Contínua (24/7 Coworking)
-
-Como o OMA usa arquivos no disco (Context Engineering) em vez de memória de chat, ele é o motor perfeito para orquestradores de terminais autônomos:
-
-*   **[AionUi](https://github.com/iOfficeAI/AionUi):** Você pode instanciar múltiplos terminais lado a lado na UI deles e delegar as fases do `PIPELINE.md`. O AionUi é o "escritório", o OMA é o "método".
-*   **[Hermes Agent](https://github.com/NousResearch/hermes-agent) / OpenClaw:** O instalador detecta as pastas `~/.hermes/skills` automaticamente. Você pode rodar a agência num VPS e comandar os agentes via Telegram ou Discord.
-
----
-
-## 🌟 Onde fomos buscar inspiração (Prior Art)
-
-Eu não inventei a roda. O OMA é a síntese das mentes mais brilhantes do mercado de Engenharia Agêntica e Design. Se esse repo existe, é por causa deles:
-
-### 🏛️ Arquitetura & Product Management
-*   **[GStack](https://github.com/garrytan/gstack) (por Garry Tan):** Inspirou nossa Tríade de Revisão. A OMA adotou a visão de que código não deve ser escrito sem focar no MVP e cortar escopo.
-*   **[Get-Shit-Done (GSD)](https://github.com/gsd-build/get-shit-done):** Inspirou nossa leveza e persistência em arquivos (`STATE.md`).
-*   **[Spec-Kit](https://github.com/github/spec-kit):** Validou o *Spec-Driven Development*. Exigimos `PRD.md` antes de qualquer código.
-
-### ⚙️ Engenharia
-*   **[Superpowers](https://github.com/obra/superpowers):** A base do nosso Backend Specialist. Importamos a "TDD Iron Law" e os Git Worktrees para execução paralela.
-*   **[Agency-Agents](https://github.com/msitarzewski/agency-agents):** Nos ensinou que "Roleplay Raso" não funciona. Usamos *Agent Definition Files* rígidos em vez de prompts genéricos.
-
-### 🎨 Anti-"AI Slop"
-Interfaces de IA costumam ser óbvias e cansativas. Nós blindamos o OMA importando filosofias dos maiores nomes do Frontend Design:
-*   **[Impeccable](https://github.com/pbakaus/impeccable) & [Taste-Skill](https://github.com/leonxlnx/taste-skill):** A base da nossa defesa contra o "AI Slop". Espaçamento intencional, contraste luxuoso e tipografia refinada.
-*   **[A Filosofia de Emil Kowalski](https://emilkowal.ski/):** A espinha dorsal do nosso *Design Specialist*. Micro-interações e animações fluidas.
-*   **[Huashu Design](https://github.com/alchaincyf/huashu-design):** Insights de prototipagem rápida e componentes HTML nativos de altíssima fidelidade.
-
-Se você gosta do OMA, por favor, considere dar um Star nos repositórios desses caras. Nós estamos nos ombros de gigantes.
+- **[AionUi](https://github.com/iOfficeAI/AionUi)** â€” Instantiate multiple terminals side by side. AionUi is the "office", OMA is the "method".
+- **[Hermes Agent](https://github.com/NousResearch/hermes-agent) / OpenClaw** â€” Run the agency on a VPS and command agents via Telegram or Discord.
 
 ---
 
 <div align="center">
-<i>"Você não sobe o nível do seu código pedindo por favor. Você sobe o nível construindo sistemas que proíbem código ruim."</i><br><br>
-<b>Licença MIT | Feito por um builder, para builders.</b>
+
+*"You don't level up your code by asking nicely. You level up by building systems that forbid bad code."*
+
+**MIT License | Made by a builder, for builders.**
+
 </div>
