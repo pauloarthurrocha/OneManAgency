@@ -29,8 +29,8 @@ A complexidade inteira está no sistema, não no seu fluxo de trabalho. Você co
 2. **O PIV Loop (Plan, Implement, Validate):** O OMA proíbe a IA de planejar e codar no mesmo fôlego. O agente faz o plano, gera o Handoff e avisa: *"Limpe o chat para não alucinar"*. Você limpa, dá o play, e a IA coda com contexto vazio e foco a laser.
 3. **Tríade de Revisão:** Antes de codar, o seu briefing não vira código imediatamente. Ele é barrado por 3 "agentes" (CEO, Tech Lead, Design Lead) que cortam features inúteis, cravam o banco de dados e proíbem o "AI Slop".
 4. **TDD é Lei:** O agente de Backend é proibido de escrever código de produção sem antes escrever um teste que falhe. Sério.
-5. **Batteries Included (MCPs Embutidos):** Ferramentas de IA são burras sem ferramentas externas. O `/oma-init` injeta na raiz do seu projeto um arquivo `.mcp.json` hiper-otimizado. Sem você configurar NENHUMA chave de API, a sua IA ganha o poder de **Puppeteer** (para navegar e raspar sites de graça), **Context7** (para ler docs oficiais e não usar código depreciado), **Sequential Thinking** (força a IA a raciocinar antes de gerar código bugado) e **Memory**.
-6. **Híbrido e Otimizado (Offline-First & Cross-OS):** A instalação do framework acontece uma única vez via NPM. Repositórios base de skills são clonados silenciosamente, e CLIs avançados (como de UI/UX) são instalados no sistema global. Depois disso, rodar o `/oma-init` num projeto novo leva 0.5 segundos e propaga a inteligência para a sua IDE instantaneamente. E como os agentes usam ferramentas nativas do FileSystem em vez de *Shell Scripts*, a agência roda perfeitamente em Mac, Linux e Windows (PowerShell).
+5. **Batteries Included (MCPs Embutidos):** Ferramentas de IA são burras sem ferramentas externas. A skill `oma-init` rodando na sua IDE injeta na raiz do seu projeto um arquivo `.mcp.json` hiper-otimizado. Sem você configurar NENHUMA chave de API, a sua IA ganha o poder de **Puppeteer** (para navegar e raspar sites de graça), **Context7** (para ler docs oficiais e não usar código depreciado), **Sequential Thinking** (força a IA a raciocinar antes de gerar código bugado) e **Memory**.
+6. **Híbrido e Otimizado (Offline-First & Cross-OS):** A instalação do framework acontece uma única vez via NPM. Repositórios base de skills são clonados silenciosamente, e CLIs avançados (como de UI/UX) são instalados no sistema global. Depois disso, inicializar o OMA em um projeto novo leva 0.5 segundos e propaga a inteligência para a sua IDE instantaneamente. E como os agentes usam ferramentas nativas do FileSystem em vez de *Shell Scripts*, a agência roda perfeitamente em Mac, Linux e Windows (PowerShell).
 
 
 ---
@@ -52,9 +52,8 @@ npm install -g onemanagency@latest
 Você não precisa ficar digitando dezenas de comandos. O OMA tem "Autonomous Skill Chaining". A IA guia o processo.
 
 ### 1. O Setup
-Crie uma pasta vazia para o seu novo produto e chame o Engenheiro de Infraestrutura (oma-init).
-```bash
-mkdir meu-novo-saas && cd meu-novo-saas
+Crie uma pasta vazia e abra ela na sua IDE com a IA ligada. Chame o Engenheiro de Infraestrutura pelo chat com a IA da IDE:
+```text
 /oma-init
 ```
 

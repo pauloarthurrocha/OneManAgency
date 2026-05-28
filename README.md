@@ -72,14 +72,18 @@ Enterprise tools were too heavy. So I took the best methodologies from Silicon V
 
 ## Quick Start
 
+1. **Install globally** on your machine (terminal):
 ```bash
-# Install globally
 npm install -g onemanagency@latest
+```
 
-# Create a new project
+2. **Create a new folder** and open it in your AI-powered IDE (Claude Code, Cursor, Roo Code, etc.):
+```bash
 mkdir my-new-saas && cd my-new-saas
+```
 
-# Initialize OMA (auto-detects your IDE)
+3. **Initialize OMA** by typing the slash command directly in your IDE's AI chat:
+```text
 /oma-init
 ```
 
@@ -121,8 +125,8 @@ The `pipeline-generator` has ready playbooks for each project type:
 ## How It Works in Practice
 
 ### 1. Setup
-```bash
-mkdir meu-novo-saas && cd meu-novo-saas
+Crie uma pasta vazia e abra ela na sua IDE com IA ligada. Chame o Engenheiro de Infraestrutura pelo chat:
+```text
 /oma-init
 ```
 

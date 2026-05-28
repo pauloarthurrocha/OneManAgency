@@ -69,6 +69,9 @@ opencode-vanilla-config.json
 .mcp.json
 .npmrc
 
+# Landing page (não faz parte do sistema CLI)
+oma-landing/
+
 # ATENÇÃO: NÃO ignorar AGENTS.md no repo do framework — ele é o
 # dev context para contribuidores. Em projetos cliente o oma-init
 # gera um AGENTS.md diferente, mas isso é problema do projeto cliente.

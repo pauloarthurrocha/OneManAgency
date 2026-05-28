@@ -31,11 +31,11 @@ oma doctor
 Nós não começamos abrindo um arquivo `.tsx` ou `.py`. O OMA te força a ser um Product Manager primeiro. 
 
 ### Passo 1: O Terreno
-Crie uma pasta vazia. Abra ela no seu terminal com a sua IA ligada e rode:
-```bash
+Crie uma pasta vazia e abra ela na sua IDE com a IA ligada. Chame o Engenheiro de Infraestrutura pelo chat com a IA da IDE para criar toda a estrutura do projeto:
+```text
 /oma-init
 ```
-*O que acontece:* Ele vai montar os arquivos ocultos que o OMA usa para ter "memória de longo prazo" (`STATE.md`, diretórios escondidos). 
+*O que acontece:* A IA vai carregar a skill globalmente de `~/.oma/`, configurar os MCPs, criar os arquivos de contexto invisíveis (`STATE.md`, `AGENTS.md`) e preparar as pastas de skills locais do seu repositório.
 
 ### Passo 2: A Entrevista
 A própria IA vai emendar para o próximo passo.
