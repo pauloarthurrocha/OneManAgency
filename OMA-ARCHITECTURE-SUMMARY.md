@@ -24,7 +24,7 @@ O sistema é dividido em um fluxo ponta-a-ponta (End-to-End):
 - O processo de inicialização (`/oma-init`) roda localmente em sub-segundos sendo **Offline-First** (para o cache clonado) e cross-OS (Windows/Mac/Linux).
 
 ### B. Context Engineering (Persistência em Disco)
-Em vez de depender da memória da janela de chat, a agência escreve seu estado no disco:
+Em vez de depender da memória da janela de chat, o OMA escreve seu estado no disco:
 - `STATE.md`: Progresso do projeto.
 - `HANDOFF.md`: Usado no **PIV Loop**. A IA planeja, escreve o Handoff, pede para o usuário limpar o chat (`/clear`) e, ao retornar, a IA lê o Handoff e começa a programar com a RAM (contexto) vazia.
 - `AGENTS.md`: Arquivo mestre que contém a *Wake-up Routine*, instruindo a IA sobre como se recuperar após um reinício de sessão.

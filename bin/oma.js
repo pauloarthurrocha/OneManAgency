@@ -51,9 +51,16 @@ const fail    = m => { console.error(`${colors.red}✗ ${m}${colors.reset}`); pr
 // ─── parse de flags simples (sem dependencias) ──────────────────────
 function parseFlags(argv) {
   const flags = {};
-  for (const a of argv) {
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i];
     if (a === '--dry-run') flags.dryRun = true;
     else if (a === '--no-external') flags.skipExternal = true;
+    else if (a === '--only') {
+      flags.only = (argv[++i] || '').split(',').map(s => s.trim()).filter(Boolean);
+    }
+    else if (a === '--exclude') {
+      flags.exclude = (argv[++i] || '').split(',').map(s => s.trim()).filter(Boolean);
+    }
     else if (a.startsWith('--only='))    flags.only    = a.slice('--only='.length).split(',').map(s => s.trim()).filter(Boolean);
     else if (a.startsWith('--exclude=')) flags.exclude = a.slice('--exclude='.length).split(',').map(s => s.trim()).filter(Boolean);
   }
@@ -74,7 +81,7 @@ function cmdInstallGlobal(argv) {
   if (!dryRun && fs.existsSync(path.join(GLOBAL_DIR, 'version'))) {
     info('Instalacao existente detectada. Fazendo backup...');
     const ts = new Date().toISOString().replace(/[:.]/g, '-');
-    for (const d of [SKILLS_DIR, AGENTS_DIR, SCRIPTS_DIR]) {
+    for (const d of [SKILLS_DIR, AGENTS_DIR]) {
       if (fs.existsSync(d)) {
         const backupPath = `${d}.backup-${ts}`;
         // copia simples (evita mv cross-device)
@@ -252,7 +259,7 @@ function cmdHelp() {
   log('  version                  Mostra versao\n');
 
   log('FLUXO:', 'bold');
-  log('  1. npm install -g @pauloarthurrocha/onemanagency --registry=https://npm.pkg.github.com');
+  log('  1. npm install -g onemanagency@latest');
   log('  2. (opcional) oma doctor');
   log('  3. cd meu-projeto');
   log('  4. IDE > skill(name="oma-init")');

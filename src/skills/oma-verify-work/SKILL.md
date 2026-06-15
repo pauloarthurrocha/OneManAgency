@@ -1,13 +1,13 @@
 ---
 name: oma-verify-work
-description: O Engenheiro de QA Implacável (Quality Gate) pós-fase da OneManAgency v4.0. Valida outputs de cada fase do PIPELINE.md contra critérios de aceite declarados. Agora com integração automática de scripts Python de validação e Validação Anti-Alucinação (Scope Creep & API Deprecation). Gera relatório de verificação (.planning/VERIFICATION_REPORT.md) com status PASS/WARNING/FAIL. Pode ser invocado automaticamente pelo oma-executor após cada fase, ou manualmente pelo usuário.
+description: O Engenheiro de QA Implacável (Quality Gate) pós-fase da OneManAgency v4.0. Valida outputs de cada fase do PIPELINE.md contra critérios de aceite declarados. Suporta scripts Python de validação quando eles existirem no projeto e aplica Validação Anti-Alucinação (Scope Creep & API Deprecation). Gera relatório de verificação (.planning/VERIFICATION_REPORT.md) com status PASS/WARNING/FAIL. Pode ser invocado automaticamente pelo oma-executor após cada fase, ou manualmente pelo usuário.
 metadata:
   version: 4.0.0
   changelog:
     - v4.0: Adoção de Persona (Engenheiro de QA Implacável). Adição de checks Anti-Scope Creep no Step 2 e API Deprecation via MCPs no Step 4.
     - v2.2: Adição de checks Anti-Scope Creep no Step 2 e API Deprecation via MCPs no Step 4.
     - v2.1: Validação de Error Persistence e Memory Compaction (práticas de Context Engineering inspiradas no Manus).
-    - v2.0: Integração automática com scripts Python (checklist.py, verify_all.py). Suporte a Validation Level (quick/full) no PIPELINE.md.
+    - v2.0: Suporte opcional a scripts Python (checklist.py, verify_all.py) quando presentes no projeto. Suporte a Validation Level (quick/full) no PIPELINE.md.
     - v1.0: Validação estruturada de outputs, critérios de aceite, placeholders, e build/test quando aplicável.
 ---
 
@@ -104,16 +104,16 @@ Se a média dessas 3 dimensões for menor que **8/10**, você emite um **FAIL** 
 
 ---
 
-### Step 5: Validação Automática via Scripts Python (v2.0)
+### Step 5: Validação Automática via Scripts Python (Opcional)
 
-O Quality Gate agora integra scripts Python de validação para automação completa:
+O Quality Gate pode integrar scripts Python de validação quando eles estiverem disponíveis no projeto. O pacote core do OMA não deve assumir que esses arquivos existem; verifique antes de executar.
 
 #### Scripts Disponíveis
 
 | Script | Uso | Tempo | Quando Rodar |
 |---|---|---|---|
-| `.agents/skills/oma-verify-work/scripts/checklist.py` | Validação rápida (lint, types, security, tests, build, SEO, code quality) | ~30s | Toda fase que gera código |
-| `.agents/skills/oma-verify-work/scripts/verify_all.py` | Validação completa (Lighthouse, E2E, bundle, a11y, mobile, i18n, links) | ~3-5min | Fases finais (QA, Deploy) |
+| `.agents/skills/oma-verify-work/scripts/checklist.py` | Validação rápida (lint, types, security, tests, build, SEO, code quality) | ~30s | Se o arquivo existir |
+| `.agents/skills/oma-verify-work/scripts/verify_all.py` | Validação completa (Lighthouse, E2E, bundle, a11y, mobile, i18n, links) | ~3-5min | Se o arquivo existir |
 
 #### Ativação no PIPELINE.md
 
@@ -143,7 +143,7 @@ Cada fase pode ter metadata `Validation:` indicando o nível de validação:
 
 #### Execução Automática
 
-O executor chama os scripts automaticamente:
+O executor só chama os scripts se os arquivos existirem:
 
 ```bash
 # Validação rápida

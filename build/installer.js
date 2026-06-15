@@ -62,7 +62,7 @@ const IDE_TARGETS = [
   { name: 'opencode', parent: '.opencode', skills: '.opencode/skills' },
   { name: 'codex', parent: '.codex', skills: '.codex/skills' },
   { name: 'cursor', parent: '.cursor', skills: '.cursor/skills' },
-  { name: 'antigravity', parent: '.gemini/antigravity', skills: '.gemini/antigravity/skills' },
+  { name: 'antigravity', parent: '.gemini/antigravity', skills: '.gemini/antigravity/skills', detectParents: ['.gemini/antigravity', '.gemini'] },
   { name: 'roo', parent: '.roo', skills: '.roo/skills' },
   { name: 'gemini-cli', parent: '.gemini', skills: '.gemini/skills' },
   { name: 'windsurf', parent: '.windsurf', skills: '.windsurf/skills' },
@@ -218,12 +218,21 @@ function readVersion(packageDir) {
 function resolveTargets() {
   const home = os.homedir();
   return IDE_TARGETS
-    .map(t => ({
-      ...t,
-      parentPath: path.join(home, t.parent),
-      skillsPath: path.join(home, t.skills),
-    }))
-    .filter(t => fs.existsSync(t.parentPath));
+    .map(t => {
+      const detectParents = t.detectParents || [t.parent];
+      const detectedParentPath = detectParents
+        .map(p => path.join(home, p))
+        .find(p => fs.existsSync(p));
+
+      return {
+        ...t,
+        detectParents,
+        detectedParentPath,
+        parentPath: path.join(home, t.parent),
+        skillsPath: path.join(home, t.skills),
+      };
+    })
+    .filter(t => Boolean(t.detectedParentPath));
 }
 
 // ─── Core install logic ────────────────────────────────────────────

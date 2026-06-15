@@ -4,7 +4,7 @@ description: Orquestrador dinâmico da OneManAgency v4.0. O Diretor de Operaçõ
 metadata:
   version: 4.0.0
   changelog:
-    - "v4.1: Step 5.1b — Carregar Agent: obrigatório. O campo Agent: no PIPELINE.md agora carrega mecanicamente o arquivo de definição do agente (src/agents/[agent].md) e aplica suas Strict Rules durante a execução. Se ausente, heurística por tema da fase."
+    - "v4.1: Step 5.1b — Carregar Agent: obrigatório. O campo Agent: no PIPELINE.md agora carrega mecanicamente o arquivo de definição do agente (.agents/agents/[agent].md, ~/.oma/agents/[agent].md ou src/agents/[agent].md dentro do repo OMA) e aplica suas Strict Rules durante a execução. Se ausente, heurística por tema da fase."
     - "v4.0: Adoção de Persona (Diretor de Operações/COO). Adicionada verificação estrita de pular etapas vitais: se o usuário tentar rodar código sem passar pela Tríade de Revisão (PRD, Architecture, Design), o COO alerta e bloqueia (salvo override explícito). Implementação estrita do PIV Loop, TDD Raiz obrigatório para backend, Worktrees isoladas para waves de código e System Evolution formalizado via discovery-notes."
     - v3.4: Adicionado "R1.5 - Consultoria Proativa (Risk Assessment)" no gate humano e uso mandatório de MCPs para validação técnica anti-alucinação no Step 5.3.
     - v3.3: Adiciona práticas de Context Engineering (Memory Compaction, 2-Action Rule, Error Persistence) inspiradas no padrão Manus.
@@ -48,16 +48,14 @@ Para evitar o estouro de contexto (Context Window = RAM) e manter a estabilidade
 
 ## 1. Detecção de Ferramenta (Cross-IDE)
 
-Detectar qual IDE está ativa antes de carregar skills:
+Detectar qual IDE está ativa antes de carregar skills. Use primeiro o contexto da própria ferramenta. Se precisar checar no filesystem, teste a existência destes diretórios de forma cross-platform (`fs.existsSync`, PowerShell `Test-Path`, ou ferramenta nativa da IDE):
 
-```bash
-ls ~/.opencode/ 2>/dev/null && echo "OPENCODE"
-ls ~/.claude/ 2>/dev/null && echo "CLAUDE"
-ls ~/.gemini/ 2>/dev/null && echo "ANTIGRAVITY"
-ls ~/.codex/ 2>/dev/null && echo "CODEX"
-ls ~/.cursor/ 2>/dev/null && echo "CURSOR"
-ls ~/.roo/ 2>/dev/null && echo "ROO"
-```
+- `~/.opencode/` → OpenCode
+- `~/.claude/` → Claude Code
+- `~/.gemini/antigravity/` ou `~/.gemini/` → Antigravity/Gemini
+- `~/.codex/` → Codex
+- `~/.cursor/` → Cursor
+- `~/.roo/` → Roo Code
 
 Guardar em `ACTIVE_TOOL`.
 
@@ -263,10 +261,11 @@ Se a metadata `Skills:` estiver ausente, usar a tabela abaixo de **tema → skil
 Cada linha de fase no `PIPELINE.md` pode ter metadata `Agent:` com o nome de um agente definido em `src/agents/`. Diferente das skills (que são instruções de tarefa), o **Agent é a persona** que governa COMO a tarefa será executada — suas regras rígidas, anti-patterns e filosofia.
 
 **Se `Agent:` está presente na fase:**
-1. Tentar `src/agents/[agent].md`
-2. Se falhar, tentar `.agents/agents/[agent].md`
-3. Se encontrar: **carregar o arquivo inteiro como contexto de persona**. As regras em "Strict Rules" do agente são **obrigatórias** — violá-las é motivo de reprovação no Quality Gate.
-4. Se não encontrar: avisar, mas prosseguir com persona genérica.
+1. Tentar `.agents/agents/[agent].md`
+2. Se falhar, tentar `~/.oma/agents/[agent].md`
+3. Se falhar, tentar `src/agents/[agent].md` (apenas quando estiver executando dentro do repositório do OMA Framework)
+4. Se encontrar: **carregar o arquivo inteiro como contexto de persona**. As regras em "Strict Rules" do agente são **obrigatórias** — violá-las é motivo de reprovação no Quality Gate.
+5. Se não encontrar: avisar, mas prosseguir com persona genérica.
 
 **Se `Agent:` está ausente na fase:**
 - Usar heurística pelo tema da fase para selecionar o agente mais adequado:
@@ -309,7 +308,8 @@ Executar a tarefa da fase, honrando:
   2. Escreva EXATAMENTE onde o próximo agente deve começar no arquivo `.planning/HANDOFF.md` (crie este arquivo).
   3. **Condicional Cross-IDE para Execução Limpa:**
      - **Se você estiver rodando no Claude Code ou OpenCode (com suporte a sub-agentes/Task tool):** Em vez de parar, inicie imediatamente um sub-agente (via ferramenta `Task` ou `Agent`) passando o comando para ler o `HANDOFF.md` e executar a implementação em um ambiente isolado.
-     - **Se você estiver no Cursor, Windsurf, Roo Code ou não tiver suporte a sub-agentes:** PARE e diga ao usuário: *"Plano concluído e HANDOFF.md gerado. Para evitar alucinações (Lost in the Middle), peço que você limpe este chat (ex: `/clear` ou abra um novo chat) e digite 'resume' para eu continuar a implementação com a memória limpa."*- **TDD Raiz (RED-GREEN-REFACTOR):** Para tarefas lógicas e de Backend, o TDD é **MANDATÓRIO**. Você não implementa código funcional sem antes escrever o teste que descreve o comportamento desejado. Escreva o teste -> Execute (deve falhar) -> Escreva o código mínimo para passar -> Execute novamente -> Refatore (DRY).
+     - **Se você estiver no Cursor, Windsurf, Roo Code ou não tiver suporte a sub-agentes:** PARE e diga ao usuário: *"Plano concluído e HANDOFF.md gerado. Para evitar alucinações (Lost in the Middle), peço que você limpe este chat (ex: `/clear` ou abra um novo chat) e digite 'resume' para eu continuar a implementação com a memória limpa."*
+- **TDD Raiz (RED-GREEN-REFACTOR):** Para tarefas lógicas e de Backend, o TDD é **MANDATÓRIO**. Você não implementa código funcional sem antes escrever o teste que descreve o comportamento desejado. Escreva o teste -> Execute (deve falhar) -> Escreva o código mínimo para passar -> Execute novamente -> Refatore (DRY).
 - Protocolos universais do `AGENTS.md` (read-first, micro-batches, silêncio operacional).
 - Regras específicas do `.agent/rules/PROJECT.md`.
 - Regra Shift-Left Deploy: se a fase é "setup de infra", ela deve vir **antes** de qualquer escrita de código substancial. Se o PIPELINE.md quebra essa regra, alertar o usuário antes de executar.
@@ -398,15 +398,17 @@ Para ver exemplos de execução (Few-Shot) ou entender o Protocolo de Worktrees/
 
 ## 11. MCPs Esperados
 
-O executor assume presença destes MCPs (configurados pelo `oma-init` em `.mcp.json`):
+O executor assume presença destes MCPs zero-key configurados pelo `oma-init` em `.mcp.json`:
 
 | MCP | Uso |
 |---|---|
-| `brave-search` | Pesquisa de tendências de mercado |
 | `context7` | Docs atualizadas de libs (validação de stack) |
+| `sequential-thinking` | Raciocínio estruturado para debug/arquitetura |
 | `playwright` | Navegação / scraping estruturado |
-| `firecrawl` | Scraping em larga escala |
-| `github` | Gerenciamento de repos |
+| `memory` | Knowledge graph persistente |
+| `fetch` | HTTP/JSON simples read-only |
+
+MCPs com chave (`brave-search`, `firecrawl`, `github`) são opcionais. Se estiverem ausentes, o executor degrada funcionalidade de pesquisa/crawl/PR sem bloquear a fase.
 
 Se um MCP está ausente, o executor **degrada** a funcionalidade (não trava) — apenas avisa:
 ```

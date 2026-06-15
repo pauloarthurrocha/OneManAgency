@@ -4,7 +4,7 @@ trigger: always_on
 
 <!-- AGENTS.md — v2.0 (Context Engineering Universal)
      Arquivo: AGENTS.md
-     Escopo: UNIVERSAL — aplica-se a QUALQUER projeto gerado pela Agência
+     Escopo: UNIVERSAL — aplica-se a QUALQUER projeto gerado pelo OMA Framework
      Arquitetura: XML Context Engineering + Cognitive Density + Anti-LiTM
      
      REGRA DE OURO: Este arquivo é GENÉRICO. NUNCA coloque stack específica,

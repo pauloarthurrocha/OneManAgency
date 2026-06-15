@@ -3,6 +3,21 @@
 Todas as mudanças notáveis neste projeto serão documentadas neste formato.
 Baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
+## [4.1.1] - 2026-06-15
+
+### Fixed
+- Removidas referencias operacionais a nomes legados; `oma-init` agora aponta para `npm install -g onemanagency@latest`.
+- `oma install` agora pode rodar repetidamente sem falhar no backup por `SCRIPTS_DIR` inexistente.
+- Parser da CLI aceita flags nos formatos `--only=codex` e `--only codex`.
+- Deteccao de `~/.gemini` agora configura Gemini CLI e Antigravity de forma consistente.
+- Executor agora carrega personas por `Agent:` a partir de `.agents/agents/`, `~/.oma/agents/` ou `src/agents/` no repo OMA.
+- Pacote NPM deixa de incluir docs internas/ignoradas e publica apenas docs publicas/core.
+
+### Changed
+- `oma-init`, `client-onboarding`, `oma-executor` e `oma-verify-work` alinhados a stack canonica zero-key de 5 MCPs.
+- Scripts Python de validacao passam a ser tratados como opcionais quando existirem no projeto.
+- Adicionada suite `node:test` cobrindo reinstall, parser de flags e deteccao Gemini/Antigravity.
+
 ## [4.1.0] - 2026-05-13
 
 ### Added
@@ -38,7 +53,7 @@ Baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 - **Review Triad** — CEO, Eng, Design review antes da execucao
 - **Eval Harness** (LLM-as-a-Judge) em oma-verify-work para QA autonomo
 - Agent Definition Files com 15 personas em 4 categorias
-- Auto-injecao de MCPs Zero-Config (Puppeteer, Fetch, Memory, Context7)
+- Auto-injecao de MCPs Zero-Config (Playwright, Fetch, Memory, Context7)
 - Session HANDOFF protocol (Anti-LiTM)
 - Frontend specialist com Framer Motion spring physics e Huashu prototyping
 - Deteccao automatica de IDEs: Claude Code, Cursor, Windsurf, Cline, Aider, Roo Code, Hermes, OpenClaw
@@ -46,13 +61,13 @@ Baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 - Slash commands intuitivos (`/oma-init` em vez de `skill(name="oma-init")`)
 
 ### Changed
-- Rebrand completo de "Agencia AI Adaptavel" para "OneManAgency (OMA)"
+- Rebrand completo para "OneManAgency (OMA)"
 - Package name alterado para `onemanagency` (unscoped)
 - Estrutura do repo reorganizada: `src/`, `build/`, `install/`, `docs/`
 - README reescrito com copywriting e marketing psychology
 
 ### Removed
-- Referencias legadas ao nome "agencia-ai-adaptavel"
+- Referencias legadas ao nome anterior do projeto
 - Configs locais de ambiente do repositorio publico
 - `.npmrc` do tracking (prevencao de token leaks)
 

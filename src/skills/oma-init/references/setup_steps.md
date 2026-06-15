@@ -14,33 +14,32 @@ Se não estiver, avise o cliente, mas prossiga.
 
 ### Step 3: Propagação de Skills (Cross-IDE)
 
-Para garantir continuidade entre IDEs, criar pasta `.agents/skills` local e copiar os arquivos.
-Se as skills não estiverem no cache global em `~/.oma/skills`, crie pastas em branco e avise.
+Para garantir continuidade entre IDEs:
+- Crie `.agents/skills` e copie todo conteúdo de `~/.oma/skills`.
+- Crie `.agents/agents` e copie todo conteúdo de `~/.oma/agents`.
+- Se `~/.oma/skills` ou `~/.oma/agents` não existirem, crie as pastas locais vazias e avise: o usuário precisa rodar `oma install`.
+- Use ferramentas nativas de filesystem da IDE ou Node.js (`fs.cpSync`) para funcionar em Windows, macOS e Linux. Não dependa de `cp`, `mkdir -p` ou redirecionamentos Bash.
 
 ### Step 4: Clonar Skills Externas
 
+Sincronize o cache global baixado pelo installer:
+- `~/.oma/external/awesome-design-md` → `.agents/design-library`
+- diretórios dentro de `~/.oma/external/*` que contenham `SKILL.md` → `.agents/skills/<nome-da-skill>`
+
+Depois rode CLIs opcionais, se disponíveis:
 ```bash
-# 1. Awesome Design MD
-mkdir -p .agents/design-library
-
-# 2. Marketing Skills
-mkdir -p .agents/skills
-
-# 3. UI/UX Pro Max (Via Oficial CLI)
-npx -y uipro-cli init --ai "$IDE_NOME" --global 2>/dev/null
-
-# 4. Anthropic Skills
-mkdir -p .agents/skills
-
-# 5. Antigravity Kit (Via Oficial CLI)
-npx -y @vudovn/ag-kit init --force --quiet 2>/dev/null
+npx -y uipro-cli init --ai ACTIVE_IDE --global
+npx -y @vudovn/ag-kit init --force --quiet
 ```
+
+Substitua `ACTIVE_IDE` por `claude`, `codex`, `cursor`, `antigravity`, `gemini-cli`, `roo`, `opencode` ou `generic`. Se o comando falhar por rede ou pacote ausente, avise e continue com o cache offline.
 
 ### Step 5: Arquivos de IDE (CLAUDE.md / GEMINI.md / .cursor/rules)
 
 O `AGENTS.md` será criado via cópia no Step 9. Depois disso:
 - Copie `AGENTS.md` para `CLAUDE.md` e `GEMINI.md`.
 - Copie `AGENTS.md` para `.cursor/rules/project.mdc`.
+- Se o projeto usar Codex, mantenha `AGENTS.md` na raiz; se usar Windsurf/Cline/Roo, preserve também `.agents/skills` e `.agents/agents` como fonte cross-IDE.
 
 ### Step 6: Configurar MCPs (Zero-Config)
 

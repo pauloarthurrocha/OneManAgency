@@ -40,4 +40,4 @@ Audite a raiz do projeto e crie um aviso final para o usuário:
 - Verifique se o comando de build da stack escolhida passa sem erros de tipo.
 - Lembre o usuário de configurar o DNS / Variáveis de Produção na plataforma escolhida (Vercel, Coolify, etc).
 
-**Output:** Salve os documentos. Declare ao usuário: **"O PROJETO ESTÁ PRONTO PARA PRODUÇÃO E LANÇAMENTO. Missão da Agência concluída."**
+**Output:** Salve os documentos. Declare ao usuário: **"O PROJETO ESTÁ PRONTO PARA PRODUÇÃO E LANÇAMENTO. Missão OMA concluída."**

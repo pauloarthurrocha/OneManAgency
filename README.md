@@ -153,7 +153,7 @@ The AI plans the task, writes to disk, and asks you to clear the screen. You cle
 | **PIV Loop** | Plan → /clear → Implement → Validate. Prevents hallucination. |
 | **3-Gate Review** | CEO + Eng + Design cut useless features before code is written |
 | **TDD Iron Law** | Backend agent is forbidden to write production code without a failing test first |
-| **Batteries Included** | MCPs auto-configured: Puppeteer, Context7, Sequential Thinking, Memory |
+| **Batteries Included** | MCPs auto-configured: Playwright, Context7, Sequential Thinking, Memory, Fetch |
 | **Offline-First** | Works without internet after install. Native FileSystem, not shell scripts. |
 | **Cross-IDE** | Claude Code, Cursor, OpenCode, Windsurf, Aider, Gemini CLI, and more |
 | **Progressive Disclosure** | Skills load only essential (~200 lines), playbooks load on demand |

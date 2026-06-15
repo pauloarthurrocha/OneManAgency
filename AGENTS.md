@@ -3,7 +3,7 @@
      ════════════════════════════════════════════════════════════════════════════ -->
 
 <system_context>
-Você está atuando no código-fonte do **OneManAgency (OMA Framework)** (antigamente chamado de Agência AI Adaptável).
+Você está atuando no código-fonte do **OneManAgency (OMA Framework)**.
 Este NÃO é um projeto de cliente. Este é o repositório da ferramenta CLI que orquestra IAs no computador dos desenvolvedores.
 Você é um Arquiteto Sênior mantendo a ferramenta que outras IAs usam para operar.
 </system_context>
@@ -40,7 +40,7 @@ Não usamos "Roleplay Raso" (ex: "Aja como um dev sênior"). Usamos arquivos est
 **Implementação (4):** `frontend-specialist`, `backend-specialist`, `database-architect`, `devops-engineer`
 **Design & Conteúdo (2):** `design-specialist`, `copywriter-specialist`
 **Qualidade (5):** `code-reviewer`, `accessibility-auditor`, `performance-engineer`, `reality-checker`, `test-engineer`
-**Especialistas (4):** `security-auditor`, `seo-specialist`, `mcp-builder`, `orchestrator`
+**Especialistas (6):** `security-auditor`, `seo-specialist`, `mcp-builder`, `orchestrator`, `mobile-specialist`, `chatbot-specialist`
 
 Regras de edição:
 - Se mexer no `backend-specialist.md`: O **TDD (Red-Green-Refactor) é inegociável**.
@@ -60,6 +60,6 @@ O `.mcp.json` injetado no projeto cliente tem **5 MCPs sem chave**:
 ## ⚠️ Regras Contribuição (Se você for alterar código aqui)
 1. **Instalação Externa:** Repos em `EXTERNAL_REPOS` no `installer.js` usam `git clone` para cópia estática. Ferramentas como `uipro-cli` e `ag-kit` usam instalação global NPM direta e `npx init` durante o `oma-init`. Mudou repo? Edite as constantes correspondentes no installer.
 2. **Bash/Windows:** Ao criar comandos CLI, garanta que funcionem em Linux/Mac (Bash) e Windows (PowerShell). Quando possível, prefira `path.join`/`fs` em Node.js a shell scripts.
-3. **O Nome do Projeto:** Sempre "OneManAgency" ou "OMA Framework". Nunca o nome antigo "Agência AI Adaptável".
+3. **O Nome do Projeto:** Sempre "OneManAgency" ou "OMA Framework". Nunca use nomes legados.
 4. Em bug da própria CLI do OMA, use o MCP `sequential-thinking` para raciocinar antes de chutar fix.
 5. **Skills longas (>500 linhas)** violam o padrão skill-creator. Se precisar adicionar conteúdo grande (playbooks, exemplos), splite em `src/skills/<skill>/references/<topic>.md` e referencie do SKILL.md principal.

@@ -2,10 +2,10 @@
 
 # 🤖 OneManAgency (v4.1)
 
-**O framework open-source para você construir software como se tivesse uma agência inteira trabalhando para você.**<br>
+**O framework open-source para você construir software como se tivesse um time inteiro trabalhando para você.**<br>
 *Orquestração Multi-LLM, Context Engineering nativo, PIV Loop e TDD para Claude Code, OpenCode, Cursor, Windsurf, Aider, Hermes Agent, Roo Code e Gemini CLI.*
 
-[![npm version](https://img.shields.io/badge/npm-v4.1.0-CB3837?style=for-the-badge&logo=npm)](https://github.com/pauloarthurrocha/OneManAgency)
+[![npm version](https://img.shields.io/badge/npm-v4.1.1-CB3837?style=for-the-badge&logo=npm)](https://github.com/pauloarthurrocha/OneManAgency)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
 *“Não escreva prompts. Arquiteture sistemas.”*
@@ -29,8 +29,8 @@ A complexidade inteira está no sistema, não no seu fluxo de trabalho. Você co
 2. **O PIV Loop (Plan, Implement, Validate):** O OMA proíbe a IA de planejar e codar no mesmo fôlego. O agente faz o plano, gera o Handoff e avisa: *"Limpe o chat para não alucinar"*. Você limpa, dá o play, e a IA coda com contexto vazio e foco a laser.
 3. **Tríade de Revisão:** Antes de codar, o seu briefing não vira código imediatamente. Ele é barrado por 3 "agentes" (CEO, Tech Lead, Design Lead) que cortam features inúteis, cravam o banco de dados e proíbem o "AI Slop".
 4. **TDD é Lei:** O agente de Backend é proibido de escrever código de produção sem antes escrever um teste que falhe. Sério.
-5. **Batteries Included (MCPs Embutidos):** Ferramentas de IA são burras sem ferramentas externas. A skill `oma-init` rodando na sua IDE injeta na raiz do seu projeto um arquivo `.mcp.json` hiper-otimizado. Sem você configurar NENHUMA chave de API, a sua IA ganha o poder de **Puppeteer** (para navegar e raspar sites de graça), **Context7** (para ler docs oficiais e não usar código depreciado), **Sequential Thinking** (força a IA a raciocinar antes de gerar código bugado) e **Memory**.
-6. **Híbrido e Otimizado (Offline-First & Cross-OS):** A instalação do framework acontece uma única vez via NPM. Repositórios base de skills são clonados silenciosamente, e CLIs avançados (como de UI/UX) são instalados no sistema global. Depois disso, inicializar o OMA em um projeto novo leva 0.5 segundos e propaga a inteligência para a sua IDE instantaneamente. E como os agentes usam ferramentas nativas do FileSystem em vez de *Shell Scripts*, a agência roda perfeitamente em Mac, Linux e Windows (PowerShell).
+5. **Batteries Included (MCPs Embutidos):** Ferramentas de IA são burras sem ferramentas externas. A skill `oma-init` rodando na sua IDE injeta na raiz do seu projeto um arquivo `.mcp.json` hiper-otimizado. Sem você configurar NENHUMA chave de API, a sua IA ganha o poder de **Playwright** (para navegar, testar e capturar páginas), **Context7** (para ler docs oficiais e não usar código depreciado), **Sequential Thinking** (força a IA a raciocinar antes de gerar código bugado), **Memory** e **Fetch**.
+6. **Híbrido e Otimizado (Offline-First & Cross-OS):** A instalação do framework acontece uma única vez via NPM. Repositórios base de skills são clonados silenciosamente, e CLIs avançados (como de UI/UX) são instalados no sistema global. Depois disso, inicializar o OMA em um projeto novo leva 0.5 segundos e propaga a inteligência para a sua IDE instantaneamente. E como os agentes usam ferramentas nativas do FileSystem em vez de *Shell Scripts*, o OMA roda perfeitamente em Mac, Linux e Windows (PowerShell).
 
 
 ---
@@ -162,7 +162,7 @@ O `oma-verify-work` agora inclui um sistema de avaliação autônomo que usa LLM
 Como o OMA usa arquivos no disco (Context Engineering) em vez de memória de chat, ele é o motor perfeito para orquestradores de terminais autônomos:
 
 *   **[AionUi](https://github.com/iOfficeAI/AionUi):** Você pode instanciar múltiplos terminais lado a lado na UI deles e delegar as fases do `PIPELINE.md`. O AionUi é o "escritório", o OMA é o "método".
-*   **[Hermes Agent](https://github.com/NousResearch/hermes-agent) / OpenClaw:** O instalador detecta as pastas `~/.hermes/skills` automaticamente. Você pode rodar a agência num VPS e comandar os agentes via Telegram ou Discord.
+*   **[Hermes Agent](https://github.com/NousResearch/hermes-agent) / OpenClaw:** O instalador detecta as pastas `~/.hermes/skills` automaticamente. Você pode rodar o OMA num VPS e comandar os agentes via Telegram ou Discord.
 
 ---
 

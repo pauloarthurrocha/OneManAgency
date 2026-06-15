@@ -46,16 +46,15 @@ Antes de qualquer resposta, adote esta mentalidade de um *Partner do Y Combinato
 
 ## 🔍 Check de MCPs Disponíveis
 
-Antes da Etapa 2 (validação de stack), verifique quais MCPs estão em `.mcp.json`:
-
-```bash
-cat .mcp.json 2>/dev/null | grep -E "(brave-search|context7|firecrawl|playwright)" || echo "MCPS_AUSENTES"
-```
+Antes da Etapa 2 (validação de stack), verifique quais MCPs estão em `.mcp.json` usando leitura de arquivo/JSON da ferramenta atual. A stack canônica criada pelo `oma-init` é zero-key:
 
 - **`context7` presente** → use para validar versões/docs de libs em tempo real
-- **`brave-search` presente** → use para pesquisar tendências (ex: "melhor SSG 2026")
-- **`firecrawl` presente** → use para scraping de páginas de referência
-- **Nenhum disponível** → avise: *"Sem MCPs de pesquisa ativos — vou validar com conhecimento base. Recomendo rodar `oma-init` para adicionar."*
+- **`playwright` presente** → use para inspecionar sites/páginas quando houver URL ou concorrente concreto
+- **`sequential-thinking` presente** → use para decisões de arquitetura ou debugging complexo
+- **`memory` presente** → use para registrar conhecimento reutilizável quando a IDE suportar
+- **`fetch` presente** → use para HTTP/JSON read-only simples
+- **`brave-search` ou `firecrawl` presentes** → opcionais com API key; use para research/crawl quando configurados pelo usuário
+- **Nenhum disponível** → avise: *"Sem MCPs ativos — vou validar com conhecimento base. Recomendo rodar `oma-init` para adicionar a stack zero-key."*
 
 ---
 
@@ -90,7 +89,7 @@ Antes de mergulhar nos questionários técnicos, aja como um **Consultor Estrat�
 Seu objetivo aqui é trazer **pontos cegos** à tona, mas com **zero alucinação**.
 
 **Regras para Sugerir Módulos/Features:**
-1. **Base no Mercado Real:** Só sugira módulos que são padrão (baseline) para sistemas daquele segmento. Se for um e-commerce, recuperação de carrinho abandonado é padrão. Se não tiver certeza absoluta do que é padrão no nicho, **use o `brave-search`** para mapear os concorrentes antes de falar.
+1. **Base no Mercado Real:** Só sugira módulos que são padrão (baseline) para sistemas daquele segmento. Se for um e-commerce, recuperação de carrinho abandonado é padrão. Se não tiver certeza absoluta do que é padrão no nicho, use o MCP de pesquisa disponível (`fetch`, `playwright`, ou `brave-search` se configurado) para mapear referências antes de falar.
 2. **Seja Direto e Limitado:** Sugira no máximo 2 ou 3 features de alto impacto. Não inche o escopo.
 3. **Sempre Valide (Apresentação Socrática):** Nunca diga "Vou adicionar X". Diga: *"Analisando projetos de [Segmento], é padrão de mercado incluir [Feature X para resolver Dor Y]. Gostaria de incluir isso no escopo do MVP ou deixamos para uma v2?"*
 
@@ -267,9 +266,7 @@ Cruze os dados que já coletou para criar um perfil visual:
 
 **2. Verificar disponibilidade:**
 
-```bash
-ls .agents/design-library/ 2>/dev/null | head -20
-```
+Verifique a pasta `.agents/design-library/` com a ferramenta de filesystem da IDE. Em terminal, use o comando equivalente do sistema operacional (`Get-ChildItem` no PowerShell, `ls` no Bash).
 
 Se a pasta não existe ou está vazia, avise:
 > *"A biblioteca de design não foi instalada. Vou criar o design system do zero na fase de Design do pipeline. Quer que eu rode o clone manualmente agora?"*
@@ -302,10 +299,7 @@ Se a pasta não existe ou está vazia, avise:
 
 Após validação do cliente:
 
-```bash
-cp ".agents/design-library/[TEMPLATE_ESCOLHIDO]/DESIGN.md" ".planning/DESIGN.md"
-echo "✓ Design System base copiado para .planning/DESIGN.md"
-```
+Copie `.agents/design-library/[TEMPLATE_ESCOLHIDO]/DESIGN.md` para `.planning/DESIGN.md` usando ferramenta de filesystem ou API Node (`fs.copyFileSync`) para manter compatibilidade Windows/macOS/Linux.
 
 **5. Registrar a escolha:**
 
@@ -401,7 +395,7 @@ Preencher os placeholders `{{...}}` do template já existente. Obrigatórios:
 
 ### Etapa 4 — A Tríade de Revisão (GStack Inspired)
 
-Antes de passar o bastão para a execução, o projeto deve passar por um refinamento arquitetural. Isso evita que a Agência escreva código baseado na primeira ideia (que geralmente é super-complexa).
+Antes de passar o bastão para a execução, o projeto deve passar por um refinamento arquitetural. Isso evita que o OMA escreva código baseado na primeira ideia (que geralmente é super-complexa).
 
 **Você deve informar o cliente:**
 > *"Briefing e Pipeline gerados! Antes de começarmos a codar, pelas melhores práticas da Engenharia Agêntica (PIV Loop), precisamos passar esse plano pela nossa Tríade de Revisão. Eu vou acionar:*
@@ -449,7 +443,7 @@ Você precisa invocar a etapa de CEO Review para desafiar o escopo.
 
 **AÇÃO OBRIGATÓRIA DA IA:**
 Pergunte ao cliente: "Posso invocar a Tríade de Revisão (/plan-ceo-review) agora?"
-Se ele disser SIM, **NÃO** diga para ele digitar. VOCÊ MESMO deve executar o tool call `skill(name="oma-ceo-review")`. Você tem permissão e agência para orquestrar o fluxo.
+Se ele disser SIM, **NÃO** diga para ele digitar. VOCÊ MESMO deve executar o tool call `skill(name="oma-ceo-review")`. Você tem permissão e autonomia para orquestrar o fluxo.
 ```
 
 ---

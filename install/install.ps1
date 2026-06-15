@@ -31,7 +31,7 @@ if (!(Get-Command node -ErrorAction SilentlyContinue)) {
 $IDE = @()
 if (Test-Path "$env:USERPROFILE\.opencode") { $IDE += "opencode" }
 if (Test-Path "$env:USERPROFILE\.claude") { $IDE += "claude" }
-if (Test-Path "$env:USERPROFILE\.gemini") { $IDE += "antigravity" }
+if (Test-Path "$env:USERPROFILE\.gemini") { $IDE += "gemini-cli"; $IDE += "antigravity" }
 if (Test-Path "$env:USERPROFILE\.codex") { $IDE += "codex" }
 if (Test-Path "$env:USERPROFILE\.cursor") { $IDE += "cursor" }
 if (Test-Path "$env:USERPROFILE\.roo") { $IDE += "roo" }
