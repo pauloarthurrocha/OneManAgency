@@ -4,7 +4,7 @@
   "description": "Sistema de execução de projetos via IA. OneManAgency - funciona em qualquer IDE e adapta-se a qualquer projeto.",
   "main": "bin/oma.js",
   "bin": {
-    "oma": "./bin/oma.js"
+    "oma": "bin/oma.js"
   },
   "scripts": {
     "postinstall": "node build/postinstall.js",
@@ -26,7 +26,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pauloarthurrocha/OneManAgency.git"
+    "url": "git+https://github.com/pauloarthurrocha/OneManAgency.git"
   },
   "bugs": {
     "url": "https://github.com/pauloarthurrocha/OneManAgency/issues"
