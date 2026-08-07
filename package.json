@@ -1,6 +1,6 @@
 {
   "name": "onemanagency",
-  "version": "4.1.1",
+  "version": "4.2.0",
   "description": "Sistema de execução de projetos via IA. OneManAgency - funciona em qualquer IDE e adapta-se a qualquer projeto.",
   "main": "bin/oma.js",
   "bin": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "postinstall": "node build/postinstall.js",
-    "test": "node --test tests"
+    "test": "node --test tests/installer-cli.test.js"
   },
   "keywords": [
     "ai",

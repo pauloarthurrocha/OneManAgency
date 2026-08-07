@@ -75,8 +75,8 @@ build/
 ### Step 9: Context Engineering (Copiar Templates Globais)
 
 Copie da pasta `~/.oma/templates/`:
-- `AGENTS.md.template` → `./AGENTS.md`
-- `PROJECT.md.template` → `./.agent/rules/PROJECT.md`
+- `AGENTS.md.template` → `./AGENTS.md` (Fonte Única da Verdade contendo Stack do Projeto + Protocolos Universais)
+- `PROJECT.md.template` → `./.agents/rules/PROJECT.md` (Alias/Playbook adicional)
 - `STATE.md.template` → `./.planning/STATE.md`
 - `discovery-notes.md.template` → `./.planning/discovery-notes.md`
 - `CHANGELOG_LLM.md.template` → `./.planning/CHANGELOG_LLM.md`

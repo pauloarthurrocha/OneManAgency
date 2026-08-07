@@ -3,6 +3,16 @@
 Todas as mudanças notáveis neste projeto serão documentadas neste formato.
 Baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
+## [4.2.0] - 2026-08-07
+
+### Added / Changed
+- **Arquitetura SSoT v3.0 (Single Source of Truth):** `AGENTS.md` na raiz passa a ser o arquivo unificado contendo a Stack do Projeto (P0) no topo e os Protocolos Universais da Agência (P1) na sequência, garantindo leitura nativa imediata por todas as IDEs/LLMs sem dependência obrigatória de arquivos em subpastas ocultas.
+- **Restauração do Comentário do Header:** Removido o comentário herdado do template v2.0 ("Este arquivo é GENÉRICO...").
+
+### Fixed
+- Caminho do script `npm test` em `package.json` corrigido para `node --test tests/installer-cli.test.js`.
+- Template do `setup_steps.md` ajustado para utilizar a pasta `.agents/rules/` e o novo padrão SSoT.
+
 ## [4.1.1] - 2026-06-15
 
 ### Fixed

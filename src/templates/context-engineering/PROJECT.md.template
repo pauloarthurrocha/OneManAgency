@@ -2,15 +2,11 @@
 trigger: always_on
 ---
 
-<!-- PROJECT.md — Fonte Canônica do Projeto
-     Arquivo: .agent/rules/PROJECT.md
+<!-- PROJECT.md — Playbook de Stack do Projeto
+     Arquivo: .agents/rules/PROJECT.md
      Escopo: ESPECÍFICO DESTE PROJETO
-     Gerado por: oma-init (Fase 0)
-     Atualizado por: time (conforme decisões são tomadas)
-     
-     REGRA DE OURO: Este arquivo contém APENAS informações específicas
-     deste projeto (stack, proibições, guardrails, infra). Não coloque
-     protocolos universais aqui — esses ficam em AGENTS.md.
+     Nota: A Verdade do Projeto principal fica no AGENTS.md da raiz.
+     Este arquivo atua como um playbook detalhado de apoio.
 -->
 
 <fonte_canonica>
